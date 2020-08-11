@@ -1,7 +1,6 @@
 import Vue from 'vue'
 // @ts-ignore
 import App from './App.vue'
-import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import { Auth0Plugin } from "@bcwdev/auth0-vue";

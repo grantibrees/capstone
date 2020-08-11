@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <router-link class="navbar-brand" :to="{ name: 'home' }">Kanban</router-link>
+    <router-link class="navbar-brand" :to="{ name: 'home' }">Capstone</router-link>
     <button
       class="navbar-toggler"
       type="button"
