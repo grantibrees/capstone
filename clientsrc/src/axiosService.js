@@ -11,6 +11,12 @@ export const spotifyAuthApi = Axios.create({
   withCredentials: true
 })
 
+export const spotifyAuthHost = Axios.create({
+  baseURL: "https://accounts.spotify.com/",
+  timeout: 3000,
+
+})
+
 export const spotifyApi = Axios.create({
   baseURL: "https://api.spotify.com/v1/",
   timeout: 3000
