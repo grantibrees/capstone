@@ -1,9 +1,14 @@
 import Axios from "axios"
 let base = window.location.host.includes('localhost') ? '//localhost:3000/' : '/'
-const api = Axios.create({
+export const api = Axios.create({
   baseURL: base + "api/",
   timeout: 3000,
   withCredentials: true
 })
+export const spotifyApi = Axios.create({
+  baseURL: "https://accounts.spotify.com/api/",
+  timeout: 3000,
+  withCredentials: true
+})
 
-export default api 
+
