@@ -19,6 +19,7 @@ export class AuthHostController extends BaseController {
     this.router
       .get('/login', this.authorizeHost)
       .get('/callback', this.authCallBack)
+
   }
 
 
@@ -27,12 +28,10 @@ export class AuthHostController extends BaseController {
       let html = await spotifyApi.createAuthorizeURL(scopes, '')
       // let consoleHtml = new URL(html);
       res.redirect(html)
-      
-      // let data = await AuthHostService.authorizeHost(spotifyApi)
     } catch (error) { next(error) }
 
-
   }
+  
   async authCallBack(req, res, next) {
     const { code } = req.query;
     console.log(code)
@@ -53,3 +52,5 @@ export class AuthHostController extends BaseController {
 
   }
 }
+
+

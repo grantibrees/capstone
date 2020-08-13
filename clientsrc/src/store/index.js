@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { spotifyApi } from "../axiosService"
 import { spotifyAuthApi } from "../axiosService"
+import { api } from "../axiosService"
 import router from '../router/index'
 import Axios from "axios"
 import qs from 'qs'
@@ -23,6 +24,22 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    //#region -- AUTH STUFF --
+    setBearer({ }, bearer) {
+      api.defaults.headers.authorization = bearer;
+    },
+    resetBearer() {
+      api.defaults.headers.authorization = "";
+    },
+    async getProfile({ commit }) {
+      try {
+        let res = await api.get("/profile")
+        commit("setUser", res.data)
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    //#endregion
 
   },
   modules: {
