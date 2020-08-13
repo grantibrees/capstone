@@ -65,6 +65,8 @@ export default {
       try {
         const res = await spotifyApi.get('search?q=' + query.data + '&type=track', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
         console.log(res, 'song results')
+        commit("setTrackSearchResults", res.data.tracks.items)
+
       } catch (error) {
         console.error(error)
       }
