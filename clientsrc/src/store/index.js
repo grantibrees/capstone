@@ -16,11 +16,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    spotifyAuthToken: ""
+    spotifyAuthToken: "",
+    trackSearchResults: []
   },
   mutations: {
     setSpotifyVisitorAuth(state, spotifyAuthToken) {
       state.spotifyAuthToken = spotifyAuthToken
+    },
+    setTrackSearchResults(state, searchResults) {
+      state.trackSearchResults = searchResults
     }
   },
   actions: {
