@@ -26,7 +26,7 @@
         </li>
       </ul>
 
-      <form class="form-inline mr-5" @submit="searchByArtist(),searchByAlbum(),searchBySong()">
+      <form class="form-inline mr-5" @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()">
         <input
           v-model="search.data"
           class="form-control mr-sm-2"
