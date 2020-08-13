@@ -26,10 +26,16 @@
         </li>
       </ul>
 
-  <form class="form-inline mr-5" @submit="searchByArtist(),searchByAlbum(),searchBySong()">
-    <input v-model="search.data" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
+      <form class="form-inline mr-5" @submit="searchByArtist(),searchByAlbum(),searchBySong()">
+        <input
+          v-model="search.data"
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
 
       <span class="navbar-text">
         <button class="btn btn-success" @click="login" v-if="!$auth.isAuthenticated">Login</button>
@@ -48,37 +54,38 @@ let _api = axios.create({
 });
 export default {
   name: "Navbar",
-  data(){
+  data() {
     return {
       search: {},
-    }
+    };
   },
   methods: {
     async login() {
       await this.$auth.loginWithPopup();
       this.$store.dispatch("setBearer", this.$auth.bearer);
       this.$store.dispatch("getProfile");
+      console.log("the problem is in login navbar");
       console.log("this.$auth.user: ");
       console.log(this.$auth.user);
     },
     async logout() {
       await this.$auth.logout({ returnTo: window.location.origin });
     },
-  searchByArtist(){
-    this.$store.dispatch('searchByArtist', {
-      data: this.search.data
-    })
-  },
-  searchByAlbum(){
-    this.$store.dispatch('searchByAlbum', {
-      data: this.search.data
-    })
-  },
-  searchBySong(){
-    this.$store.dispatch('searchBySong', {
-      data: this.search.data
-    })
-  }
+    searchByArtist() {
+      this.$store.dispatch("searchByArtist", {
+        data: this.search.data,
+      });
+    },
+    searchByAlbum() {
+      this.$store.dispatch("searchByAlbum", {
+        data: this.search.data,
+      });
+    },
+    searchBySong() {
+      this.$store.dispatch("searchBySong", {
+        data: this.search.data,
+      });
+    },
   },
 };
 </script>
