@@ -9,7 +9,6 @@ import qs from 'qs'
 import { spotifyClientId, spotifyClientSecret } from "../authConfig"
 import store from "../store"
 import VisitorModule from "../store/VisitorModule"
-import HostModule from "../store/HostModule"
 
 
 Vue.use(Vuex)
@@ -48,7 +47,6 @@ export default new Vuex.Store({
   },
   modules: {
     VisitorModule,
-    HostModule
   }
 })
 

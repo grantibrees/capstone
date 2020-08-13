@@ -41,7 +41,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getSpotifyVisitorAuth");
-    this.$store.dispatch("getSpotifyHostAuth");
+    // this.$store.dispatch("getSpotifyHostAuth");
   },
   methods: {
     selectSong(trackInput) {

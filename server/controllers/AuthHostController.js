@@ -28,7 +28,7 @@ export class AuthHostController extends BaseController {
       let html = await spotifyApi.createAuthorizeURL(scopes, '')
       // let consoleHtml = new URL(html);
       res.redirect(html)
-    } catch (error) { next(error) }
+    } catch(error){ next(error) }
 
   }
   
@@ -42,10 +42,14 @@ export class AuthHostController extends BaseController {
 
       spotifyApi.setAccessToken(access_token);
       spotifyApi.setRefreshToken(refresh_token);
-      authHostService.setHostTokens(access_token, refresh_token, expires_in)
+      let payload = {
+         accessToken: access_token, 
+         refreshToken: refresh_token, 
+         expiresIn: expires_in }
+      authHostService.setHostTokens(payload)
       res.redirect('http://localhost:8080');
     } catch(error){
-      res.redirect('/#/error/invalid token')
+      res.redirect('error')
     }
 
 

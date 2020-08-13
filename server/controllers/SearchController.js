@@ -1,10 +1,9 @@
 import express from "express";
 import BaseController from "../utils/BaseController";
 import { searchService } from "../services/SearchService";
-import store from "../../clientsrc/src/store/index"
 import auth0provider from "@bcwdev/auth0provider";
 
-export class ValuesController extends BaseController {
+export class SearchController extends BaseController {
   constructor() {
     super("api/values");
     this.router
