@@ -15,10 +15,11 @@ const spotifyApi = new SpotifyWebApi({
 export class AuthHostController extends BaseController {
 
   constructor() {
-    super("authorize")
+    super("login")
     console.log('AuthHostController active');
     this.router
       .get('', this.authorizeHost)
+      .get('/')
   }
 
 
@@ -27,9 +28,11 @@ export class AuthHostController extends BaseController {
       let html = await spotifyApi.createAuthorizeURL(scopes, '')
       console.log(html);
       res.redirect(html)
+      console.log(res);
       // let data = await AuthHostService.authorizeHost(spotifyApi)
     } catch (error) { next(error) }
 
-
   }
+
+
 }

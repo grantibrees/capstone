@@ -17,6 +17,7 @@ export default {
       this.$store.dispatch("setBearer", this.$auth.bearer);
       this.$store.dispatch("getProfile");
     } catch (err) {
+      console.log("the problem is in app");
       this.$router.push({ name: "home" });
     }
   },
