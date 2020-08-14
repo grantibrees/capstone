@@ -11,6 +11,9 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: 'http://localhost:3000/callback',
 });
+
+let unsafe = {}
+
 export class AuthHostController extends BaseController {
 
   constructor() {
@@ -27,12 +30,15 @@ export class AuthHostController extends BaseController {
     try {
       let html = await spotifyApi.createAuthorizeURL(scopes, '')
       // let consoleHtml = new URL(html);
+      console.log(html);
+      // res.send({ url: html })
       res.redirect(html)
-    } catch(error){ next(error) }
+    } catch (error) { next(error) }
 
   }
-  
+
   async authCallBack(req, res, next) {
+    console.log("hit callback")
     const { code } = req.query;
     console.log(code)
     try {
@@ -43,12 +49,15 @@ export class AuthHostController extends BaseController {
       spotifyApi.setAccessToken(access_token);
       spotifyApi.setRefreshToken(refresh_token);
       let payload = {
-         accessToken: access_token, 
-         refreshToken: refresh_token, 
-         expiresIn: expires_in }
-      authHostService.setHostTokens(payload)
-      res.redirect('http://localhost:8080');
-    } catch(error){
+        accessToken: access_token,
+        refreshToken: refresh_token,
+        expiresIn: expires_in
+      }
+      // authHostService.setHostTokens(payload)
+      //unsafe.send(payload)
+
+      res.redirect("http://localhost:8080/#/dashboard?" + `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`)
+    } catch (error) {
       res.redirect('error')
     }
 

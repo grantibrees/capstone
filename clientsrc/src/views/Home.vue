@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <a class="btn btn-primary" :href="url">Host a Session</a>
+    <button @click="movePage('Session')" class="btn btn-info">go to session</button>
     <button
       @click="selectSong(result)"
       class="btn btn-outline-success m-1"
@@ -9,6 +10,8 @@
       :key="result.id"
     >{{result.artists[0].name}} {{result.name}}</button>
     <iframe
+      @click="console.log('music clicked')"
+      id="music-player"
       :src="embedLink"
       width="300"
       height="380"
@@ -35,19 +38,32 @@ export default {
     trackResults() {
       return this.$store.state.trackSearchResults;
     },
+    url() {
+      return location.origin.includes("localhost")
+        ? "//localhost:3000/login"
+        : "/login";
+    },
   },
   components: {
     HelloWorld,
   },
   mounted() {
     this.$store.dispatch("getSpotifyVisitorAuth");
-    // this.$store.dispatch("getSpotifyHostAuth");
+    // this.startMusic();
   },
   methods: {
     selectSong(trackInput) {
       let type = trackInput.uri.split(":")[1];
       let code = trackInput.uri.split(":")[2];
       this.embedLink = "https://open.spotify.com/embed/" + type + "/" + code;
+    },
+    movePage(page) {
+      this.$router.push({ name: page });
+    },
+    async startSession() {
+      let res = await fetch("http://localhost:3000/login");
+      let { url } = await res.json();
+      console.log(url);
     },
   },
 };
