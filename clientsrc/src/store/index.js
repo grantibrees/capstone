@@ -18,6 +18,11 @@ export default new Vuex.Store({
     spotifyAuthToken: "",
     trackSearchResults: [],
     user: {},
+    hostTokens: {
+      accessToken: '',
+      refreshToken: '',
+      expiresIn: ''
+    }
   },
   mutations: {
     setUser(state, user) {
@@ -28,6 +33,11 @@ export default new Vuex.Store({
     },
     setTrackSearchResults(state, searchResults) {
       state.trackSearchResults = searchResults
+    },
+    setHostTokens(state, tokens) {
+      state.hostTokens.accessToken = tokens.accessToken
+      state.hostTokens.refreshToken = tokens.refreshToken
+      state.hostTokens.expiresIn = tokens.expiresIn
     }
   },
   actions: {
@@ -46,6 +56,9 @@ export default new Vuex.Store({
       } catch (error) {
 
       }
+    },
+    setSpotifyHostTokens({ commit }, tokenData) {
+      commit("setHostTokens", tokenData)
     },
     // FIXME Add back get profile functionality, currently api does not support this action.
     async getProfile({ commit }) {
