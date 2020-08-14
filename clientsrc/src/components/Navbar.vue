@@ -24,13 +24,6 @@
         >
           <router-link class="nav-link" :to="{ name: 'About' }">About</router-link>
         </li>
-        <li
-          class="nav-item"
-          v-if="$auth.isAuthenticated"
-          :class="{ active: $route.name == 'Test' }"
-        >
-          <router-link class="nav-link" :to="{ name: 'Test' }">Test</router-link>
-        </li>
       </ul>
 
       <form
@@ -73,7 +66,7 @@ export default {
     async login() {
       await this.$auth.loginWithPopup();
       this.$store.dispatch("setBearer", this.$auth.bearer);
-      this.$store.dispatch("getProfile");
+      this.$store.dispatch("getProfile", this.$auth.user);
       console.log("the problem is in login navbar");
       console.log("this.$auth.user: ");
       console.log(this.$auth.user);

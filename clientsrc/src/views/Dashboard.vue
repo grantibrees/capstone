@@ -20,6 +20,9 @@ export default {
       };
       console.log(tokens);
       this.$store.dispatch("setSpotifyHostTokens", tokens);
+      this.$router.push({
+        name: "SessionCreate",
+      });
     },
   },
 };

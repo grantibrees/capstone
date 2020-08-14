@@ -38,6 +38,13 @@ export default {
     trackResults() {
       return this.$store.state.trackSearchResults;
     },
+    profileExists() {
+      if (this.$store.state.profile) {
+        return this.$store.state.profile.email;
+      } else {
+        return false;
+      }
+    },
     url() {
       return location.origin.includes("localhost")
         ? "//localhost:3000/login"

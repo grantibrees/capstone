@@ -8,7 +8,8 @@ import Axios from "axios"
 import qs from 'qs'
 import { spotifyClientId, spotifyClientSecret } from "../authConfig"
 import store from "../store"
-import VisitorModule from "../store/VisitorModule"
+import VisitorModule from "./VisitorModule"
+import SessionModule from "./SessionModule"
 
 
 Vue.use(Vuex)
@@ -48,32 +49,19 @@ export default new Vuex.Store({
     resetBearer() {
       api.defaults.headers.authorization = "";
     },
-    async getHostLogin({ commit, dispatch }) {
-      try {
-        let res = await loginApi.get("")
-        console.log(res.data)
 
-      } catch (error) {
-
-      }
+    async getProfile({ commit }, profile) {
+      commit("setUser", profile)
     },
     setSpotifyHostTokens({ commit }, tokenData) {
       commit("setHostTokens", tokenData)
     },
     // FIXME Add back get profile functionality, currently api does not support this action.
-    async getProfile({ commit }) {
-      try {
-        console.log("get profile rand")
-        // let res = await api.get("/profile")
-        // commit("setUser", res.data)
-      } catch (err) {
-        console.error(err)
-      }
-    },
     //#endregion
 
   },
   modules: {
+    SessionModule,
     VisitorModule,
   }
 })
