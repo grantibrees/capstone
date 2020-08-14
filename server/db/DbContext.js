@@ -4,6 +4,7 @@ import SearchSchema from "../models/Search";
 import HostTokensSchema from "../models/HostTokens";
 import SongSchema from "../models/Song";
 import SessionSchema from "../models/Session"
+import ProfileSchema from "../models/Profile"
 
 
 class DbContext {
@@ -13,6 +14,8 @@ class DbContext {
   Session = mongoose.model("Session", SessionSchema)
 
   HostTokens = mongoose.model("HostTokens", HostTokensSchema)
+
+  Profile = mongoose.model("Profile", ProfileSchema)
 
 }
 

@@ -24,9 +24,19 @@
         >
           <router-link class="nav-link" :to="{ name: 'About' }">About</router-link>
         </li>
+        <li
+          class="nav-item"
+          v-if="$auth.isAuthenticated"
+          :class="{ active: $route.name == 'Test' }"
+        >
+          <router-link class="nav-link" :to="{ name: 'Test' }">Test</router-link>
+        </li>
       </ul>
 
-      <form class="form-inline mr-5" @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()">
+      <form
+        class="form-inline mr-5"
+        @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
+      >
         <input
           v-model="search.data"
           class="form-control mr-sm-2"
