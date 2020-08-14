@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 // @ts-ignore
 import Home from '../views/Home.vue'
 // @ts-ignore
-import PlayHandler from '../components/PlayHandler.vue'
 // @ts-ignore
 import { authGuard } from "@bcwdev/auth0-vue"
 
@@ -32,7 +31,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     // @ts-ignore
-    component: PlayHandler,
+    component: () => import(/* webpackChunkName: "playHandler" */ '../components/PlayHandler.vue'),
     beforeEnter: authGuard
   }
 ]
