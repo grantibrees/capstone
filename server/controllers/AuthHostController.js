@@ -3,7 +3,7 @@ import BaseController from '../utils/BaseController';
 import { authHostService } from '../services/AuthHostService.js'
 
 const SpotifyWebApi = require('spotify-web-api-node');
-let scopes = ['user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private']
+let scopes = ['streaming', 'user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private']
 
 
 const spotifyApi = new SpotifyWebApi({
@@ -53,10 +53,12 @@ export class AuthHostController extends BaseController {
         refreshToken: refresh_token,
         expiresIn: expires_in
       }
+
       // authHostService.setHostTokens(payload)
       //unsafe.send(payload)
 
       res.redirect("http://localhost:8080/#/dashboard?" + `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`)
+
     } catch (error) {
       res.redirect('error')
     }

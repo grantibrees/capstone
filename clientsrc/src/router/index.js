@@ -3,11 +3,13 @@ import VueRouter from 'vue-router'
 // @ts-ignore
 import Home from '../views/Home.vue'
 // @ts-ignore
+
 import Session from '../views/Session.vue'
 // @ts-ignore
 import Dashboard from '../views/Dashboard.vue'
 // @ts-ignore
 import SessionCreate from '../views/SessionCreate.vue'
+
 // @ts-ignore
 import { authGuard } from "@bcwdev/auth0-vue"
 
@@ -30,6 +32,7 @@ const routes = [
     beforeEnter: authGuard
   },
   {
+
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
@@ -52,6 +55,7 @@ const routes = [
 
     ]
   },
+
 ]
 
 const router = new VueRouter({
