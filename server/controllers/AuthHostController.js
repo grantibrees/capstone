@@ -3,7 +3,7 @@ import BaseController from '../utils/BaseController';
 import { authHostService } from '../services/AuthHostService.js'
 
 const SpotifyWebApi = require('spotify-web-api-node');
-let scopes = ['user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private']
+let scopes = ['streaming', 'user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private']
 
 
 const spotifyApi = new SpotifyWebApi({
@@ -28,10 +28,10 @@ export class AuthHostController extends BaseController {
       let html = await spotifyApi.createAuthorizeURL(scopes, '')
       // let consoleHtml = new URL(html);
       res.redirect(html)
-    } catch(error){ next(error) }
+    } catch (error) { next(error) }
 
   }
-  
+
   async authCallBack(req, res, next) {
     const { code } = req.query;
     console.log(code)
@@ -43,12 +43,13 @@ export class AuthHostController extends BaseController {
       spotifyApi.setAccessToken(access_token);
       spotifyApi.setRefreshToken(refresh_token);
       let payload = {
-         accessToken: access_token, 
-         refreshToken: refresh_token, 
-         expiresIn: expires_in }
+        accessToken: access_token,
+        refreshToken: refresh_token,
+        expiresIn: expires_in
+      }
       authHostService.setHostTokens(payload)
       res.redirect('http://localhost:8080');
-    } catch(error){
+    } catch (error) {
       res.redirect('error')
     }
 

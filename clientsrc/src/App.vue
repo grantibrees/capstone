@@ -9,6 +9,9 @@
 <script>
 import Navbar from "./components/Navbar";
 import { onAuth } from "@bcwdev/auth0-vue";
+window.onSpotifyWebPlaybackSDKReady = () => {
+  // You can now initialize Spotify.Player and use the SDK
+};
 export default {
   name: "App",
   async beforeCreate() {
