@@ -26,7 +26,6 @@ export default {
   computed: {},
   methods: {
     createSession() {
-      debugger;
       this.$store.dispatch("createSession", {
         sessionName: this.newSessionName,
         sessionCode: utils.randomCode(),

@@ -50,8 +50,13 @@ export default new Vuex.Store({
       api.defaults.headers.authorization = "";
     },
 
-    async getProfile({ commit }, profile) {
-      commit("setUser", profile)
+    async getProfile({ commit }) {
+      try {
+        let res = await api.get("/profile")
+        commit("setUser", res.data)
+      } catch (err) {
+        console.error(err)
+      }
     },
     setSpotifyHostTokens({ commit }, tokenData) {
       commit("setHostTokens", tokenData)
