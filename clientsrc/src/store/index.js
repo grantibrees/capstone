@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { spotifyApi } from "../axiosService"
-import { spotifyAuthApi } from "../axiosService"
-import { api, loginApi } from "../axiosService"
+import { api, loginApi, spotifySongApi, spotifyAuthApi, spotifyApi } from "../axiosService"
 import router from '../router/index'
 import Axios from "axios"
 import qs from 'qs'

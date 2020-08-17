@@ -1,12 +1,16 @@
 <template>
-  <div class="host-component"></div>
+  <div class="host-component mt-5">
+    <button @click="play">play</button>
+  </div>
 </template>
 <script>
 export default {
   name: "FileName" /*  */,
   data() {
     /* Data binding. */
-    return {};
+    return {
+      deviceId: "",
+    };
   },
   mounted() {
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -15,64 +19,72 @@ export default {
     console.log("hostComponent loaded");
     this.checkForActiveSong();
   } /* Runs functions on startup */,
-  computed: {} /* Pulls values from the store. Always the value of the method that's in it. The live value. Constant value, has to have a return in it, it's a getter. It's like a listener, listening to the state. It gets the state.
+  computed: {
+    accessToken() {
+      return this.$store.state.hostTokens.accessToken;
+    },
+  } /* Pulls values from the store. Always the value of the method that's in it. The live value. Constant value, has to have a return in it, it's a getter. It's like a listener, listening to the state. It gets the state.
       cars() {
       return this.store.state.cars;
   */,
+  mounted() {
+    this.initiatePlayer();
+  },
   methods: {
-    checkForActiveSong() {
-      // if (this.$store.state.activeSong) {
-      this.playSong();
-      // }
+    waitForSpotifyWebPlaybackSDKToLoad: async function () {
+      return new Promise((resolve) => {
+        if (window.Spotify) {
+          resolve(window.Spotify);
+        } else {
+          window.onSpotifyWebPlaybackSDKReady = () => {
+            resolve(window.Spotify);
+          };
+        }
+      });
     },
-    playSong() {
-      window.onSpotifyPlayerAPIReady = () => {
-        const player = new Spotify.Player({
-          name: "Web Playback SDK Template",
-          // getOAuthToken: (cb) => {
-          //   cb(this.$store.state.hostTokens);
-          // },
-        });
-        player.on("initialization_error", (e) => console.error(e));
-        player.on("authentication_error", (e) => console.error(e));
-        player.on("account_error", (e) => console.error(e));
-        player.on("playback_error", (e) => console.error(e));
-
-        player.on("player_state_changed", (state) => {
-          console.log(state);
-          $("#current-track").attr(
-            "src",
-            state.track_window.current_track.album.images[0].url
-          );
-          $("#current-track-name").text(state.track_window.current_track.name);
-        });
-        // Ready
-        player.on("ready", (data) => {
-          console.log("Ready with Device ID", data.device_id);
-
-          // Play a track using our new device ID
-          play(data.device_id);
-        });
-
-        // Connect to the player!
-        player.connect();
-      };
-
-      // Play a specified track on the Web Playback SDK's device ID
-      function play(device_id) {
-        $.ajax({
-          url:
-            "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
-          type: "PUT",
-          data: '{"uris": ["spotify:track:5ya2gsaIhTkAuWYEMB0nw5"]}',
-          beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", "Bearer " + _token);
-          },
-          success: function (data) {
-            console.log(data);
-          },
-        });
-      }
+    initiatePlayer: async function () {
+      const { Player } = await this.waitForSpotifyWebPlaybackSDKToLoad();
+      const player = new Player({
+        name: "Capstone Web Player",
+        volume: 1.0,
+        getOAuthToken: (callback) => {
+          callback(this.accessToken);
+        },
+      });
+      console.log(JSON.stringify(player));
+      // Error handling
+      player.addListener("initialization_error", ({ message }) => {
+        console.log("Initialization_error: " + message);
+      });
+      player.addListener("authentication_error", ({ message }) => {
+        console.log("Authentication_error: " + message);
+      });
+      player.addListener("account_error", ({ message }) => {
+        console.log("Account_error: " + message);
+      });
+      player.addListener("playback_error", ({ message }) => {
+        console.log("Playback_error: " + message);
+      });
+      // Playback status updates
+      player.addListener("player_state_changed", (state) => {
+        // Update UI information on player state changed
+      });
+      // Ready
+      player.addListener("ready", ({ device_id }) => {
+        console.log("Ready with Device Id: ", device_id);
+        this.deviceId = device_id;
+      });
+      // Not Ready
+      player.addListener("not_ready", ({ device_id }) => {
+        console.log("Not ready with device Id: ", device_id);
+      });
+      player.connect();
+    },
+    play() {
+      this.$store.dispatch("playCurrentSong", {
+        deviceId: this.deviceId,
+        accessToken: this.accessToken,
+      });
     },
   } /* Functions that DO things, Commit and Dispatch */,
   components: {} /* Pulls a components file as a child to reference. Often like a for A=[]\
