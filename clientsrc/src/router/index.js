@@ -12,9 +12,10 @@ import SessionCreate from '../views/SessionCreate.vue'
 // @ts-ignore
 import SessionJoin from '../views/SessionJoin.vue'
 // @ts-ignore
-// import SessionUnique from '../views/SessionUnique.vue'       // may need to change
+import SessionUnique from '../views/SessionUnique.vue'
 // @ts-ignore
 import { authGuard } from "@bcwdev/auth0-vue"
+
 
 Vue.use(VueRouter)
 
@@ -52,7 +53,7 @@ const routes = [
         component: SessionCreate
       },
 
-     
+
 
     ]
   },
@@ -61,13 +62,13 @@ const routes = [
     path: '/session/join',
     name: 'SessionJoin',
     component: SessionJoin
-    },
+  },
 
-    {
-      path: '/session/:code',
-      name: 'SessionUnique',
-      component: Session
-    },
+  {
+    path: '/session/:code',
+    name: 'SessionUnique',
+    component: SessionUnique
+  },
 ]
 
 

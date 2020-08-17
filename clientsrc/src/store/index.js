@@ -10,6 +10,8 @@ import { spotifyClientId, spotifyClientSecret } from "../authConfig"
 import store from "../store"
 import VisitorModule from "./VisitorModule"
 import SessionModule from "./SessionModule"
+import SongModule from "./SongModule"
+
 
 
 Vue.use(Vuex)
@@ -23,8 +25,11 @@ export default new Vuex.Store({
       accessToken: '',
       refreshToken: '',
       expiresIn: ''
-    }, 
-    activeSession: {}
+    },
+    activeSession: {
+    },
+    activeSong: {},
+    nextSong: {},
   },
   mutations: {
     setUser(state, user) {
@@ -44,6 +49,12 @@ export default new Vuex.Store({
 
     setActiveSession(state, sessionData) {
       state.activeSession = sessionData
+    },
+    setActiveSong(state, activeSong) {
+      state.activeSong = activeSong
+    },
+    setNextSong(state, nextSong) {
+      state.nextSong = nextSong
     }
   },
   actions: {
@@ -73,6 +84,7 @@ export default new Vuex.Store({
   modules: {
     SessionModule,
     VisitorModule,
+    SongModule
   }
 })
 
