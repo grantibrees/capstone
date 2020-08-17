@@ -4,7 +4,7 @@ import { valuesService } from "../services/ValuesService";
 import auth0provider from "@bcwdev/auth0provider";
 import { sessionsService } from '../services/SessionsService'
 
-export class SessionssController extends BaseController {
+export class SessionsController extends BaseController {
   constructor() {
     super("api/session");
     this.router
@@ -22,7 +22,8 @@ export class SessionssController extends BaseController {
   async create(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      req.body.creatorEmail = req.userInfo.email
+      req.body.creatorEmail = req.body.userEmail
+      console.log(req.body)
       let data = await sessionsService.create(req.body)
       return res.status(201).send(data)
     } catch (error) { next(error); }
@@ -35,3 +36,5 @@ export class SessionssController extends BaseController {
       return res.send(data)
     } catch (error) { next(error) }
   }
+
+}
