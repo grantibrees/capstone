@@ -1,5 +1,5 @@
 <template>
-  <div class="SessionCreate container-fluid">
+  <div class="SessionCreate container-fluid mt-5">
     <div class="row">
       <div class="col-12">
         <div class="form-group">
@@ -30,7 +30,6 @@ export default {
         sessionName: this.newSessionName,
         sessionCode: utils.randomCode(),
         userEmail: this.$store.state.user.email,
-        queue: [],
       });
       this.newSessionName = "";
     },

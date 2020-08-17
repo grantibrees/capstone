@@ -3,13 +3,21 @@ const Schema = mongoose.Schema;
 
 const Session = new Schema(
   {
-    userEmail: { type: String, required: true },
+    creatorEmail: { type: String, required: true },
     sessionName: { type: String, required: true },
     sessionCode: { type: Number, required: true },
     queue: [],
 
   },
   { timestamps: true, toJSON: { virtuals: true } }
-);
+)
+
+Session.virtual("creator",
+  {
+    localField: "creatorEmail",
+    ref: "Profile",
+    foreignField: "email",
+    justOne: true
+  })
 
 export default Session;

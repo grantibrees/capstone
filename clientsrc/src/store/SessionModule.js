@@ -12,7 +12,7 @@ export default {
     async createSession({ commit }, sessionData) {
       try {
         console.log(sessionData)
-        api.post("sessions",)
+        api.post("sessions", sessionData)
       } catch (error) {
         console.error(error)
       }
