@@ -24,7 +24,7 @@ export default new Vuex.Store({
       refreshToken: '',
       expiresIn: ''
     }, 
-    activeSession: {}
+    activeSession: {},
   },
   mutations: {
     setUser(state, user) {

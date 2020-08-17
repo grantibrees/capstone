@@ -19,7 +19,7 @@ export default {
   },
   mounted() {
     console.log("mounted session page");
-    this.$store.dispatch("getSpotifyHostAuth");
+    // this.$store.dispatch("getSpotifyHostAuth");
 
     // Set up the Web Playback SDK
 
