@@ -4,12 +4,15 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 // @ts-ignore
 
-import Session from '../views/Session.vue'
+import Session from '../views/Session.vue' // may need to change
 // @ts-ignore
 import Dashboard from '../views/Dashboard.vue'
 // @ts-ignore
 import SessionCreate from '../views/SessionCreate.vue'
-
+// @ts-ignore
+import SessionJoin from '../views/SessionJoin.vue'
+// @ts-ignore
+// import SessionUnique from '../views/SessionUnique.vue'       // may need to change
 // @ts-ignore
 import { authGuard } from "@bcwdev/auth0-vue"
 
@@ -42,21 +45,32 @@ const routes = [
         name: 'Session',
         component: Session
       },
+
       {
         path: '/session/create',
         name: 'SessionCreate',
         component: SessionCreate
       },
-      {
-        path: '/session/:code',
-        name: 'SessionUnique',
-        component: Session
-      },
+
+     
 
     ]
   },
 
+  {
+    path: '/session/join',
+    name: 'SessionJoin',
+    component: SessionJoin
+    },
+
+    {
+      path: '/session/:code',
+      name: 'SessionUnique',
+      component: Session
+    },
 ]
+
+
 
 const router = new VueRouter({
   routes

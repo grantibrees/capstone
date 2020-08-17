@@ -2,7 +2,7 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <a class="btn btn-primary" :href="url">Host a Session</a>
-    <button @click="movePage('Session')" class="btn btn-info">go to session</button>
+    <button @click="movePage('SessionJoin')" class="btn btn-info">go to session</button>
     <button
       @click="selectSong(result)"
       class="btn btn-outline-success m-1"
