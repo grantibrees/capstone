@@ -30,4 +30,9 @@ export const spotifyApi = Axios.create({
   timeout: 3000
 })
 
+export const spotifySongApi = Axios.create({
+  baseURL: "https://api.spotify.com/v1/me/player/",
+  timeout: 3000,
+})
+
 

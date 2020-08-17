@@ -14,6 +14,9 @@ window.onSpotifyWebPlaybackSDKReady = () => {
 };
 export default {
   name: "App",
+  mounted() {
+    window.onSpotifyWebPlaybackSDKReady = () => {};
+  },
   async beforeCreate() {
     try {
       await onAuth();
