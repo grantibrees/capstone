@@ -3,11 +3,15 @@
     <div class="col-2">
       <button @click.prevent="vote('up')" class="btn btn-success btn-outline">Upvote</button>
     </div>
-    <div class="col-8"> 
-    {{songData.title}}
-    {{songData.album}}
-    {{songData.score}}
-    <img class="rounded my-auto" src="{{songData.albumCover}}" alt="">
+    <div class="col-8">
+      {{songData.title}}
+      {{songData.album}}
+      {{songData.score}}
+      <img
+        class="rounded my-auto"
+        :src="songData.albumCover"
+        alt
+      />
     </div>
     <div class="col-2">
       <button @click.prevent="vote('down')" class="btn btn-danger btn-outline">Downvote</button>
@@ -18,40 +22,37 @@
 
 <script>
 export default {
-  name: 'songs',
-  prop:[
-    songData
-  ],
-  data(){
+  name: "songs",
+  data() {
     return {
-      upVoteToggle=true,
-      downVoteToggle=true
-    }
+      upVoteToggle: true,
+      downVoteToggle: true,
+    };
   },
-  computed:{},
-  methods:{
-    vote(direction){
+  computed: {},
+  methods: {
+    vote(direction) {
       // If your clicking down and already had voted up this prob will just double vote up without additional measures
-      if(direction == 'up' && this.upVoteToggle == true){
-        songData.score++
-        this.upVoteToggle = false
-      } else if (direction == 'up' && this.upVoteToggle == false){
-        songData.score--
-        this.upVoteToggle = true
-      }  else if (direction == 'down' && this.downVoteToggle == true){
-        songData.score--
-        this.donwVoteToggle = false
+      if (direction == "up" && this.upVoteToggle == true) {
+        songData.score++;
+        this.upVoteToggle = false;
+      } else if (direction == "up" && this.upVoteToggle == false) {
+        songData.score--;
+        this.upVoteToggle = true;
+      } else if (direction == "down" && this.downVoteToggle == true) {
+        songData.score--;
+        this.donwVoteToggle = false;
       } else {
-        songData.score++
-        this.downVoteToggle = true
+        songData.score++;
+        this.downVoteToggle = true;
       }
-    }
+    },
   },
-  components:{}
-}
+  props: ["songData"],
+  components: {},
+};
 </script>
 
 
 <style scoped>
-
 </style>

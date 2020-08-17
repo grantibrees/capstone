@@ -1,12 +1,14 @@
 <template>
   <div class="SessionUnique">
     <hostComponent></hostComponent>
+    <queue />
   </div>
 </template>
 
 
 <script>
 import hostComponent from "../components/HostComponent";
+import queue from "../components/Queue";
 export default {
   name: "SessionUnique",
   data() {
@@ -26,6 +28,7 @@ export default {
 
   components: {
     hostComponent,
+    queue,
   },
 };
 </script>
