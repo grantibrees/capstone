@@ -17,9 +17,18 @@ export default {
           { "uris": ["spotify:track:4Oun2ylbjFKMPTiaSbbCih"] },
           { headers: { 'Authorization': 'Bearer ' + songRequest.accessToken } })
       } catch (error) {
-
+        console.error(error)
       }
-    }
+    },
+
+    async addToQueue({commit}, payload){
+      try {
+        api.put('session/' + payload.sessionCode, payload)
+        console.log(payload)
+      } catch(error){
+        console.error(error)
+      }
+    },
     // async createSession({ commit }, sessionData) {
     //   try {
     //     console.log(sessionData)

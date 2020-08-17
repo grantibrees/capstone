@@ -1,18 +1,26 @@
 <template>
   <div class="Queue">
-    <div class="bg-secondary text-white border border-rounded">
-      <div class="row">
+    <div class= "text-white bg-primary rounded container">
+      <div class="row justify-content-center p-2">
+        <div class="col-2">
+           Cover Art:  {{activeSong.albumCover}}
+        </div>
+        <div class="col-8">
         <h3>Playing</h3>
-        <!-- {{activeSong.title}}
-        {{activeSong.album}}
-        {{activeSong.trackLength}}
-        {{activeSong.albumCover}}-->
+        Title: {{activeSong.title}}
+        Album: {{activeSong.album}}
+       Track Length:  {{activeSong.trackLength}}
+      
       </div>
       <!-- Is this going to be handled by the SKD player? -->
-      <!-- <div class="row">
+      
+      </div>
+      <div class="row justify-content-center p-2">
+        <div class="col-10">
         <button>Play/Pause</button>
         <button>Skip</button>
-      </div>-->
+      </div>
+      </div>
     </div>
     <div>
       <h5>Queue</h5>

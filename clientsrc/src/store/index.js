@@ -26,6 +26,7 @@ export default new Vuex.Store({
 
     },
     activeSession: {
+      queue: []
     },
     activeSong: {},
     nextSong: {},
@@ -55,7 +56,7 @@ export default new Vuex.Store({
     },
     setNextSong(state, nextSong) {
       state.nextSong = nextSong
-    }
+    },
   },
   actions: {
     //#region -- AUTH STUFF --
