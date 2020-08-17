@@ -23,11 +23,13 @@ export default new Vuex.Store({
       accessToken: '',
       refreshToken: '',
       expiresIn: ''
+
     },
     activeSession: {
     },
     activeSong: {},
     nextSong: {},
+
   },
   mutations: {
     setUser(state, user) {
