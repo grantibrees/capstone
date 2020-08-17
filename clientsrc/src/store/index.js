@@ -23,7 +23,8 @@ export default new Vuex.Store({
       accessToken: '',
       refreshToken: '',
       expiresIn: ''
-    }
+    }, 
+    activeSession: {}
   },
   mutations: {
     setUser(state, user) {
@@ -39,6 +40,10 @@ export default new Vuex.Store({
       state.hostTokens.accessToken = tokens.accessToken
       state.hostTokens.refreshToken = tokens.refreshToken
       state.hostTokens.expiresIn = tokens.expiresIn
+    },
+
+    setActiveSession(state, sessionData) {
+      state.activeSession = sessionData
     }
   },
   actions: {

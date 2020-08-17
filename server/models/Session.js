@@ -5,7 +5,7 @@ const Session = new Schema(
   {
     creatorEmail: { type: String, required: true },
     sessionName: { type: String, required: true },
-    sessionCode: { type: Number, required: true },
+    sessionCode: { type: String, required: true },
     queue: [],
 
   },
