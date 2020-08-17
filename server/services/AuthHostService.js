@@ -2,10 +2,16 @@ import { dbContext } from "../db/DbContext";
 import { BadRequest } from "../utils/Errors";
 
 class AuthHostService {
-  async setHostTokens(payload) {
-    try { let HostTokens = await dbContext.HostTokens.create(payload);
-    return HostTokens;
-    } catch (error){
+  async setHostTokens(email, accessToken, refreshToken) {
+    try {
+      await dbContext.Profile.findOneAndUpdate(
+        { email: email },
+        { $addToSet: { currentAccessToken: accessToken } },
+        // { $addToSet: {currentRefreshToken: refreshToken}}, Have to add this later
+        { new: true }
+      )
+
+    } catch (error) {
       console.error(error)
     }
   }

@@ -22,7 +22,7 @@ export class AuthHostController extends BaseController {
     this.router
       .get('/login', this.authorizeHost)
       .get('/callback', this.authCallBack)
-
+      .put('/hostTokens', this.setHostTokens)
   }
 
 
@@ -53,8 +53,6 @@ export class AuthHostController extends BaseController {
         refreshToken: refresh_token,
         expiresIn: expires_in
       }
-
-      // authHostService.setHostTokens(payload)
       //unsafe.send(payload)
 
       res.redirect("http://localhost:8080/#/dashboard?" + `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`)
@@ -66,6 +64,14 @@ export class AuthHostController extends BaseController {
 
 
   }
+
+  async setHostTokens(req, res, next) {
+    try {
+      req.body.creatorEmail = req.email
+      let data = authHostService.setHostTokens(req.params.email, req.params.refreshToken, req.params.accessToken)
+      res.send(data)
+    } catch (error) {
+
+    }
+  }
 }
-
-

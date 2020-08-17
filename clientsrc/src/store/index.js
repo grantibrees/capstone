@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { api, loginApi, spotifySongApi, spotifyAuthApi, spotifyApi } from "../axiosService"
+import { api, hostTokensApi, loginApi, spotifySongApi, spotifyAuthApi, spotifyApi } from "../axiosService"
 import router from '../router/index'
 import Axios from "axios"
 import qs from 'qs'
@@ -23,7 +23,6 @@ export default new Vuex.Store({
       accessToken: '',
       refreshToken: '',
       expiresIn: ''
-
     },
     activeSession: {
     },
@@ -58,7 +57,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    //#region -- AUTH STUFF --
     setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
     },
@@ -74,11 +72,23 @@ export default new Vuex.Store({
         console.error(err)
       }
     },
-    setSpotifyHostTokens({ commit }, tokenData) {
+    async setSpotifyHostTokens({ commit, dispatch, state }, tokenData) {
       commit("setHostTokens", tokenData)
+      let userStuff = {
+        email: state.user.email,
+        accessToken: tokenData.accessToken,
+        refreshToken: tokenData.refreshToken
+      }
+      try {
+        let res = await hostTokensApi.put('', userStuff)
+        console.log(res);
+      } catch (error) {
+        console.error(error)
+      }
+
     },
-    // FIXME Add back get profile functionality, currently api does not support this action.
-    //#endregion
+
+
 
   },
   modules: {
