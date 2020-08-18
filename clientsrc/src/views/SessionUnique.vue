@@ -27,7 +27,8 @@ export default {
   },
   methods: {
     async callTokens() {
-      if (!this.$store.state.hostTokens.accessToken) {
+      debugger;
+      if (this.$store.state.hostTokens.accessToken == false) {
         await this.$store.dispatch("callDownTokens");
       }
     },

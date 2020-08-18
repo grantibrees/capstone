@@ -50,7 +50,8 @@ const routes = [
       {
         path: '/session/create',
         name: 'SessionCreate',
-        component: SessionCreate
+        component: SessionCreate,
+        beforeEnter: authGuard
       },
 
 
@@ -67,7 +68,8 @@ const routes = [
   {
     path: '/session/:code',
     name: 'SessionUnique',
-    component: SessionUnique
+    component: SessionUnique,
+    beforeEnter: authGuard
   },
 ]
 

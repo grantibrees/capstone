@@ -25,8 +25,8 @@ export class AuthHostController extends BaseController {
       .get('/login', this.authorizeHost)
       .get('/callback', this.authCallBack)
       .use(auth0provider.getAuthorizedUserInfo)
-      .post('tokensave', this.setHostTokens)
-      .get('tokenget', this.getHostTokens)
+      .post('/tokensave', this.setHostTokens)
+      .get('/tokenget', this.getHostTokens)
 
   }
 

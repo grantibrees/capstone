@@ -59,9 +59,12 @@ export default new Vuex.Store({
   actions: {
     setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
+      hostTokensApi.defaults.headers.authorization = bearer;
+
     },
     resetBearer() {
       api.defaults.headers.authorization = "";
+      hostTokensApi.defaults.headers.authorization = "";
     },
 
     async getProfile({ commit }) {
