@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <router-link class="navbar-brand" :to="{ name: 'Home' }">Capstone</router-link>
+  <nav class="navbar navbar-expand-lg navbar-light bg-transparent fixed-top">
+    <router-link class="navbar-brand" :to="{ name: 'Home' }">Song Scoop Yee Sire</router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -26,19 +26,7 @@
         </li>
       </ul>
 
-      <form
-        class="form-inline mr-5"
-        @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
-      >
-        <input
-          v-model="search.data"
-          class="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+   
 
       <span class="navbar-text">
         <button class="btn btn-success" @click="login" v-if="!$auth.isAuthenticated">Login</button>
@@ -59,7 +47,7 @@ export default {
   name: "Navbar",
   data() {
     return {
-      search: {},
+     
     };
   },
   methods: {
@@ -74,21 +62,7 @@ export default {
     async logout() {
       await this.$auth.logout({ returnTo: window.location.origin });
     },
-    searchByArtist() {
-      this.$store.dispatch("searchByArtist", {
-        data: this.search.data,
-      });
-    },
-    searchByAlbum() {
-      this.$store.dispatch("searchByAlbum", {
-        data: this.search.data,
-      });
-    },
-    searchBySong() {
-      this.$store.dispatch("searchBySong", {
-        data: this.search.data,
-      });
-    },
+  
   },
 };
 </script>
