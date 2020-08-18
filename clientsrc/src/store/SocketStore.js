@@ -12,9 +12,9 @@ export const socketStore = {
       })
 
       //registers event listeners for emits from socketservice
-      socket.on("selectSong", payload => {
+      socket.on("addToQueue", payload => {
         commit("addToQueue", payload)
-        console.log('worked')
+        console.log('worked', payload)
       })
 
       // socket.on("deleteCar", car => {
@@ -27,7 +27,7 @@ export const socketStore = {
     },
     joinRoom({ commit, dispatch }, roomName) {
       socket.emit("dispatch", { action: "joinRoom", data: roomName })
-      console.log('room Joined')
+      console.log('room Joined', roomName)
     },
     leaveRoom({ commit, dispatch }, roomName) {
       socket.emit("disconnect", { action: "leaveRoom", data: roomName })

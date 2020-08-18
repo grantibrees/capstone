@@ -33,7 +33,7 @@ export class SessionsController extends BaseController {
   async addToQueue(req, res, next) {
     try {
       let data = await sessionsService.addToQueue(req.params.sessionCode, req.body)
-      socketService.messageRoom('session', "addToQueue", data)
+      socketService.messageRoom('session', "addToQueue", req.body)
       return res.send({ data: data, message: "added song to que" })
     } catch (error) { next(error) }
   }
