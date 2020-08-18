@@ -40,8 +40,6 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    // beforeEnter: authGuard,
-
     children: [
       {
         path: '/session',
@@ -52,8 +50,7 @@ const routes = [
       {
         path: '/session/create',
         name: 'SessionCreate',
-        component: SessionCreate,
-        // beforeEnter: authGuard
+        component: SessionCreate
       },
 
 
@@ -64,16 +61,13 @@ const routes = [
   {
     path: '/session/join',
     name: 'SessionJoin',
-    component: SessionJoin,
-    // beforeEnter: authGuard
-
+    component: SessionJoin
   },
 
   {
     path: '/session/:code',
     name: 'SessionUnique',
-    component: SessionUnique,
-    beforeEnter: authGuard
+    component: SessionUnique
   },
 ]
 

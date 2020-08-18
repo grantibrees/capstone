@@ -6,22 +6,20 @@
 
 
 <script>
-import { onAuth } from "@bcwdev/auth0-vue";
 export default {
   name: "Dashboard",
-  async mounted() {
-    let tokens = {
-      accessToken: this.$route.query.accessToken,
-      refreshToken: this.$route.query.refreshToken,
-      expiresIn: this.$route.query.expiresIn,
-    };
-    await onAuth();
-    this.getTokens(tokens);
+  mounted() {
+    this.getTokens();
   },
   methods: {
-    getTokens(tokens) {
+    getTokens() {
+      let tokens = {
+        accessToken: this.$route.query.accessToken,
+        refreshToken: this.$route.query.refreshToken,
+        expiresIn: this.$route.query.expiresIn,
+      };
+      console.log(tokens);
       this.$store.dispatch("setSpotifyHostTokens", tokens);
-      this.$store.dispatch("saveSpotifyHostTokens", tokens);
       this.$router.push({
         name: "SessionCreate",
       });
