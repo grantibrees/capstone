@@ -61,8 +61,6 @@
 <script>
 import hostComponent from "../components/HostComponent";
 import queue from "../components/Queue";
-import { onAuth } from "@bcwdev/auth0-vue";
-
 export default {
   name: "SessionUnique",
   data() {
@@ -71,14 +69,10 @@ export default {
     };
   },
 
-
-  async mounted() {
-    await onAuth();
-    await this.callTokens();
-    this.joinSession();
+  mounted() {
+    this.$store.dispatch("joinSession", this.$route.params.code);
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch('joinRoom', "session")
-
   },
 
   computed: {
@@ -123,22 +117,6 @@ export default {
       });
     },
   },
-
-  methods: {
-    async callTokens() {
-      if (this.$store.state.hostTokens.accessToken == false) {
-        await this.$store.dispatch("callDownTokens");
-      }
-    },
-    joinSession() {
-      if (this.$route.params.code) {
-        this.$store.dispatch("joinSession", this.$route.params.code);
-      } else {
-        console.log("no route params code found");
-      }
-    },
-  },
-
 
   components: {
     hostComponent,

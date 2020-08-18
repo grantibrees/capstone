@@ -30,13 +30,9 @@ export default {
       return this.store.state.cars;
   */,
   mounted() {
-    // this.getHostToken();
     this.initiatePlayer();
   },
   methods: {
-    // getHostToken() {
-    //   this.$store.dispatch("getHostToken");
-    // },
     waitForSpotifyWebPlaybackSDKToLoad: async function () {
       return new Promise((resolve) => {
         if (window.Spotify) {
