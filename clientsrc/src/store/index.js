@@ -9,6 +9,7 @@ import store from "../store"
 import VisitorModule from "./VisitorModule"
 import SessionModule from "./SessionModule"
 import SongModule from "./SongModule"
+import { socketStore } from "./SocketStore"
 
 
 
@@ -21,14 +22,16 @@ export default new Vuex.Store({
     spotifyAuthToken: "",
     trackSearchResults: [],
     user: {},
+    hostDeviceId: '',
     hostTokens: {
       accessToken: '',
       refreshToken: '',
       expiresIn: ''
     },
     activeSession: {
+      queue: []
     },
-    activeSong: {},
+    activeSong: "no active song",
     nextSong: {},
 
   },
@@ -56,6 +59,9 @@ export default new Vuex.Store({
     },
     setNextSong(state, nextSong) {
       state.nextSong = nextSong
+    },
+    setDeviceId(state, deviceId) {
+      state.hostDeviceId = deviceId
     }
   },
   actions: {
@@ -84,6 +90,7 @@ export default new Vuex.Store({
       console.log(" host tokens set to store: ", tokenData);
     },
 
+
     async saveSpotifyHostTokens({ commit, dispatch }, tokenData) {
       try {
         let payload = {
@@ -108,11 +115,17 @@ export default new Vuex.Store({
     }
 
 
+    getDeviceId({ commit }, deviceId) {
+      commit("setDeviceId", deviceId)
+    }
+    // FIXME Add back get profile functionality, currently api does not support this action.
+    //#endregion
   },
   modules: {
     SessionModule,
     VisitorModule,
-    SongModule
+    SongModule,
+    socketStore
   }
 })
 
