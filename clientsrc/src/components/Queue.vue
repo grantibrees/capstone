@@ -50,8 +50,6 @@ export default {
         this.$store.dispatch("getActiveSong", songsQueue[0]);
       }
     },
-
-    }
   },
   components: {
     songs,

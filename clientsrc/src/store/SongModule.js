@@ -36,7 +36,15 @@ export default {
       if (store.state.activeSong == "no active song") {
         commit("setActiveSong", song)
         dispatch("playCurrentSong")
+        api.delete("session/" + store.state.activeSession.sessionCode, store.state.activeSong)
+        store.state.activeSession.queue.splice(0, 1)
+
       }
+    },
+
+    changeSong({ commit, dispatch }) {
+      store.state.activeSong = "no active song"
+      dispatch("getActiveSong", store.state.activeSession.queue[0])
     }
     // async createSession({ commit }, sessionData) {
     //   try {

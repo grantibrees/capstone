@@ -10,6 +10,8 @@ export default {
     /* Data binding. */
     return {
       deviceId: "",
+      changingTrack: false,
+      currentState: {},
     };
   },
   mounted() {
@@ -67,7 +69,7 @@ export default {
       });
       // Playback status updates
       player.addListener("player_state_changed", (state) => {
-        // Update UI information on player state changed
+        this.changeSong(state);
       });
       // Ready
       player.addListener("ready", ({ device_id }) => {
@@ -83,9 +85,25 @@ export default {
     play() {
       this.$store.dispatch("playCurrentSong");
     },
-  } /* Functions that DO things, Commit and Dispatch */,
-  components: {} /* Pulls a components file as a child to reference. Often like a for A=[]\
-  ÷*/,
+    changeSong(state) {
+      console.log(state);
+      if (
+        state &&
+        state.paused &&
+        this.changingTrack == false &&
+        state.position === 0
+      ) {
+        console.log("Track ended");
+        this.changingTrack = true;
+        this.currentState = state;
+        this.$store.dispatch("changeSong");
+        this.resetChangingTrack();
+      }
+    },
+    resetChangingTrack() {
+      setTimeout((this.changingTrack = false), 15000);
+    },
+  },
 };
 </script>
 
