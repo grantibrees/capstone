@@ -14,6 +14,8 @@ import SongModule from "./SongModule"
 
 Vue.use(Vuex)
 
+import { onAuth } from "@bcwdev/auth0-vue";
+
 export default new Vuex.Store({
   state: {
     spotifyAuthToken: "",
@@ -60,7 +62,7 @@ export default new Vuex.Store({
     setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
       hostTokensApi.defaults.headers.authorization = bearer;
-
+      console.log("Set Bearer tokens")
     },
     resetBearer() {
       api.defaults.headers.authorization = "";
@@ -71,19 +73,32 @@ export default new Vuex.Store({
       try {
         let res = await api.get("/profile")
         commit("setUser", res.data)
+        console.log("profile data", res.data);
       } catch (err) {
         console.error(err)
       }
     },
-    async setSpotifyHostTokens({ commit, dispatch, state }, tokenData) {
+    setSpotifyHostTokens({ commit, dispatch, state }, tokenData) {
+
       commit("setHostTokens", tokenData)
+      console.log(" host tokens set to store: ", tokenData);
+    },
+
+    async saveSpotifyHostTokens({ commit, dispatch }, tokenData) {
       try {
-        let res = await hostTokensApi.post('tokensave', tokenData)
-        console.log(res);
+        let payload = {
+          accessToken: tokenData.accessToken,
+          refreshToken: tokenData.refreshToken,
+          expiresIn: tokenData.expiresIn,
+        }
+        console.log(payload);
+        let res = await hostTokensApi.post('tokensave', payload)
+        console.log("host tokens posted to server", res);
       } catch (error) {
         console.error(error)
       }
     },
+
     async callDownTokens({ commit, dispatch, state }) {
       try {
         let res = await hostTokensApi.get('tokenget')

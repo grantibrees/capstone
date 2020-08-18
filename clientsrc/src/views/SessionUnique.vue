@@ -17,7 +17,7 @@ export default {
 
   mounted() {
     this.callTokens();
-    this.$store.dispatch("joinSession", this.$route.params.code);
+    this.joinSession();
   },
 
   computed: {
@@ -27,9 +27,15 @@ export default {
   },
   methods: {
     async callTokens() {
-      debugger;
       if (this.$store.state.hostTokens.accessToken == false) {
         await this.$store.dispatch("callDownTokens");
+      }
+    },
+    joinSession() {
+      if (this.$route.params.code) {
+        this.$store.dispatch("joinSession", this.$route.params.code);
+      } else {
+        console.log("no route params code found");
       }
     },
   },

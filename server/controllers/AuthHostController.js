@@ -58,7 +58,7 @@ export class AuthHostController extends BaseController {
         refreshToken: refresh_token,
         expiresIn: expires_in
       }
-      console.log(req.userInfo);
+
       //unsafe.send(payload)
 
       res.redirect("http://localhost:8080/#/dashboard?" + `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`)
@@ -73,12 +73,12 @@ export class AuthHostController extends BaseController {
 
   async setHostTokens(req, res, next) {
     try {
-      req.body.creatorEmail = req.email
+      req.body.creatorEmail = req.userInfo.email
       let payload = {
-        email: req.params.email,
-        refreshToken: req.params.refreshToken,
-        accessToken: req.params.accessToken,
-        expiresIn: req.params.expiresIn
+        creatorEmail: req.body.creatorEmail,
+        refreshToken: req.body.refreshToken,
+        accessToken: req.body.accessToken,
+        expiresIn: req.body.expiresIn
       }
       await authHostService.setHostTokens(payload)
       res.send('Tokens saved')

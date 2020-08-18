@@ -5,7 +5,7 @@ class AuthHostService {
   async setHostTokens(data) {
     try {
       await dbContext.HostTokens.findOneAndUpdate(
-        { creatorEmail: data.email },
+        { creatorEmail: data.creatorEmail },
         data,
         { new: true, upsert: true })
     } catch (error) {
