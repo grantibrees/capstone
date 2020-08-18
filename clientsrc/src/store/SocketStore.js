@@ -13,8 +13,8 @@ export const socketStore = {
 
       //registers event listeners for emits from socketservice
       socket.on("addToQueue", payload => {
-        commit("addToQueue", payload)
         console.log('worked', payload)
+        commit("addToQueue", payload)
       })
 
       // socket.on("deleteCar", car => {
