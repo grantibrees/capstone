@@ -31,9 +31,8 @@ export class SessionsController extends BaseController {
 
   async addToQueue(req, res, next) {
     try {
-      req.body.creatorEmail = req.userInfo.email
       let data = await sessionsService.addToQueue(req.params.sessionCode, req.body)
-      return res.send(data)
+      return res.send({ data: data, message: "added song to que" })
     } catch (error) { next(error) }
   }
 

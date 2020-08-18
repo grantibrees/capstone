@@ -72,7 +72,7 @@ export default {
       // Ready
       player.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device Id: ", device_id);
-        this.deviceId = device_id;
+        this.$store.dispatch("getDeviceId", device_id);
       });
       // Not Ready
       player.addListener("not_ready", ({ device_id }) => {
@@ -81,10 +81,7 @@ export default {
       player.connect();
     },
     play() {
-      this.$store.dispatch("playCurrentSong", {
-        deviceId: this.deviceId,
-        accessToken: this.accessToken,
-      });
+      this.$store.dispatch("playCurrentSong");
     },
   } /* Functions that DO things, Commit and Dispatch */,
   components: {} /* Pulls a components file as a child to reference. Often like a for A=[]\

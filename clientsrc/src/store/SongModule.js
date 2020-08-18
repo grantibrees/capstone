@@ -13,22 +13,31 @@ export default {
     async playCurrentSong({ commit }, songRequest) {
       console.log("song play")
       try {
-        await spotifySongApi.put("play?device_id=" + songRequest.deviceId,
-          { "uris": ["spotify:track:4Oun2ylbjFKMPTiaSbbCih"] },
-          { headers: { 'Authorization': 'Bearer ' + songRequest.accessToken } })
+        await spotifySongApi.put("play?device_id=" + store.state.hostDeviceId,
+          { "uris": [store.state.activeSong.uri] },
+          { headers: { 'Authorization': 'Bearer ' + store.state.hostTokens.accessToken } })
       } catch (error) {
         console.error(error)
       }
     },
 
-    async addToQueue({commit}, payload){
+    async addToQueue({ commit, dispatch }, payload) {
       try {
-        api.put('session/' + payload.sessionCode, payload)
-        console.log(payload)
-      } catch(error){
+        let res = await api.put('session/' + payload.sessionCode, payload)
+        console.log(res)
+        dispatch("joinSession", payload.sessionCode)
+        dispatch("getActiveSong", payload)
+      } catch (error) {
         console.error(error)
       }
     },
+
+    getActiveSong({ commit, dispatch }, song) {
+      if (store.state.activeSong == "no active song") {
+        commit("setActiveSong", song)
+        dispatch("playCurrentSong")
+      }
+    }
     // async createSession({ commit }, sessionData) {
     //   try {
     //     console.log(sessionData)
