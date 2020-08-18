@@ -21,7 +21,7 @@ export default {
 
     },
 
-    async joinSession({ commit }, sessionCode) {
+    async joinSession({ commit, dispatch }, sessionCode) {
       try {
         let res = await api.get("session/" + sessionCode)
         commit("setActiveSession", res.data[0])

@@ -19,6 +19,7 @@ export default new Vuex.Store({
     spotifyAuthToken: "",
     trackSearchResults: [],
     user: {},
+    hostDeviceId: '',
     hostTokens: {
       accessToken: '',
       refreshToken: '',
@@ -28,7 +29,7 @@ export default new Vuex.Store({
     activeSession: {
       queue: []
     },
-    activeSong: {},
+    activeSong: "no active song",
     nextSong: {},
 
   },
@@ -57,6 +58,9 @@ export default new Vuex.Store({
     setNextSong(state, nextSong) {
       state.nextSong = nextSong
     },
+    setDeviceId(state, deviceId) {
+      state.hostDeviceId = deviceId
+    }
   },
   actions: {
     //#region -- AUTH STUFF --
@@ -78,6 +82,10 @@ export default new Vuex.Store({
     setSpotifyHostTokens({ commit }, tokenData) {
       commit("setHostTokens", tokenData)
     },
+
+    getDeviceId({ commit }, deviceId) {
+      commit("setDeviceId", deviceId)
+    }
     // FIXME Add back get profile functionality, currently api does not support this action.
     //#endregion
 

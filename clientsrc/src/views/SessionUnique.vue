@@ -93,6 +93,7 @@ export default {
         trackLength: track.duration_ms,
         popularity: track.popularity,
         uri: track.uri,
+        score: 0,
         sessionCode: this.$route.params.code,
       });
     },
