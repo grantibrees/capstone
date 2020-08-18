@@ -3,6 +3,7 @@ import BaseController from "../utils/BaseController";
 import { valuesService } from "../services/ValuesService";
 import auth0provider from "@bcwdev/auth0provider";
 import { sessionsService } from '../services/SessionsService'
+import socketService from "../services/SocketService";
 
 export class SessionsController extends BaseController {
   constructor() {
@@ -32,6 +33,7 @@ export class SessionsController extends BaseController {
   async addToQueue(req, res, next) {
     try {
       let data = await sessionsService.addToQueue(req.params.sessionCode, req.body)
+      socketService.messageRoom('session', "addToQueue", data)
       return res.send({ data: data, message: "added song to que" })
     } catch (error) { next(error) }
   }

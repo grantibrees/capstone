@@ -72,6 +72,7 @@ export default {
   mounted() {
     this.$store.dispatch("joinSession", this.$route.params.code);
     this.$store.dispatch("getSpotifyVisitorAuth");
+    this.$store.dispatch('joinRoom', "session")
   },
 
   computed: {
@@ -83,6 +84,9 @@ export default {
     },
   },
   methods: {
+    beforeDestory(){
+      this.$store.dispatch('leaveRoom', "session")
+    },
     selectSong(track) {
       this.$store.dispatch("addToQueue", {
         album: track.album.name,

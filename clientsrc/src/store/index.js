@@ -9,6 +9,7 @@ import store from "../store"
 import VisitorModule from "./VisitorModule"
 import SessionModule from "./SessionModule"
 import SongModule from "./SongModule"
+import { socketStore } from "./SocketStore"
 
 
 
@@ -93,7 +94,8 @@ export default new Vuex.Store({
   modules: {
     SessionModule,
     VisitorModule,
-    SongModule
+    SongModule,
+    socketStore
   }
 })
 
