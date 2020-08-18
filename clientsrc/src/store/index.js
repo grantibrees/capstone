@@ -102,7 +102,8 @@ export default new Vuex.Store({
     async callDownTokens({ commit, dispatch, state }) {
       try {
         let res = await hostTokensApi.get('tokenget')
-        console.log(res);
+        commit("setHostTokens", res.data)
+        console.log(res.data);
       } catch (error) { console.log(error); }
     }
 

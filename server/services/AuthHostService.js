@@ -13,7 +13,7 @@ class AuthHostService {
     }
   }
   async getHostTokens(email) {
-    let value = await dbContext.Search.findById(email);
+    let value = await dbContext.HostTokens.findOne({ creatorEmail: email });
     if (!value) {
       throw new BadRequest("Invalid Id");
     }

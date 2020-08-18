@@ -89,9 +89,8 @@ export class AuthHostController extends BaseController {
 
   async getHostTokens(req, res, next) {
     try {
-      req.body.creatorEmail = req.email
-      await authHostService.getHostTokens(req.email)
-      res.send('Tokens retrieved')
+      let result = await authHostService.getHostTokens(req.userInfo.email)
+      res.send(result)
     } catch (error) {
 
     }

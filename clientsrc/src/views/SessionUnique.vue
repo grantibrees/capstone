@@ -9,14 +9,17 @@
 <script>
 import hostComponent from "../components/HostComponent";
 import queue from "../components/Queue";
+import { onAuth } from "@bcwdev/auth0-vue";
+
 export default {
   name: "SessionUnique",
   data() {
     return {};
   },
 
-  mounted() {
-    this.callTokens();
+  async mounted() {
+    await onAuth();
+    await this.callTokens();
     this.joinSession();
   },
 
