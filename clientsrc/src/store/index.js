@@ -74,20 +74,19 @@ export default new Vuex.Store({
     },
     async setSpotifyHostTokens({ commit, dispatch, state }, tokenData) {
       commit("setHostTokens", tokenData)
-      let userStuff = {
-        email: state.user.email,
-        accessToken: tokenData.accessToken,
-        refreshToken: tokenData.refreshToken
-      }
       try {
-        let res = await hostTokensApi.put('', userStuff)
+        let res = await hostTokensApi.post('tokensave', tokenData)
         console.log(res);
       } catch (error) {
         console.error(error)
       }
-
     },
-
+    async callDownTokens({ commit, dispatch, state }) {
+      try {
+        let res = await hostTokensApi.get('tokenget')
+        console.log(res);
+      } catch (error) { console.log(error); }
+    }
 
 
   },

@@ -1,6 +1,8 @@
 import express from 'express';
 import BaseController from '../utils/BaseController';
 import { authHostService } from '../services/AuthHostService.js'
+import auth0provider from "@bcwdev/auth0provider";
+
 
 const SpotifyWebApi = require('spotify-web-api-node');
 let scopes = ['streaming', 'user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private']
@@ -22,7 +24,10 @@ export class AuthHostController extends BaseController {
     this.router
       .get('/login', this.authorizeHost)
       .get('/callback', this.authCallBack)
-      .put('/hostTokens', this.setHostTokens)
+      .use(auth0provider.getAuthorizedUserInfo)
+      .post('tokensave', this.setHostTokens)
+      .get('tokenget', this.getHostTokens)
+
   }
 
 
@@ -53,6 +58,7 @@ export class AuthHostController extends BaseController {
         refreshToken: refresh_token,
         expiresIn: expires_in
       }
+      console.log(req.userInfo);
       //unsafe.send(payload)
 
       res.redirect("http://localhost:8080/#/dashboard?" + `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`)
@@ -68,8 +74,24 @@ export class AuthHostController extends BaseController {
   async setHostTokens(req, res, next) {
     try {
       req.body.creatorEmail = req.email
-      let data = authHostService.setHostTokens(req.params.email, req.params.refreshToken, req.params.accessToken)
-      res.send(data)
+      let payload = {
+        email: req.params.email,
+        refreshToken: req.params.refreshToken,
+        accessToken: req.params.accessToken,
+        expiresIn: req.params.expiresIn
+      }
+      await authHostService.setHostTokens(payload)
+      res.send('Tokens saved')
+    } catch (error) {
+
+    }
+  }
+
+  async getHostTokens(req, res, next) {
+    try {
+      req.body.creatorEmail = req.email
+      await authHostService.getHostTokens(req.email)
+      res.send('Tokens retrieved')
     } catch (error) {
 
     }

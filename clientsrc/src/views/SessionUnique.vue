@@ -16,6 +16,7 @@ export default {
   },
 
   mounted() {
+    this.callTokens();
     this.$store.dispatch("joinSession", this.$route.params.code);
   },
 
@@ -24,7 +25,13 @@ export default {
       return this.$store.state.activeSession;
     },
   },
-  methods: {},
+  methods: {
+    async callTokens() {
+      if (!this.$store.state.hostTokens.accessToken) {
+        await this.$store.dispatch("callDownTokens");
+      }
+    },
+  },
 
   components: {
     hostComponent,
