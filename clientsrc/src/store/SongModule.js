@@ -21,11 +21,12 @@ export default {
       }
     },
 
-    async addToQueue({commit}, payload){
+    async addToQueue({ commit, dispatch }, payload) {
       try {
-        api.put('session/' + payload.sessionCode, payload)
-        console.log(payload)
-      } catch(error){
+        let res = await api.put('session/' + payload.sessionCode, payload)
+        console.log(res)
+        dispatch("joinSession", payload.sessionCode)
+      } catch (error) {
         console.error(error)
       }
     },
