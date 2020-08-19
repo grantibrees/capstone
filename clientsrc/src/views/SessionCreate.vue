@@ -3,8 +3,13 @@
     <div class="row justify-content-center">
       <div class="col-8">
         <div class="form-group">
-          <h5>Warning: You'll need Spotify Premium to Host a Session </h5>
-          <input v-model="newSessionName" type="text" placeholder="Choose A Name For Your Session" class="form-control" />
+          <h5>Warning: You'll need Spotify Premium to Host a Session</h5>
+          <input
+            v-model="newSessionName"
+            type="text"
+            placeholder="Choose A Name For Your Session"
+            class="form-control"
+          />
           <h5 id="helpId" class="form-text text-muted">please enter the name of the session</h5>
           <button class="btn btn-outline-info" @click="createSession">Create</button>
         </div>
@@ -16,6 +21,7 @@
 
 <script>
 import utils from "../../utils.js";
+import { onAuth } from "@bcwdev/auth0-vue";
 export default {
   name: "SessionCreate",
   data() {
@@ -23,9 +29,17 @@ export default {
       newSessionName: "",
     };
   },
-  mounted() {},
+  async beforeMount() {
+    // await this.auth();
+  },
   computed: {},
   methods: {
+    // async auth() {
+    //   await this.$auth.loginWithPopup();
+    //   // await onAuth();
+    //   this.$store.dispatch("setBearer", this.$auth.bearer);
+    //   this.$store.dispatch("getProfile", this.$auth.user);
+    // },
     createSession() {
       this.$store.dispatch("createSession", {
         sessionName: this.newSessionName,
@@ -41,8 +55,7 @@ export default {
 
 
 <style scoped>
-  .font-medieval-wide{
-    font-family: 'Metamorphous', cursive;
-    }
-
+.font-medieval-wide {
+  font-family: "Metamorphous", cursive;
+}
 </style>

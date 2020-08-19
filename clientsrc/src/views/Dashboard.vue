@@ -16,6 +16,8 @@ export default {
       expiresIn: this.$route.query.expiresIn,
     };
     await onAuth();
+    this.$store.dispatch("setBearer", this.$auth.bearer);
+    this.$store.dispatch("getProfile", this.$auth.user);
     this.getTokens(tokens);
   },
   methods: {

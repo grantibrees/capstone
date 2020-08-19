@@ -89,6 +89,11 @@ export default {
         return false;
       }
     },
+    url() {
+      return location.origin.includes("localhost")
+        ? "//localhost:3000/login"
+        : "/login";
+    },
   },
   components: {},
   mounted() {
@@ -97,16 +102,7 @@ export default {
   },
   methods: {
     async hostTrigger() {
-      debugger;
-      await onAuth();
-      await this.$store.dispatch("setBearer", this.$auth.bearer);
-      await this.$store.dispatch("getProfile");
-
-      router.push(
-        location.origin.includes("localhost")
-          ? "//localhost:3000/login"
-          : "/login"
-      );
+      location.replace(this.url);
     },
 
     selectSong(track) {

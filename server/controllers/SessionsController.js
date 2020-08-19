@@ -1,6 +1,5 @@
 import express from "express";
 import BaseController from "../utils/BaseController";
-import { valuesService } from "../services/ValuesService";
 import auth0provider from "@bcwdev/auth0provider";
 import { sessionsService } from '../services/SessionsService'
 import socketService from "../services/SocketService";
@@ -12,7 +11,7 @@ export class SessionsController extends BaseController {
       .get("/:sessionCode", this.getBySessionCode)
       .put("/:sessionCode", this.addToQueue)
       .use(auth0provider.getAuthorizedUserInfo)
-      .post("", this.create)
+      .post("/post", this.create)
   }
   async getBySessionCode(req, res, next) {
     try {

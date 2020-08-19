@@ -17,16 +17,7 @@
         <li class="nav-item" :class="{ active: $route.name == 'Home' }">
           <router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link>
         </li>
-        <li
-          class="nav-item"
-          v-if="$auth.isAuthenticated"
-          :class="{ active: $route.name == 'About' }"
-        >
-          <router-link class="nav-link" :to="{ name: 'About' }">About</router-link>
-        </li>
       </ul>
-
-   
 
       <span class="navbar-text">
         <button class="btn btn-success" @click="login" v-if="!$auth.isAuthenticated">Login</button>
@@ -46,9 +37,7 @@ let _api = axios.create({
 export default {
   name: "Navbar",
   data() {
-    return {
-     
-    };
+    return {};
   },
   methods: {
     async login() {
@@ -62,7 +51,6 @@ export default {
     async logout() {
       await this.$auth.logout({ returnTo: window.location.origin });
     },
-  
   },
 };
 </script>
