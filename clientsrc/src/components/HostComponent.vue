@@ -1,6 +1,5 @@
 <template>
   <div class="host-component mt-5">
-    <button @click="play">play</button>
   </div>
 </template>
 <script>

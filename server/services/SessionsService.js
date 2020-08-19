@@ -6,16 +6,31 @@ class SessionsService {
     let data = await dbContext.Session.create(rawData)
   }
   async addToQueue(sessionCode, song) {
-
+    
     let data = await dbContext.Session.findOneAndUpdate(
       { sessionCode: sessionCode, },
       { $addToSet: { queue: song } },
       { new: true })
-    if (!data) {
-      throw new BadRequest("Invalid ID");
+      if (!data) {
+        throw new BadRequest("Invalid ID");
+      }
+      return data;
     }
-    return data;
-  }
+  async    updateSong(sessionCode, body) {
+         await dbContext.Session.findOneAndUpdate(
+          { sessionCode: sessionCode },
+          { $pull: { queue: {uri : body.uri}}},
+          { new: true })
+          let data = await dbContext.Session.findOneAndUpdate(
+          { sessionCode: sessionCode},
+          { $addToSet: { queue : body } },
+          { new: true }
+        )
+          if (!data) {
+            throw new BadRequest("Invalid ID");
+          }
+          return data;
+      }
   async getById(sessionCode) {
     let data = await dbContext.Session.find({ sessionCode: sessionCode })
     if (!data) {

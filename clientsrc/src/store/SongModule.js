@@ -54,7 +54,13 @@ export default {
     changeSong({ commit, dispatch }) {
       store.state.activeSong = "no active song"
       dispatch("getActiveSong", store.state.activeSession.queue[0])
+    },
+
+    updateSongScore({ commit, dispatch}, songRequest) {
+    api.put('session/' + songRequest.songData.sessionCode + "/" + songRequest.uri, songRequest.songData)
     }
+
+  
     // async createSession({ commit }, sessionData) {
     //   try {
     //     console.log(sessionData)
