@@ -73,7 +73,12 @@ export default {
 
   async beforeMount() {
     await onAuth();
+    await hostCheck function(){
+      let email = await this.$store.dispatch("getSessionEmail", this.$route.params.code)
+    if(email = this.$auth.user.email){
     await this.callTokens();
+    }};
+
   },
 
   mounted() {
@@ -126,7 +131,11 @@ export default {
 
     async callTokens() {
       if (this.$store.state.hostTokens.accessToken == false) {
-        await this.$store.dispatch("callDownTokens");
+        if (this.activeSession.creatorEmail == this.$auth.user.email) {
+          await this.$store.dispatch("callDownTokens");
+        } else {
+          console.log("Not the host, no tokens for you");
+        }
       }
     },
     async joinSession() {

@@ -57,7 +57,7 @@ export default new Vuex.Store({
     setActiveSong(state, activeSong) {
       state.activeSong = activeSong
     },
-    setQueue(state, queue){
+    setQueue(state, queue) {
       state.activeSession.queue = queue
     },
     setNextSong(state, nextSong) {
@@ -87,6 +87,14 @@ export default new Vuex.Store({
         console.error(err)
       }
     },
+    async getSessionEmail({ dispatch }, code) {
+      try {
+        let res = await api.get("session/" + code)
+        console.log(res.data[0].creatorEmail);
+        return res.data[0].creatorEmail
+      } catch (error) { console.error(error) }
+    },
+
     setSpotifyHostTokens({ commit, dispatch, state }, tokenData) {
 
       commit("setHostTokens", tokenData)

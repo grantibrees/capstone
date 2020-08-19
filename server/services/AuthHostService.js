@@ -2,6 +2,7 @@ import { dbContext } from "../db/DbContext";
 import { BadRequest } from "../utils/Errors";
 
 class AuthHostService {
+
   async setHostTokens(data) {
     try {
       await dbContext.HostTokens.findOneAndUpdate(

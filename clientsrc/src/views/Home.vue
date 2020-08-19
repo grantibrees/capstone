@@ -98,7 +98,6 @@ export default {
   },
   methods: {
     selectSong(track) {
-      debugger;
       this.$store.dispatch("addToQueue", {
         album: track.album.name,
         songTitle: track.name,
