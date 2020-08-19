@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <navbar />
     <div class="spacing"></div>
     <router-view />
   </div>
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
 import { onAuth } from "@bcwdev/auth0-vue";
 window.onSpotifyWebPlaybackSDKReady = () => {
   // You can now initialize Spotify.Player and use the SDK
@@ -25,9 +23,7 @@ export default {
       this.$router.push({ name: "home" });
     }
   },
-  components: {
-    Navbar,
-  },
+  components: {},
 };
 </script>
 
