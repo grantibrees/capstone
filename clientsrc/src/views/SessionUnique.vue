@@ -72,13 +72,7 @@ export default {
   },
 
   async beforeMount() {
-    await onAuth();
-    await hostCheck function(){
-      let email = await this.$store.dispatch("getSessionEmail", this.$route.params.code)
-    if(email = this.$auth.user.email){
-    await this.callTokens();
-    }};
-
+    await this.hostCheck();
   },
 
   mounted() {
@@ -96,6 +90,17 @@ export default {
     },
   },
   methods: {
+    async hostCheck() {
+      let email = await this.$store.dispatch(
+        "getSessionEmail",
+        this.$route.params.code
+      );
+      if ((email = this.$auth.user.email)) {
+        await onAuth();
+        await this.callTokens();
+      }
+    },
+
     beforeDestory() {
       this.$store.dispatch("leaveRoom", "session");
     },

@@ -19,11 +19,7 @@ export default {
   },
   async beforeCreate() {
     try {
-      this.$store.dispatch('initializeSocket')
-      await onAuth();
-      this.$store.dispatch("setBearer", this.$auth.bearer);
-      this.$store.dispatch("getProfile");
-      
+      this.$store.dispatch("initializeSocket");
     } catch (err) {
       console.log("the problem is in app");
       this.$router.push({ name: "home" });

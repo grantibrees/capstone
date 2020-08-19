@@ -73,7 +73,7 @@ const routes = [
     path: '/session/:code',
     name: 'SessionUnique',
     component: SessionUnique,
-    beforeEnter: authGuard
+    // beforeEnter: authGuard
   },
 ]
 

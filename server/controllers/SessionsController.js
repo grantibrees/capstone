@@ -9,10 +9,10 @@ export class SessionsController extends BaseController {
   constructor() {
     super("api/session");
     this.router
-      .use(auth0provider.isAuthorized)
       .get("/:sessionCode", this.getBySessionCode)
-      .post("", this.create)
       .put("/:sessionCode", this.addToQueue)
+      .use(auth0provider.getAuthorizedUserInfo)
+      .post("", this.create)
   }
   async getBySessionCode(req, res, next) {
     try {

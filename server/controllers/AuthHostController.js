@@ -15,11 +15,11 @@ export class AuthHostController extends BaseController {
     super("")
     console.log('AuthHostController active');
     this.router
-      .get('/login', this.authorizeHost)
       .get('/callback', this.authCallBack)
-      .use(auth0provider.getAuthorizedUserInfo)
-      .post('/tokensave', this.setHostTokens)
-      .get('/tokenget', this.getHostTokens)
+      .get('/login', this.authorizeHost)
+      .use('/auth', auth0provider.getAuthorizedUserInfo)
+      .post('/auth/tokensave', this.setHostTokens)
+      .get('/auth/tokenget', this.getHostTokens)
   }
   async authorizeHost(req, res, next) {
     try {
