@@ -115,14 +115,12 @@ export default new Vuex.Store({
         commit("setHostTokens", res.data)
         console.log(res.data);
       } catch (error) { console.log(error); }
-    }
+    },
 
 
     getDeviceId({ commit }, deviceId) {
       commit("setDeviceId", deviceId)
     }
-    // FIXME Add back get profile functionality, currently api does not support this action.
-    //#endregion
   },
   modules: {
     SessionModule,

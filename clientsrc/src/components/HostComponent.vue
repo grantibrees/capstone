@@ -19,19 +19,13 @@ export default {
       // You can now initialize Spotify.Player and use the SDK
     };
     console.log("hostComponent loaded");
-    this.checkForActiveSong();
+    // this.checkForActiveSong();
+    this.initiatePlayer();
   } /* Runs functions on startup */,
   computed: {
-    accessToken() {
-      return this.$store.state.hostTokens.accessToken;
+    async accessToken() {
+      return await this.$store.state.hostTokens.accessToken;
     },
-  } /* Pulls values from the store. Always the value of the method that's in it. The live value. Constant value, has to have a return in it, it's a getter. It's like a listener, listening to the state. It gets the state.
-      cars() {
-      return this.store.state.cars;
-  */,
-  mounted() {
-    // this.getHostToken();
-    this.initiatePlayer();
   },
   methods: {
     // getHostToken() {

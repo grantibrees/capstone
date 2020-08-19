@@ -60,8 +60,8 @@
 
 <script>
 import hostComponent from "../components/HostComponent";
-import queue from "../components/Queue";
 import { onAuth } from "@bcwdev/auth0-vue";
+import queue from "../components/Queue";
 
 export default {
   name: "SessionUnique",
@@ -71,14 +71,15 @@ export default {
     };
   },
 
-
-  async mounted() {
+  async beforeMount() {
     await onAuth();
     await this.callTokens();
+  },
+
+  mounted() {
     this.joinSession();
     this.$store.dispatch("getSpotifyVisitorAuth");
-    this.$store.dispatch('joinRoom', "session")
-
+    this.$store.dispatch("joinRoom", "session");
   },
 
   computed: {
@@ -90,8 +91,8 @@ export default {
     },
   },
   methods: {
-    beforeDestory(){
-      this.$store.dispatch('leaveRoom', "session")
+    beforeDestory() {
+      this.$store.dispatch("leaveRoom", "session");
     },
     selectSong(track) {
       this.$store.dispatch("addToQueue", {
@@ -122,23 +123,20 @@ export default {
         data: this.search.data,
       });
     },
-  },
 
-  methods: {
     async callTokens() {
       if (this.$store.state.hostTokens.accessToken == false) {
         await this.$store.dispatch("callDownTokens");
       }
     },
-    joinSession() {
+    async joinSession() {
       if (this.$route.params.code) {
-        this.$store.dispatch("joinSession", this.$route.params.code);
+        await this.$store.dispatch("joinSession", this.$route.params.code);
       } else {
         console.log("no route params code found");
       }
     },
   },
-
 
   components: {
     hostComponent,
