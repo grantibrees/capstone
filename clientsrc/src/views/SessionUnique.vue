@@ -79,7 +79,7 @@ export default {
   mounted() {
     this.joinSession();
     this.$store.dispatch("getSpotifyVisitorAuth");
-    this.$store.dispatch("joinRoom", "session");
+    this.$store.dispatch("joinRoom", "session-" + this.activeSession.sessionCode);
   },
 
   computed: {
