@@ -9,11 +9,11 @@ export class SessionsController extends BaseController {
   constructor() {
     super("api/session");
     this.router
-    .put("/:sessionCode", this.addToQueue)
-    .get("/:sessionCode", this.getBySessionCode)
+      .put("/:sessionCode", this.addToQueue)
+      .get("/:sessionCode", this.getBySessionCode)
       .use(auth0provider.isAuthorized)
       .post("", this.create)
-      
+
   }
   async getBySessionCode(req, res, next) {
     try {
@@ -34,7 +34,7 @@ export class SessionsController extends BaseController {
   async addToQueue(req, res, next) {
     try {
       let data = await sessionsService.addToQueue(req.params.sessionCode, req.body)
-      socketService.messageRoom('session', "addToQueue", req.body)
+      socketService.messageRoom('session-' + req.params.sessionCode, "addToQueue", req.body)
       return res.send({ data: data, message: "added song to que" })
     } catch (error) { next(error) }
   }
