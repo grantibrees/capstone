@@ -78,7 +78,7 @@ export default {
   mounted() {
     this.joinSession();
     this.$store.dispatch("getSpotifyVisitorAuth");
-    this.$store.dispatch("joinRoom", "session");
+    this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
   },
 
   computed: {
@@ -87,7 +87,7 @@ export default {
     },
     trackResults() {
       return this.$store.state.trackSearchResults;
-    },
+    }
   },
   methods: {
     async hostCheck() {
