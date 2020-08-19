@@ -73,8 +73,7 @@ export default {
   },
 
   async beforeMount() {
-    await onAuth();
-    await this.callTokens();
+    await this.hostCheck();
   },
 
   mounted() {
@@ -92,6 +91,17 @@ export default {
     }
   },
   methods: {
+    async hostCheck() {
+      let email = await this.$store.dispatch(
+        "getSessionEmail",
+        this.$route.params.code
+      );
+      if ((email = this.$auth.user.email)) {
+        await onAuth();
+        await this.callTokens();
+      }
+    },
+
     beforeDestory() {
       this.$store.dispatch("leaveRoom", "session");
     },
@@ -127,7 +137,11 @@ export default {
 
     async callTokens() {
       if (this.$store.state.hostTokens.accessToken == false) {
-        await this.$store.dispatch("callDownTokens");
+        if (this.activeSession.creatorEmail == this.$auth.user.email) {
+          await this.$store.dispatch("callDownTokens");
+        } else {
+          console.log("Not the host, no tokens for you");
+        }
       }
     },
     async joinSession() {

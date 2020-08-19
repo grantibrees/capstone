@@ -1,6 +1,5 @@
 import express from "express";
 import BaseController from "../utils/BaseController";
-import { valuesService } from "../services/ValuesService";
 import auth0provider from "@bcwdev/auth0provider";
 import { sessionsService } from '../services/SessionsService'
 import socketService from "../services/SocketService";
@@ -9,13 +8,12 @@ export class SessionsController extends BaseController {
   constructor() {
     super("api/session");
     this.router
+      .get("/:sessionCode", this.getBySessionCode)
       .put("/:sessionCode", this.addToQueue)
       .put("/:sessionCode/:songUri",this.updateSong)
-      .get("/:sessionCode", this.getBySessionCode)
-      .use(auth0provider.isAuthorized)
-      .post("", this.create)
-      
-    }
+      .use(auth0provider.getAuthorizedUserInfo)
+      .post("/post", this.create)
+  }
     async getBySessionCode(req, res, next) {
       try {
       let data = await sessionsService.getById(req.params.sessionCode)
@@ -46,7 +44,7 @@ export class SessionsController extends BaseController {
       socketService.messageRoom('session-' + req.params.sessionCode, 'songScoreUpdated', { sessionCode: req.params.sessionCode})
       return res.send({ data: data, message: 'updated song'})
     } catch (error) {
-      
+      console.error(error)
     }
   }
 }

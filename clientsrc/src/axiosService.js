@@ -11,7 +11,7 @@ export const api = Axios.create({
   withCredentials: true
 })
 export const hostTokensApi = Axios.create({
-  baseURL: base + "",
+  baseURL: base + "auth/",
   timeout: 3000,
   withCredentials: true
 })

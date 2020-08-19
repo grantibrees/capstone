@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <navbar />
     <div class="spacing"></div>
     <router-view />
   </div>
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
 import { onAuth } from "@bcwdev/auth0-vue";
 window.onSpotifyWebPlaybackSDKReady = () => {
   // You can now initialize Spotify.Player and use the SDK
@@ -19,19 +17,13 @@ export default {
   },
   async beforeCreate() {
     try {
-      this.$store.dispatch('initializeSocket')
-      await onAuth();
-      this.$store.dispatch("setBearer", this.$auth.bearer);
-      this.$store.dispatch("getProfile");
-      
+      this.$store.dispatch("initializeSocket");
     } catch (err) {
       console.log("the problem is in app");
       this.$router.push({ name: "home" });
     }
   },
-  components: {
-    Navbar,
-  },
+  components: {},
 };
 </script>
 
