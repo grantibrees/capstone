@@ -31,6 +31,15 @@ export default {
         console.error(error)
       }
     },
+    async getQueue({ commit, dispatch}, payload) {
+      try {
+        let res = await api.get('session/' + payload.sessionCode)
+        console.log('got Queue', res.data[0])
+        commit('setQueue', res.data)
+      } catch(error){
+        console.error(error)
+      }
+    },
 
     getActiveSong({ commit, dispatch }, song) {
       if (store.state.activeSong == "no active song") {

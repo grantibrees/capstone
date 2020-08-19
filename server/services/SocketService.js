@@ -10,6 +10,7 @@ class SocketService {
       this.io = io;
       //Server listeners
       io.on("connection", this._onConnect());
+      io.on('dispatch', data => this._onDispatch(data));
     } catch (e) {
       console.error("[SOCKETSTORE ERROR]", e);
     }
@@ -34,14 +35,14 @@ class SocketService {
    * @param {SocketIO.Socket} socket
    * @param {string} room
    */
-  JoinRoom(socket, room) {
+  joinRoom(socket, room) {
     socket.join(room);
   }
   /**
    * @param {SocketIO.Socket} socket
    * @param {string} room
    */
-  LeaveRoom(socket, room) {
+  leaveRoom(socket, room) {
     socket.leave(room);
   }
 

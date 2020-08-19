@@ -56,6 +56,9 @@ export default new Vuex.Store({
     setActiveSong(state, activeSong) {
       state.activeSong = activeSong
     },
+    setQueue(state, queue){
+      state.activeSession.queue = queue
+    },
     setNextSong(state, nextSong) {
       state.nextSong = nextSong
     },
