@@ -23,6 +23,7 @@ export default {
       newSessionName: "",
     };
   },
+  mounted() {},
   computed: {},
   methods: {
     createSession() {
