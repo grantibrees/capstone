@@ -1,20 +1,24 @@
 <template>
-  <div class="songs border border-rounded bg-secondary text-white row">
+  <div class="songs border border-rounded bg-secondary text-white row font-medieval-wide h-25">
     <div class="col-2">
-      <button @click.prevent="vote('up')" class="btn btn-success btn-outline">Upvote</button>
+      <button v-if="upVoteToggle == true" @click.prevent="vote('up')" class="btn btn-success btn-outline">Upvote</button>
+       <button v-if="upVoteToggle == false" @click.prevent="vote('up')" class="btn btn-outline-success btn-outline">Upvote</button>
     </div>
-    <div class="col-8">
-      {{songData.title}}
-      {{songData.album}}
+    <div class="col-8 ">
+      {{songData.songTitle}}-
+      {{songData.artist}}
+
       {{songData.score}}
-      <img
-        class="rounded my-auto"
-        :src="songData.albumCover"
+      <!-- <img
+
+        class="rounded my-auto img-thumbnail img-fluid"
+        :src="songData.albumCover.url"
         alt
-      />
+      /> -->
     </div>
     <div class="col-2">
-      <button @click.prevent="vote('down')" class="btn btn-danger btn-outline">Downvote</button>
+      <button v-if="downVoteToggle == true" @click.prevent="vote('down')" class="btn btn-danger btn-outline">Downvote</button>
+      <button v-if="downVoteToggle == false" @click.prevent="vote('down')" class="btn btn-outline-danger btn-outline">Downvote</button>
     </div>
   </div>
 </template>
@@ -27,24 +31,37 @@ export default {
     return {
       upVoteToggle: true,
       downVoteToggle: true,
+      voteDisabled: false,
     };
   },
   computed: {},
   methods: {
+    delay(){
+      this.timeout = setTimeout(() => {
+          this.voteDisabled = false
+        }, 2000)
+    },
     vote(direction) {
-      // If your clicking down and already had voted up this prob will just double vote up without additional measures
+      if(this.voteDisabled == false){
+        this.voteDisabled = true
       if (direction == "up" && this.upVoteToggle == true) {
-        songData.score++;
+        this.songData.score++;
         this.upVoteToggle = false;
       } else if (direction == "up" && this.upVoteToggle == false) {
-        songData.score--;
+        this.songData.score--;
         this.upVoteToggle = true;
       } else if (direction == "down" && this.downVoteToggle == true) {
-        songData.score--;
-        this.donwVoteToggle = false;
-      } else {
-        songData.score++;
+        this.songData.score--;
+        this.downVoteToggle = false;
+      } else if (direction == "down" && this.downVoteToggle == false) {
+        this.songData.score++;
         this.downVoteToggle = true;
+      }
+      this.$store.dispatch('updateSongScore', {
+        songData: this.songData,
+        uri: this.songData.uri.split(":")[2]
+      })
+      this.delay()
       }
     },
   },
@@ -54,5 +71,9 @@ export default {
 </script>
 
 
+
 <style scoped>
+.font-medieval-wide{
+    font-family: 'Metamorphous', cursive;
+    }
 </style>

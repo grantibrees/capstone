@@ -3,12 +3,7 @@
     <hostComponent></hostComponent>
     <!-- Currently shows search results, need to add this to proper search and change selectSong() to properly add data to state and play song.  -->
 
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#songModal"
-    >Search</button>
+   
 
     <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -52,6 +47,12 @@
         </div>
       </div>
     </div>
+     <button
+      type="button"
+      class="btn btn-secondary rounded-pill m-2"
+      data-toggle="modal"
+      data-target="#songModal"
+    >Search</button>
     <!-- QUEUE--------------------------------------------------------------------------------------- -->
     <queue />
   </div>

@@ -17,6 +17,11 @@ export const socketStore = {
         dispatch("getQueue", payload)
       })
 
+      socket.on('songScoreUpdated', payload => {
+        console.log('song score updated')
+        dispatch('getQueue', payload)
+      })
+
       // socket.on("deleteCar", car => {
       //   commit("deleteCar", car)
       // })

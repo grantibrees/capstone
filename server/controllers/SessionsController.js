@@ -10,11 +10,12 @@ export class SessionsController extends BaseController {
     this.router
       .get("/:sessionCode", this.getBySessionCode)
       .put("/:sessionCode", this.addToQueue)
+      .put("/:sessionCode/:songUri",this.updateSong)
       .use(auth0provider.getAuthorizedUserInfo)
       .post("/post", this.create)
   }
-  async getBySessionCode(req, res, next) {
-    try {
+    async getBySessionCode(req, res, next) {
+      try {
       let data = await sessionsService.getById(req.params.sessionCode)
       return res.send(data)
     } catch (error) { next(error) }
@@ -36,5 +37,14 @@ export class SessionsController extends BaseController {
       return res.send({ data: data, message: "added song to que" })
     } catch (error) { next(error) }
   }
-
+  
+  async updateSong(req, res, next) {
+    try {
+      let data = await sessionsService.updateSong(req.params.sessionCode, req.body)
+      socketService.messageRoom('session-' + req.params.sessionCode, 'songScoreUpdated', { sessionCode: req.params.sessionCode})
+      return res.send({ data: data, message: 'updated song'})
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
