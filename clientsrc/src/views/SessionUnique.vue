@@ -88,7 +88,7 @@ export default {
     },
     trackResults() {
       return this.$store.state.trackSearchResults;
-    },
+    }
   },
   methods: {
     beforeDestory() {

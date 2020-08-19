@@ -25,7 +25,7 @@ export default {
       try {
         let res = await api.put('session/' + payload.sessionCode, payload)
         console.log(res)
-        dispatch("joinSession", payload.sessionCode)
+        // dispatch("joinSession", payload.sessionCode)
         dispatch("getActiveSong", payload)
       } catch (error) {
         console.error(error)
@@ -35,7 +35,7 @@ export default {
       try {
         let res = await api.get('session/' + payload.sessionCode)
         console.log('got Queue', res.data[0])
-        commit('setQueue', res.data)
+        commit('setQueue', res.data[0].queue)
       } catch(error){
         console.error(error)
       }
