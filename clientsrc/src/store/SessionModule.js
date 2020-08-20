@@ -25,6 +25,8 @@ export default {
       try {
         let res = await api.get("session/" + sessionCode)
         commit("setActiveSession", res.data[0])
+        if(res.data[0].queue[0]){
+        commit("setActiveSong", res.data[0].queue[0])}
         router.push({ name: 'SessionUnique', params: { code: sessionCode } })
       } catch (error) {
         console.error(error)

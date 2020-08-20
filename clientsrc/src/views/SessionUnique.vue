@@ -80,6 +80,9 @@ export default {
     this.joinSession();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
+    // this.$store.dispatch("getQueue", {
+    //   sessionCode: this.$route.params.code
+    // })
   },
 
   computed: {
