@@ -1,6 +1,16 @@
 <template>
-  <div class="host-component mt-5">
-    <button @click="play">play</button>
+  <div class="host-component col-12">
+    <div class="row align-items-center my-4">
+      <div class="col-8">
+        <h5 class="rm-my">Session Code 5DC7</h5>
+      </div>
+      <div class="col-2">
+        <i class="far fa-share-square"></i>
+      </div>
+      <div class="col-2">
+        <i class="fas fa-cog"></i>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -108,4 +118,8 @@ export default {
 </script>
 
 <style scoped>
+.rm-my {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+}
 </style>

@@ -45,7 +45,9 @@ color: var(--darkteal);
 color: var(--white);
 }
 
-
+.min-height{
+  min-height: 33vh;
+}
 
 
 .rm-my{
@@ -72,72 +74,9 @@ color: var(--white);
     display: none !important;
   }
 
-    .font-simple-serif{
-    font-family: 'Amiri', serif;
+    .font-fancy{
+      font-family: 'Norican', cursive;
     }
-    .font-fancy-serif{
-    font-family: 'Averia Serif Libre', cursive;
-    }
-    .font-whispy-thick{
-    font-family: 'Berkshire Swash', cursive;
-    }
-    .font-sharp-handwriting{
-    font-family: 'Bilbo', cursive;
-    }
-    .font-western-caps{
-    font-family: 'Girassol', cursive;
-    }
-    .font-medieval-simple{
-    font-family: 'Grenze Gotisch', cursive;
-    }
-    .font-inky-typed{
-    font-family: 'IM Fell DW Pica', serif;
-    }
-    .font-inky-caps{
-    font-family: 'IM Fell DW Pica SC', serif;
-    }
-    .font-medieval-wide{
-    font-family: 'Metamorphous', cursive;
-    }
-    .font-round-blocky-sans{
-    font-family: 'Mirza', cursive;
-    }
-    .font-keycaps{
-    font-family: 'Monofett', cursive;
-    }
-    .font-underline-caps{
-    font-family: 'Montserrat Subrayada', sans-serif;
-    }
-    .font-simple-serif-2{
-    font-family: 'Neuton', serif;
-    }
-    .font-cut-edge{
-    font-family: 'Nova Cut', cursive;
-    }
-    .font-straight-thick-sans{
-    font-family: 'Oswald', sans-serif;
-    }
-    .font-whispy-sans{
-    font-family: 'Philosopher', sans-serif;
-    }
-    .font-medieval-thick{
-    font-family: 'Pirata One', cursive;
-    }
-    .font-easy-handwriting{
-    font-family: 'Reenie Beanie', cursive;
-    }
-    .font-inky-typewriter{
-    font-family: 'Special Elite', cursive;
-    }
-    .font-wide-rounded{
-    font-family: 'Sulphur Point', sans-serif;
-    }
-    .font-windy-caps{
-    font-family: 'Trade Winds', cursive;
-    }
-    .font-retro{
-    font-family: 'VT323', monospace;
-    }
-    .font-marker-edge{
-    font-family: 'Yatra One', cursive;
+    .font-simple{
+      font-family: 'Alata', sans-serif;
     }

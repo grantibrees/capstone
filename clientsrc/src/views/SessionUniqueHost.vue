@@ -1,58 +1,68 @@
 <template>
-  <div class="SessionUnique">
-    <hostComponent></hostComponent>
-    <!-- Currently shows search results, need to add this to proper search and change selectSong() to properly add data to state and play song.  -->
+  <div class="SessionUnique container-fluid">
+    <div class="row chocolate top-height">
+      <hostComponent></hostComponent>
+    </div>
 
-    <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Search</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form
-              class="form-inline mr-5"
-              @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
-            >
-              <input
-                v-model="search.data"
-                class="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <div
-              class="bg-success m-2 p-2 row justify-content-between rounded-pill"
-              v-for="result in trackResults"
-              :key="result.id"
-            >
-              <div class="col-2">
-                <img class="ml-5 rounded img-fluid" :src="result.album.images[0].url" alt />
+    <div class="row mid-height">
+      <queue />
+    </div>
+    <div class="row bot-height strawberry align-items-center">
+      <div class="col-12">
+        <div class="row px-5 py-3">
+          <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Search</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form
+                    class="form-inline mr-5"
+                    @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
+                  >
+                    <input
+                      v-model="search.data"
+                      class="form-control mr-sm-2"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                  <div
+                    class="bg-success m-2 p-2 row justify-content-between rounded-pill"
+                    v-for="result in trackResults"
+                    :key="result.id"
+                  >
+                    <div class="col-2">
+                      <img class="ml-5 rounded img-fluid" :src="result.album.images[0].url" alt />
+                    </div>
+                    {{result.artists[0].name}}- {{result.name}}
+                    <button
+                      class="btn btn-outline-secondary mr-5 rounded-circle col-2"
+                      @click.prevent="selectSong(result)"
+                    >+</button>
+                  </div>
+                </div>
+                <div class="modal-footer"></div>
               </div>
-              {{result.artists[0].name}}- {{result.name}}
-              <button
-                class="btn btn-outline-secondary mr-5 rounded-circle col-2"
-                @click.prevent="selectSong(result)"
-              >+</button>
             </div>
           </div>
-          <div class="modal-footer"></div>
+          <button
+            type="button"
+            class="btn btn-block btn-outline-danger p-3 rounded-pill"
+            data-toggle="modal"
+            data-target="#songModal"
+          >Add a Song</button>
         </div>
       </div>
     </div>
-    <button
-      type="button"
-      class="btn btn-secondary rounded-pill m-2"
-      data-toggle="modal"
-      data-target="#songModal"
-    >Search</button>
-    <!-- QUEUE--------------------------------------------------------------------------------------- -->
-    <queue />
+
+    <!-- Currently shows search results, need to add this to proper search and change selectSong() to properly add data to state and play song.  -->
   </div>
 </template>
 
@@ -165,4 +175,45 @@ export default {
 
 
 <style scoped>
+body {
+  background-color: #fff8ed;
+  color: var(--black);
+}
+.font-fancy {
+  font-family: "Norican", cursive;
+}
+.top-height {
+  min-height: 8vh;
+  max-height: 8vh;
+}
+.mid-height {
+  min-height: 72vh;
+  max-height: 72vh;
+}
+.bot-height {
+  min-height: 20vh;
+  max-height: 20vh;
+}
+
+.strawberry {
+  background-color: #ffd9d1;
+}
+.chocolate {
+  background-color: #74462c;
+}
+.vanilla {
+  background-color: #fff8ed;
+}
+.strawberry-accent {
+  color: white;
+  background-color: #e64772;
+}
+.bright-accent {
+  color: white;
+  background-color: #0fb2b5;
+}
+.rm-my {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+}
 </style>

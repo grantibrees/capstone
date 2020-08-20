@@ -1,5 +1,5 @@
 <template>
-  <div class="Dashboard container-fluid">
+  <div class="Dashboard">
     <router-view />
   </div>
 </template>
