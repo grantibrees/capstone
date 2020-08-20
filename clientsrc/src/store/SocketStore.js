@@ -12,7 +12,7 @@ export const socketStore = {
       })
 
       //registers event listeners for emits from socketservice
-      socket.on("addToQueue", payload => {
+      socket.on("updateQueue", payload => {
         console.log('worked', payload)
         dispatch("getQueue", payload)
       })

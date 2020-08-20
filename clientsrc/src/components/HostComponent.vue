@@ -1,5 +1,6 @@
 <template>
   <div class="host-component mt-5">
+    <button @click="play">play</button>
   </div>
 </template>
 <script>
@@ -8,7 +9,7 @@ export default {
   data() {
     /* Data binding. */
     return {
-      deviceId: "",
+      deviceId: this.$store.state.hostDeviceId,
       changingTrack: false,
       currentState: {},
     };
@@ -18,18 +19,20 @@ export default {
       // You can now initialize Spotify.Player and use the SDK
     };
     console.log("hostComponent loaded");
-    // this.checkForActiveSong();
-    this.initiatePlayer();
+    this.checkForActiveSong();
   } /* Runs functions on startup */,
   computed: {
-    async accessToken() {
-      return await this.$store.state.hostTokens.accessToken;
+    accessToken() {
+      return this.$store.state.hostTokens.accessToken;
     },
+  } /* Pulls values from the store. Always the value of the method that's in it. The live value. Constant value, has to have a return in it, it's a getter. It's like a listener, listening to the state. It gets the state.
+      cars() {
+      return this.store.state.cars;
+  */,
+  mounted() {
+    this.initiatePlayer();
   },
   methods: {
-    // getHostToken() {
-    //   this.$store.dispatch("getHostToken");
-    // },
     waitForSpotifyWebPlaybackSDKToLoad: async function () {
       return new Promise((resolve) => {
         if (window.Spotify) {
@@ -86,6 +89,7 @@ export default {
       console.log(state);
       if (
         state &&
+        state != this.currentState &&
         state.paused &&
         this.changingTrack == false &&
         state.position === 0
@@ -94,11 +98,9 @@ export default {
         this.changingTrack = true;
         this.currentState = state;
         this.$store.dispatch("changeSong");
-        this.resetChangingTrack();
+      } else if (state.paused == false && state.position > 1000) {
+        this.changingTrack = false;
       }
-    },
-    resetChangingTrack() {
-      setTimeout((this.changingTrack = false), 15000);
     },
   },
 };

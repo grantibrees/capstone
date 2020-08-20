@@ -3,14 +3,9 @@
     <div v-if="this.activeSession.queue && this.activeSession.queue.length > 0">
     <div class="text-white bg-primary rounded container">
       <div class="row justify-content-center align-items-center p-2">
-
         <div class="col-2">
-          <img
-
-        class="rounded my-auto img-thumbnail img-fluid"
-        :src="activeSong.albumCover.url"
-        alt
-      /></div>
+          <img class="rounded my-auto img-thumbnail img-fluid" :src="activeSong.albumCover.url" alt />
+        </div>
         <div class="col-8">
           <h3>Playing</h3>
           Title: {{activeSong.songTitle}}
@@ -70,6 +65,7 @@ export default {
      };
   },
   mounted() {
+    // this.startSong();
   },
   computed: {
     activeSession(){
@@ -88,7 +84,7 @@ export default {
     },
   },
   methods: {
-    changeSong() {
+    startSong() {
       if (this.songsQueue.length > 0) {
         this.$store.dispatch("getActiveSong", this.songsQueue[0]);
       }
