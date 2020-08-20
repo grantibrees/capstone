@@ -16,8 +16,8 @@
       </div>
       <div class="row justify-content-center p-2">
         <div class="col-10">
-          <button>Play/Pause</button>
-          <button>Skip</button>
+          <button class="btn btn-outline-secondary">Play/Pause</button>
+          <button class="btn btn-outline-secondary">Skip</button>
         </div>
       </div>
     </div>
