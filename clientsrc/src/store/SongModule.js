@@ -31,12 +31,12 @@ export default {
         console.error(error)
       }
     },
-    async getQueue({ commit, dispatch}, payload) {
+    async getQueue({ commit, dispatch }, payload) {
       try {
         let res = await api.get('session/' + payload.sessionCode)
         console.log('got Queue', res.data[0])
         commit('setQueue', res.data[0].queue)
-      } catch(error){
+      } catch (error) {
         console.error(error)
       }
     },
@@ -45,22 +45,22 @@ export default {
       if (store.state.activeSong == "no active song") {
         commit("setActiveSong", song)
         dispatch("playCurrentSong")
-        api.delete("session/" + store.state.activeSession.sessionCode, store.state.activeSong)
-        store.state.activeSession.queue.splice(0, 1)
+        api.delete("session/" + store.state.activeSession.sessionCode + "/" + song.uri)
+        store.state.activeSession.queue.sort((a, b) => b.score - a.score).splice(0, 1)
 
       }
     },
 
     changeSong({ commit, dispatch }) {
       store.state.activeSong = "no active song"
-      dispatch("getActiveSong", store.state.activeSession.queue[0])
+      dispatch("getActiveSong", store.state.activeSession.queue.sort((a, b) => b.score - a.score)[0])
     },
 
-    updateSongScore({ commit, dispatch}, songRequest) {
-    api.put('session/' + songRequest.songData.sessionCode + "/" + songRequest.uri, songRequest.songData)
+    updateSongScore({ commit, dispatch }, songRequest) {
+      api.put('session/' + songRequest.songData.sessionCode + "/" + songRequest.uri, songRequest.songData)
     }
 
-  
+
     // async createSession({ commit }, sessionData) {
     //   try {
     //     console.log(sessionData)
