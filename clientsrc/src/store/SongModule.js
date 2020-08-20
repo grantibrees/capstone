@@ -45,7 +45,7 @@ export default {
       if (store.state.activeSong == "no active song") {
         commit("setActiveSong", song)
         dispatch("playCurrentSong")
-        api.delete("session/" + store.state.activeSession.sessionCode + "/" + song.uri)
+        api.delete("session/" + store.state.activeSession.sessionCode + "/" + songRequest.uri)
         store.state.activeSession.queue.sort((a, b) => b.score - a.score).splice(0, 1)
 
       }
