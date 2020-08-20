@@ -14,6 +14,8 @@ import SessionJoin from '../views/SessionJoin.vue'
 // @ts-ignore
 import SessionUnique from '../views/SessionUnique.vue'
 // @ts-ignore
+import SessionUniqueHost from '../views/SessionUniqueHost.vue'
+// @ts-ignore
 import { authGuard } from "@bcwdev/auth0-vue"
 
 
@@ -63,6 +65,12 @@ const routes = [
     path: '/session/:code',
     name: 'SessionUnique',
     component: SessionUnique,
+    // beforeEnter: authGuard
+  },
+  {
+    path: '/session/:code/host',
+    name: 'SessionUniqueHost',
+    component: SessionUniqueHost,
     // beforeEnter: authGuard
   },
 ]

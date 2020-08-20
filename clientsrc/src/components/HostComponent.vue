@@ -29,8 +29,8 @@ export default {
       cars() {
       return this.store.state.cars;
   */,
-  mounted() {
-    this.initiatePlayer();
+  async mounted() {
+    await this.initiatePlayer();
   },
   methods: {
     waitForSpotifyWebPlaybackSDKToLoad: async function () {
@@ -45,6 +45,7 @@ export default {
       });
     },
     initiatePlayer: async function () {
+      await this.accessToken;
       const { Player } = await this.waitForSpotifyWebPlaybackSDKToLoad();
       const player = new Player({
         name: "Capstone Web Player",

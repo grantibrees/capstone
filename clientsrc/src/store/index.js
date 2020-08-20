@@ -110,7 +110,6 @@ export default new Vuex.Store({
           expiresIn: tokenData.expiresIn,
         }
         console.log(payload);
-        // debugger
         let res = await hostTokensApi.post('tokensave', payload)
         console.log("host tokens posted to server", res);
       } catch (error) {
