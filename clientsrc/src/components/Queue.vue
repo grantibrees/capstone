@@ -1,6 +1,6 @@
 <template>
   <div class="Queue">
-    <div v-if="this.activeSession.queue && this.activeSession.queue.length > 0">
+    <div v-if="(this.activeSession.queue && this.activeSession.queue.length > 0) || this.activeSong.trackLength">
     <div class="text-white bg-primary rounded container">
       <div class="row justify-content-center align-items-center p-2">
         <div class="col-2">
