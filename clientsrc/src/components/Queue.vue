@@ -1,50 +1,80 @@
 <template>
-  <div class="Queue container-fluid">
+  <div class="Queue col">
     <div class="row chocolate">
       <!-- SECTION If there IS a queue or track length -->
       <div
+        class="col-12"
         v-if="(this.activeSession.queue && this.activeSession.queue.length > 0) || this.activeSong.trackLength"
       >
-        <div class="row"></div>
-        <div class="col-3">
-          <img class="rounded my-auto img-thumbnail img-fluid" :src="activeSong.albumCover.url" alt />
+        <div class="row">
+          <div class="col-3">
+            <img
+              class="rounded my-auto img-thumbnail img-fluid"
+              :src="activeSong.albumCover.url"
+              alt
+            />
+          </div>
+
+          <div class="col-9">
+            <div class="row justify-content-center">
+              <h3>Playing</h3>
+            </div>
+            <div class="row justify-content-center">Title: {{activeSong.songTitle}}</div>
+            <div class="row justify-content-center">Album: {{activeSong.album}}</div>
+            <div class="row justify-content-center">Track Length: {{activeSong.trackLength}}</div>
+          </div>
         </div>
-        <div class="col-9">
-          <h3>Playing</h3>
-          Title: {{activeSong.songTitle}}
-          Album: {{activeSong.album}}
-          Track Length: {{activeSong.trackLength}}
-        </div>
-        <div class="col-12">
-          <button class="btn btn-outline-secondary">Play/Pause</button>
-          <button class="btn btn-outline-secondary">Skip</button>
+        <div class="row justify-content-center">
+          <div class="col-1"></div>
+
+          <div class="col-4">
+            <button class="btn btn-outline-secondary">Play/Pause</button>
+          </div>
+          <div class="col-2"></div>
+
+          <div class="col-4">
+            <button class="btn btn-outline-secondary">Skip</button>
+          </div>
+          <div class="col-1"></div>
         </div>
       </div>
       <!-- SECTION If there is NO queue or NO track length -->
       <div v-else>
-        <div class="text-white bg-primary rounded container">
-          <div class="row justify-content-center align-items-center">
-            <div class="col-8">
-              <h3>Playing</h3>Title:
-              Album:
-              Track Length:
-            </div>
-            <!-- Is this going to be handled by the SKD player? -->
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-3 align-self-center">
+            <img
+              class="rounded img-thumbnail img-fluid"
+              src="https://images.squarespace-cdn.com/content/5d2e2c5ef24531000113c2a4/1564770252898-1KLCZDE9BJRSWDSMIM7L/image-asset.png"
+              alt
+            />
           </div>
-          <div class="row justify-content-center">
-            <div class="col-10">
-              <button>Play/Pause</button>
-              <button>Skip</button>
+          <div class="col-7">
+            <div class="row justify-content-center">
+              <h3>Playing</h3>
             </div>
+            <div class="row justify-content-center">Title:</div>
+            <div class="row justify-content-center">Album:</div>
+            <div class="row justify-content-center">Track Length:</div>
           </div>
+          <div class="col-1"></div>
         </div>
-        <div></div>
+        <div class="row justify-content-center">
+          <div class="col-1"></div>
+
+          <div class="col-4">
+            <button class="btn btn-outline-secondary">Play/Pause</button>
+          </div>
+          <div class="col-2"></div>
+
+          <div class="col-4">
+            <button class="btn btn-outline-secondary">Skip</button>
+          </div>
+          <div class="col-1"></div>
+        </div>
       </div>
     </div>
-
-    <div class="row vanilla overflowy">
-      <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong._id" />
-    </div>
+    <div class="row vanilla"></div>
   </div>
 </template> 
 

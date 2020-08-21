@@ -1,5 +1,5 @@
 <template>
-  <div class="SessionUnique container-fluid">
+  <div class="SessionUnique container-fluid full-height">
     <div class="row chocolate top-height">
       <hostComponent></hostComponent>
     </div>
@@ -181,6 +181,10 @@ body {
 }
 .font-fancy {
   font-family: "Norican", cursive;
+}
+.full-height {
+  min-height: 100%;
+  max-height: 100%;
 }
 .top-height {
   min-height: 8vh;
