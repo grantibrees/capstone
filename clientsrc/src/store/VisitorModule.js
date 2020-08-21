@@ -42,33 +42,36 @@ export default {
         console.log(error, "Failed");
       }
     },
+    //Should Be Safe To Delete
 
-    async searchByArtist({ commit, dispatch, state }, query) {
-      try {
-        const res = await spotifyApi.get('search?q=' + query.data + '&type=artist', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
-        console.log(res, 'artist results')
-      } catch (error) {
-        console.error(error)
-      }
-    },
+    // async searchByArtist({ commit, dispatch, state }, query) {
+    //   try {
+    //     const res = await spotifyApi.get('search?q=' + query.data + '&type=artist', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
+    //     console.log(res, 'artist results')
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // },
 
-    async searchByAlbum({ commit, dispatch, state }, query) {
-      try {
-        const res = await spotifyApi.get('search?q=' + query.data + '&type=album', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
-        console.log(res, 'album results')
-      } catch (error) {
-        console.error(error)
-      }
-    },
+    // async searchByAlbum({ commit, dispatch, state }, query) {
+    //   try {
+    //     const res = await spotifyApi.get('search?q=' + query.data + '&type=album', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
+    //     console.log(res, 'album results')
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // },
 
     async searchBySong({ commit, dispatch, state }, query) {
       try {
-        const res = await spotifyApi.get('search?q=' + query.data + '&type=track', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
-        console.log(res, 'song results')
-        commit("setTrackSearchResults", res.data.tracks.items)
+        const res = await spotifyApi.get('search?q=' + query.data + '&type=track' + '&limit=10&' + 'offset=' + query.page, { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
+        commit("setTrackSearchResults", res.data.tracks)
+        commit("updateTrackPage", true)
+        return res.data
 
       } catch (error) {
         console.error(error)
+        commit("updateTrackPage", false)
       }
     },
 

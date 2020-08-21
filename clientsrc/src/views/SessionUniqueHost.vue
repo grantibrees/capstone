@@ -4,19 +4,11 @@
     <!-- Currently shows search results, need to add this to proper search and change selectSong() to properly add data to state and play song.  -->
 
     <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Search</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form
-              class="form-inline mr-5"
-              @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
-            >
+            <h5 class="modal-title mr-5">Search</h5>
+            <form class="form-inline mr-5" @submit.prevent="searchBySong()">
               <input
                 v-model="search.data"
                 class="form-control mr-sm-2"
@@ -26,6 +18,17 @@
               />
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+            <button
+              type="button"
+              @click="clearTrackResults"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
             <div
               class="bg-success m-2 p-2 row justify-content-between rounded-pill"
               v-for="result in trackResults"
@@ -40,7 +43,10 @@
                 @click.prevent="selectSong(result)"
               >+</button>
             </div>
+            <infinite-loading v-if="!noLoadForYou" spinner="waveDots" @infinite="infiniteHandler"></infinite-loading>
+            <div v-if="noLoadForYou">end of results :)</div>
           </div>
+
           <div class="modal-footer"></div>
         </div>
       </div>
@@ -50,6 +56,8 @@
       class="btn btn-secondary rounded-pill m-2"
       data-toggle="modal"
       data-target="#songModal"
+      @click="yesLoadForYou"
+
     >Search</button>
     <!-- QUEUE--------------------------------------------------------------------------------------- -->
     <queue />
@@ -58,15 +66,20 @@
 
 
 <script>
+import Vue from "vue";
 import hostComponent from "../components/HostComponent";
 import { onAuth } from "@bcwdev/auth0-vue";
 import queue from "../components/Queue";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   name: "SessionUnique",
   data() {
     return {
       search: {},
+      oldSearchLength: 0,
+      isSearching: false,
+      noLoadForYou: false,
     };
   },
 
@@ -78,6 +91,7 @@ export default {
     this.joinSession();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
+
     // this.$store.dispatch("getQueue", {
     //   sessionCode: this.$route.params.code
     // })
@@ -92,6 +106,45 @@ export default {
     },
   },
   methods: {
+    yesLoadForYou(){
+      this.noLoadForYou = false
+    },
+    async infiniteHandler($state) {
+      // debugger;
+      console.log(
+        "search Results",
+        this.oldSearchLength,
+        this.trackResults.length
+      );
+      if (
+        !this.isSearching &&
+        this.oldSearchLength != this.trackResults.length &&
+        this.trackResults.length <= 50
+      ) {
+        this.isSearching = true;
+        await this.searchBySong();
+        $state.loaded();
+        setTimeout((this.isSearching = false), 2000);
+      } else {
+        console.log("no load")
+        this.noLoadForYou = true;
+      }
+
+      // $state.loaded()
+    },
+    clearTrackResults() {
+      this.$store.commit("clearTrackSearchResults");
+      this.oldSearchLength = 0;
+      this.noLoadForYou = false;
+      this.search = "";
+      console.log(this.infiniteHandler);
+      this.infiniteHandler.reset();
+    },
+    stateLoaded($state) {
+      $state.loaded();
+      console.log("loaded");
+    },
+
     async hostCheck() {
       await onAuth();
       this.$store.dispatch("setBearer", this.$auth.bearer);
@@ -122,19 +175,11 @@ export default {
         sessionCode: this.$route.params.code,
       });
     },
-    searchByArtist() {
-      this.$store.dispatch("searchByArtist", {
+    async searchBySong() {
+      this.oldSearchLength = this.trackResults.length;
+      await this.$store.dispatch("searchBySong", {
         data: this.search.data,
-      });
-    },
-    searchByAlbum() {
-      this.$store.dispatch("searchByAlbum", {
-        data: this.search.data,
-      });
-    },
-    searchBySong() {
-      this.$store.dispatch("searchBySong", {
-        data: this.search.data,
+        page: this.trackResults.length,
       });
     },
 
@@ -159,6 +204,7 @@ export default {
   components: {
     hostComponent,
     queue,
+    InfiniteLoading,
   },
 };
 </script>

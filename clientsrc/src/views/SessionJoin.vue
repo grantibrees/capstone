@@ -3,9 +3,9 @@
     <div class="row">
       <div class="col-12">
         <div class="form-group">
-          <input v-model="sessionCode" type="text" class="form-control" />
+          <input v-on:keyup.enter="joinSession" v-model="sessionCode" type="text" class="form-control" />
           <small id="helpId" class="form-text text-muted">enter session code:</small>
-          <button class="btn btn-outline-info" @click="joinSession">Join</button>
+          <button class="btn btn-outline-info"  @click="joinSession">Join</button>
         </div>
       </div>
     </div>
