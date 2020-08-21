@@ -43,7 +43,7 @@
                 @click.prevent="selectSong(result)"
               >+</button>
             </div>
-            <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+            <infinite-loading v-if="!noLoadForYou" spinner="waveDots" @infinite="infiniteHandler"></infinite-loading>
             <div v-if="noLoadForYou">end of results :)</div>
           </div>
 
@@ -56,6 +56,8 @@
       class="btn btn-secondary rounded-pill m-2"
       data-toggle="modal"
       data-target="#songModal"
+      @click="yesLoadForYou"
+
     >Search</button>
     <!-- QUEUE--------------------------------------------------------------------------------------- -->
     <queue />
@@ -104,6 +106,9 @@ export default {
     },
   },
   methods: {
+    yesLoadForYou(){
+      this.noLoadForYou = false
+    },
     async infiniteHandler($state) {
       // debugger;
       console.log(
@@ -121,6 +126,7 @@ export default {
         $state.loaded();
         setTimeout((this.isSearching = false), 2000);
       } else {
+        console.log("no load")
         this.noLoadForYou = true;
       }
 
