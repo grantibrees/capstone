@@ -25,7 +25,6 @@ export default {
       try {
         let res = await api.put('session/' + payload.sessionCode, payload)
         console.log(res)
-        // dispatch("joinSession", payload.sessionCode)
         dispatch("getActiveSong", payload)
       } catch (error) {
         console.error(error)
@@ -65,29 +64,5 @@ export default {
       }
       dispatch("saveToLocal")
     }
-
-
-    // async createSession({ commit }, sessionData) {
-    //   try {
-    //     console.log(sessionData)
-    //   await api.post("session", sessionData)
-    //   commit("setActiveSession", sessionData)
-    //   router.push( {name: 'SessionUnique', params: {code: sessionData.sessionCode} })
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-
-    // },
-
-    // async joinSession( {commit}, sessionCode ) {
-    //   try {
-    //     let res = await api.get("session/" + sessionCode)
-    //     commit("setActiveSession", res.data)
-    //     router.push( {name: 'SessionUnique', params: {code: sessionCode} })
-    //   } catch (error) {
-    //     console.error(error)
-
-    //   }
-    // }
   }
 }

@@ -1,8 +1,6 @@
 <template>
-  <div class="SessionUniqueHost container-fluid full-height">
-    <div class="row chocolate top-height">
-      <hostComponent></hostComponent>
-    </div>
+  <div class="SessionUniqueVisitor container-fluid full-height">
+    <div class="row chocolate top-height justify-content-center">Song Scoopery</div>
 
     <div class="row mid-height">
       <queue />
@@ -56,25 +54,17 @@
                       @click.prevent="selectSong(result)"
                     >+</button>
                   </div>
-                  <InfiniteLoading
-              v-if="!noLoadForYou"
-              spinner="waveDots"
-              :identifier="infiniteId"
-              @infinite="infiniteHandler"
-            >
-            </InfiniteLoading>
+                  <infinite-loading
+                    v-if="!noLoadForYou"
+                    spinner="waveDots"
+                    @infinite="infiniteHandler"
+                  ></infinite-loading>
                   <div v-if="noLoadForYou">
                     <div class="row bg-primary justify-content-center">End of results!</div>
                   </div>
                 </div>
                 <div class="modal-footer"></div>
-
               </div>
-              {{result.artists[0].name}}- {{result.name}}
-              <button
-                class="btn btn-outline-secondary mr-5 rounded-circle col-2"
-                @click.prevent="selectSong(result)"
-              >+</button>
             </div>
           </div>
 
@@ -88,7 +78,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -101,15 +90,13 @@ import queue from "../components/Queue";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  name: "SessionUniqueHost",
+  name: "SessionUniqueVisitor",
   data() {
     return {
-      search: "",
+      search: {},
       oldSearchLength: 0,
+      isSearching: false,
       noLoadForYou: false,
-      oldSearchTerm: 0,
-      isLoading: false,
-      infiniteId: "",
     };
   },
 
@@ -118,7 +105,7 @@ export default {
   },
 
   mounted() {
-    this.joinSessionHost();
+    this.joinSessionVisitor();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
 
@@ -140,14 +127,23 @@ export default {
       this.noLoadForYou = false;
     },
     async infiniteHandler($state) {
-      if (!this.isLoading && this.trackResults.length <= 50) {
-        this.isLoading = true;
+      // debugger;
+      console.log(
+        "search Results",
+        this.oldSearchLength,
+        this.trackResults.length
+      );
+      if (
+        !this.isSearching &&
+        this.oldSearchLength != this.trackResults.length &&
+        this.trackResults.length <= 50
+      ) {
+        this.isSearching = true;
         await this.searchBySong();
         $state.loaded();
-        console.log("load more");
-      } else if (this.trackResults.length > 0) {
+        setTimeout((this.isSearching = false), 2000);
+      } else {
         console.log("no load");
-        $state.complete();
         this.noLoadForYou = true;
       }
 
@@ -158,6 +154,12 @@ export default {
       this.oldSearchLength = 0;
       this.noLoadForYou = false;
       this.search = "";
+      console.log(this.infiniteHandler);
+      this.infiniteHandler.reset();
+    },
+    stateLoaded($state) {
+      $state.loaded();
+      console.log("loaded");
     },
 
     async hostCheck() {
@@ -191,19 +193,11 @@ export default {
       });
     },
     async searchBySong() {
-      if (this.oldSearchTerm != this.search) {
-        this.clearTrackResults();
-        this.noLoadForYou = false;
-        this.infiniteId = this.search;
-      }
       this.oldSearchLength = this.trackResults.length;
-      this.oldSearchTerm = this.search;
-      console.log(this.search);
       await this.$store.dispatch("searchBySong", {
-        data: this.search,
+        data: this.search.data,
         page: this.trackResults.length,
       });
-      this.isLoading = false;
     },
 
     async callTokens() {
@@ -215,9 +209,12 @@ export default {
         }
       }
     },
-    async joinSessionHost() {
+    async joinSessionVisitor() {
       if (this.$route.params.code) {
-        await this.$store.dispatch("joinSessionHost", this.$route.params.code);
+        await this.$store.dispatch(
+          "joinSessionVisitor",
+          this.$route.params.code
+        );
       } else {
         console.log("no route params code found");
       }
@@ -234,4 +231,49 @@ export default {
 
 
 <style scoped>
+body {
+  background-color: #fff8ed;
+  color: var(--black);
+}
+.font-fancy {
+  font-family: "Norican", cursive;
+}
+.full-height {
+  min-height: 100%;
+  max-height: 100%;
+}
+.top-height {
+  min-height: 8vh;
+  max-height: 8vh;
+}
+.mid-height {
+  min-height: 72vh;
+  max-height: 72vh;
+}
+.bot-height {
+  min-height: 20vh;
+  max-height: 20vh;
+}
+
+.strawberry {
+  background-color: #ffd9d1;
+}
+.chocolate {
+  background-color: #74462c;
+}
+.vanilla {
+  background-color: #fff8ed;
+}
+.strawberry-accent {
+  color: white;
+  background-color: #e64772;
+}
+.bright-accent {
+  color: white;
+  background-color: #0fb2b5;
+}
+.rm-my {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+}
 </style>

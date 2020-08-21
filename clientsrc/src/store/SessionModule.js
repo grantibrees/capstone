@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import { api, loginApi } from "../axiosService"
 import store from "."
 import router from '../router/index'
-import Swal from 'sweetalert2' 
+import Swal from 'sweetalert2'
 
 Vue.use(Vuex)
 
@@ -22,7 +22,7 @@ export default {
 
     },
 
-    async joinSession({ commit, dispatch }, sessionCode) {
+    async joinSessionHost({ commit, dispatch }, sessionCode) {
       try {
         let res = await api.get("session/" + sessionCode)
         commit("setActiveSession", res.data[0])
@@ -31,6 +31,25 @@ export default {
         }
         router.push({ name: 'SessionUniqueHost', params: { code: sessionCode } })
         dispatch("loadFromSave")
+      } catch (error) {
+        console.error(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'The Session Does Not Exist!',
+        })
+
+      }
+    },
+
+    async joinSessionVisitor({ commit, dispatch }, sessionCode) {
+      try {
+        let res = await api.get("session/" + sessionCode)
+        commit("setActiveSession", res.data[0])
+        if (res.data[0].queue[0]) {
+          commit("setActiveSong", res.data[0].queue[0])
+        }
+        router.push({ name: 'SessionUniqueVisitor', params: { code: sessionCode } })
       } catch (error) {
         console.error(error)
         Swal.fire({
