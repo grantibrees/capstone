@@ -1,23 +1,18 @@
 <template>
-  <div class="SessionUnique">
+  <div class="SessionUnique" >
     <hostComponent></hostComponent>
     <!-- Currently shows search results, need to add this to proper search and change selectSong() to properly add data to state and play song.  -->
 
-    <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
+    <div  id="songModal" class="modal fade"  tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Search</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
+            <h5 class="modal-title mr-5">Search</h5>
             <form
               class="form-inline mr-5"
-              @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
+              @submit.prevent="searchBySong()"
             >
-              <input
+              <input 
                 v-model="search.data"
                 class="form-control mr-sm-2"
                 type="search"
@@ -26,7 +21,12 @@
               />
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <div
+            <button type="button" @click='clearTrackResults' class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div 
               class="bg-success m-2 p-2 row justify-content-between rounded-pill"
               v-for="result in trackResults"
               :key="result.id"
@@ -40,10 +40,16 @@
                 @click.prevent="selectSong(result)"
               >+</button>
             </div>
+             <infinite-loading @infinite="infiniteHandler"></infinite-loading>
           </div>
+        
+          
+       
           <div class="modal-footer"></div>
         </div>
+        
       </div>
+      
     </div>
     <button
       type="button"
@@ -53,20 +59,27 @@
     >Search</button>
     <!-- QUEUE--------------------------------------------------------------------------------------- -->
     <queue />
+   
+      
+
   </div>
 </template>
 
 
 <script>
+import Vue from 'vue'
 import hostComponent from "../components/HostComponent";
 import { onAuth } from "@bcwdev/auth0-vue";
 import queue from "../components/Queue";
+import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   name: "SessionUnique",
   data() {
     return {
       search: {},
+      oldSearchLength: 0, 
+      isSearching:false
     };
   },
 
@@ -78,6 +91,7 @@ export default {
     this.joinSession();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
+
     // this.$store.dispatch("getQueue", {
     //   sessionCode: this.$route.params.code
     // })
@@ -90,8 +104,34 @@ export default {
     trackResults() {
       return this.$store.state.trackSearchResults;
     },
+    newSearchLength(){
+      return this.trackResults.length;
+    }
   },
   methods: {
+   infiniteHandler($state){
+     debugger
+        console.log('search Results', this.oldSearchLength, this.newSearchLength)
+      if(this.newSearchLength != this.oldSearchLength){
+       this.searchBySong()
+        this.oldSearchLength = this.newSearchLength
+      $state.loaded()
+      } else {
+        $state.complete()
+      }
+    
+      // $state.loaded()
+  
+    },
+    clearTrackResults(){
+    this.$store.commit('clearTrackSearchResults')
+    this.oldSearchLength = 0
+    },
+    stateLoaded($state){
+    $state.loaded()
+    console.log('loaded')
+    },
+
     async hostCheck() {
       await onAuth();
       this.$store.dispatch("setBearer", this.$auth.bearer);
@@ -122,19 +162,10 @@ export default {
         sessionCode: this.$route.params.code,
       });
     },
-    searchByArtist() {
-      this.$store.dispatch("searchByArtist", {
-        data: this.search.data,
-      });
-    },
-    searchByAlbum() {
-      this.$store.dispatch("searchByAlbum", {
-        data: this.search.data,
-      });
-    },
     searchBySong() {
       this.$store.dispatch("searchBySong", {
         data: this.search.data,
+        page: this.trackResults.length
       });
     },
 
@@ -159,6 +190,7 @@ export default {
   components: {
     hostComponent,
     queue,
+    InfiniteLoading,
   },
 };
 </script>

@@ -29,7 +29,8 @@ export default new Vuex.Store({
       expiresIn: ''
     },
     activeSession: {
-      queue: []
+      queue: [],
+      page: true
     },
     activeSong: "no active song",
     nextSong: {},
@@ -43,7 +44,13 @@ export default new Vuex.Store({
       state.spotifyAuthToken = spotifyAuthToken
     },
     setTrackSearchResults(state, searchResults) {
-      state.trackSearchResults = searchResults
+     searchResults.items.forEach(item => state.trackSearchResults.push(item))
+    },
+    updateTrackPage(state, page){
+      state.activeSession.page = page
+    },
+    clearTrackSearchResults(state) {
+      state.trackSearchResults = []
     },
     setHostTokens(state, tokens) {
       state.hostTokens.accessToken = tokens.accessToken

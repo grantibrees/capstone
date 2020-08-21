@@ -2,9 +2,6 @@
   <div class="SessionUnique">
     <hostComponent></hostComponent>
     <!-- Currently shows search results, need to add this to proper search and change selectSong() to properly add data to state and play song.  -->
-
-   
-
     <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -17,7 +14,7 @@
           <div class="modal-body">
             <form
               class="form-inline mr-5"
-              @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
+              @submit.prevent="searchBySong()"
             >
               <input
                 v-model="search.data"
@@ -28,7 +25,8 @@
               />
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <div
+             
+            <div 
               class="bg-success m-2 p-2 row justify-content-between rounded-pill"
               v-for="result in trackResults"
               :key="result.id"
@@ -42,11 +40,11 @@
                 @click.prevent="selectSong(result)"
               >+</button>
             </div>
+            </div>
           </div>
           <div class="modal-footer"></div>
         </div>
       </div>
-    </div>
      <button
       type="button"
       class="btn btn-secondary rounded-pill m-2"
@@ -80,6 +78,7 @@ export default {
     this.joinSession();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
+     this.scroll(result)
     // this.$store.dispatch("getQueue", {
     //   sessionCode: this.$route.params.code
     // })
@@ -92,6 +91,7 @@ export default {
     trackResults() {
       return this.$store.state.trackSearchResults;
     }
+    
   },
   methods: {
     async hostCheck() {
@@ -99,6 +99,7 @@ export default {
         "getSessionEmail",
         this.$route.params.code
       );
+
       if ((email = this.$auth.user.email)) {
         await onAuth();
         await this.callTokens();

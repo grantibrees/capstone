@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { api, loginApi } from "../axiosService"
 import store from "."
 import router from '../router/index'
+import Swal from 'sweetalert2' 
 
 Vue.use(Vuex)
 
@@ -31,6 +32,11 @@ export default {
         router.push({ name: 'SessionUniqueHost', params: { code: sessionCode } })
       } catch (error) {
         console.error(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'The Session Does Not Exist!',
+        })
 
       }
     }
