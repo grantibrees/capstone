@@ -67,6 +67,7 @@ export default {
         const res = await spotifyApi.get('search?q=' + query.data + '&type=track' + '&limit=10&' + 'offset=' + query.page, { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
         commit("setTrackSearchResults", res.data.tracks)
         commit("updateTrackPage", true)
+        return res.data
 
       } catch (error) {
         console.error(error)
