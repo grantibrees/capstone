@@ -10,7 +10,7 @@
             <h5 class="modal-title mr-5">Search</h5>
             <form class="form-inline mr-5" @submit.prevent="searchBySong()">
               <input
-                v-model="search.data"
+                v-model="search"
                 class="form-control mr-sm-2"
                 type="search"
                 placeholder="Search"
@@ -43,8 +43,13 @@
                 @click.prevent="selectSong(result)"
               >+</button>
             </div>
-            <infinite-loading v-if="!noLoadForYou" spinner="waveDots" @infinite="infiniteHandler"></infinite-loading>
-            <div v-if="noLoadForYou">end of results :)</div>
+            <InfiniteLoading
+              v-if="!noLoadForYou"
+              spinner="waveDots"
+              :identifier="infiniteId"
+              @infinite="infiniteHandler"
+            ></InfiniteLoading>
+            <div v-if="noLoadForYou">end of results :(</div>
           </div>
 
           <div class="modal-footer"></div>
@@ -57,7 +62,6 @@
       data-toggle="modal"
       data-target="#songModal"
       @click="yesLoadForYou"
-
     >Search</button>
     <!-- QUEUE--------------------------------------------------------------------------------------- -->
     <queue />
@@ -76,10 +80,12 @@ export default {
   name: "SessionUnique",
   data() {
     return {
-      search: {},
+      search: "",
       oldSearchLength: 0,
-      isSearching: false,
       noLoadForYou: false,
+      oldSearchTerm: 0,
+      isLoading: false,
+      infiniteId: "",
     };
   },
 
@@ -106,27 +112,18 @@ export default {
     },
   },
   methods: {
-    yesLoadForYou(){
-      this.noLoadForYou = false
+    yesLoadForYou() {
+      this.noLoadForYou = false;
     },
     async infiniteHandler($state) {
-      // debugger;
-      console.log(
-        "search Results",
-        this.oldSearchLength,
-        this.trackResults.length
-      );
-      if (
-        !this.isSearching &&
-        this.oldSearchLength != this.trackResults.length &&
-        this.trackResults.length <= 50
-      ) {
-        this.isSearching = true;
+      if (!this.isLoading && this.trackResults.length <= 50) {
+        this.isLoading = true;
         await this.searchBySong();
         $state.loaded();
-        setTimeout((this.isSearching = false), 2000);
-      } else {
-        console.log("no load")
+        console.log("load more");
+      } else if (this.trackResults.length > 0) {
+        console.log("no load");
+        $state.complete();
         this.noLoadForYou = true;
       }
 
@@ -137,12 +134,6 @@ export default {
       this.oldSearchLength = 0;
       this.noLoadForYou = false;
       this.search = "";
-      console.log(this.infiniteHandler);
-      this.infiniteHandler.reset();
-    },
-    stateLoaded($state) {
-      $state.loaded();
-      console.log("loaded");
     },
 
     async hostCheck() {
@@ -176,11 +167,19 @@ export default {
       });
     },
     async searchBySong() {
+      if (this.oldSearchTerm != this.search) {
+        this.clearTrackResults();
+        this.noLoadForYou = false;
+        this.infiniteId = this.search;
+      }
       this.oldSearchLength = this.trackResults.length;
+      this.oldSearchTerm = this.search;
+      console.log(this.search);
       await this.$store.dispatch("searchBySong", {
-        data: this.search.data,
+        data: this.search,
         page: this.trackResults.length,
       });
+      this.isLoading = false;
     },
 
     async callTokens() {
