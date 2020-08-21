@@ -28,12 +28,12 @@
           <div class="col-1"></div>
 
           <div class="col-4">
-            <button class="btn btn-outline-secondary">Play/Pause</button>
+            <button class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
           </div>
           <div class="col-2"></div>
 
           <div class="col-4">
-            <button class="btn btn-outline-secondary">Skip</button>
+            <button class="btn btn-outline-secondary rounded-pill">Skip</button>
           </div>
           <div class="col-1"></div>
         </div>
@@ -63,18 +63,20 @@
           <div class="col-1"></div>
 
           <div class="col-4">
-            <button class="btn btn-outline-secondary">Play/Pause</button>
+            <button class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
           </div>
           <div class="col-2"></div>
 
           <div class="col-4">
-            <button class="btn btn-outline-secondary">Skip</button>
+            <button class="btn btn-outline-secondary rounded-pill">Skip</button>
           </div>
           <div class="col-1"></div>
         </div>
       </div>
     </div>
-    <div class="row vanilla"></div>
+    <div class="row vanilla overflowy">
+      <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong._id" />
+    </div>
   </div>
 </template> 
 

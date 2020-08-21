@@ -12,7 +12,7 @@
         <div class="row px-5 py-3">
           <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
+              <div class="modal-content bg-success">
                 <div class="modal-header">
                   <h5 class="modal-title">Search</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -31,10 +31,13 @@
                       placeholder="Search"
                       aria-label="Search"
                     />
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <button
+                      class="btn btn-outline-danger rounded-pill my-2 my-sm-0"
+                      type="submit"
+                    >Search</button>
                   </form>
                   <div
-                    class="bg-success m-2 p-2 row justify-content-between rounded-pill"
+                    class="bg-primary m-2 p-2 row justify-content-between rounded-pill"
                     v-for="result in trackResults"
                     :key="result.id"
                   >
@@ -43,7 +46,7 @@
                     </div>
                     {{result.artists[0].name}}- {{result.name}}
                     <button
-                      class="btn btn-outline-secondary mr-5 rounded-circle col-2"
+                      class="btn btn-outline-secondary mr-5 rounded-pill col-2"
                       @click.prevent="selectSong(result)"
                     >+</button>
                   </div>
