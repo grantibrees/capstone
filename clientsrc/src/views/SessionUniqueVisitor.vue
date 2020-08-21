@@ -1,5 +1,5 @@
 <template>
-  <div class="SessionUniqueVisitor container-fluid full-height">
+  <div class="SessionUniqueHost container-fluid full-height">
     <div class="row chocolate top-height justify-content-center">Song Scoopery</div>
 
     <div class="row mid-height">
@@ -54,11 +54,12 @@
                       @click.prevent="selectSong(result)"
                     >+</button>
                   </div>
-                  <infinite-loading
+                  <InfiniteLoading
                     v-if="!noLoadForYou"
                     spinner="waveDots"
+                    :identifier="infiniteId"
                     @infinite="infiniteHandler"
-                  ></infinite-loading>
+                  ></InfiniteLoading>
                   <div v-if="noLoadForYou">
                     <div class="row bg-primary justify-content-center">End of results!</div>
                   </div>
@@ -84,24 +85,25 @@
 
 <script>
 import Vue from "vue";
-import hostComponent from "../components/HostComponent";
 import { onAuth } from "@bcwdev/auth0-vue";
 import queue from "../components/Queue";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  name: "SessionUniqueVisitor",
+  name: "SessionUniqueHost",
   data() {
     return {
-      search: {},
+      search: "",
       oldSearchLength: 0,
-      isSearching: false,
       noLoadForYou: false,
+      oldSearchTerm: 0,
+      isLoading: false,
+      infiniteId: "",
     };
   },
 
   async beforeMount() {
-    await this.hostCheck();
+    // await this.hostCheck();
   },
 
   mounted() {
@@ -127,23 +129,14 @@ export default {
       this.noLoadForYou = false;
     },
     async infiniteHandler($state) {
-      // debugger;
-      console.log(
-        "search Results",
-        this.oldSearchLength,
-        this.trackResults.length
-      );
-      if (
-        !this.isSearching &&
-        this.oldSearchLength != this.trackResults.length &&
-        this.trackResults.length <= 50
-      ) {
-        this.isSearching = true;
+      if (!this.isLoading && this.trackResults.length <= 50) {
+        this.isLoading = true;
         await this.searchBySong();
         $state.loaded();
-        setTimeout((this.isSearching = false), 2000);
-      } else {
+        console.log("load more");
+      } else if (this.trackResults.length > 0) {
         console.log("no load");
+        $state.complete();
         this.noLoadForYou = true;
       }
 
@@ -154,26 +147,20 @@ export default {
       this.oldSearchLength = 0;
       this.noLoadForYou = false;
       this.search = "";
-      console.log(this.infiniteHandler);
-      this.infiniteHandler.reset();
-    },
-    stateLoaded($state) {
-      $state.loaded();
-      console.log("loaded");
     },
 
-    async hostCheck() {
-      await onAuth();
-      this.$store.dispatch("setBearer", this.$auth.bearer);
-      this.$store.dispatch("getProfile", this.$auth.user);
-      let email = await this.$store.dispatch(
-        "getSessionEmail",
-        this.$route.params.code
-      );
-      if (email == this.$auth.user.email) {
-        await this.callTokens();
-      }
-    },
+    // async hostCheck() {
+    //   await onAuth();
+    //   this.$store.dispatch("setBearer", this.$auth.bearer);
+    //   this.$store.dispatch("getProfile", this.$auth.user);
+    //   let email = await this.$store.dispatch(
+    //     "getSessionEmail",
+    //     this.$route.params.code
+    //   );
+    //   if (email == this.$auth.user.email) {
+    //     await this.callTokens();
+    //   }
+    // },
 
     beforeDestory() {
       this.$store.dispatch("leaveRoom", "session");
@@ -193,28 +180,33 @@ export default {
       });
     },
     async searchBySong() {
+      if (this.oldSearchTerm != this.search) {
+        this.clearTrackResults();
+        this.noLoadForYou = false;
+        this.infiniteId = this.search;
+      }
       this.oldSearchLength = this.trackResults.length;
+      this.oldSearchTerm = this.search;
+      console.log(this.search);
       await this.$store.dispatch("searchBySong", {
-        data: this.search.data,
+        data: this.search,
         page: this.trackResults.length,
       });
+      this.isLoading = false;
     },
 
-    async callTokens() {
-      if (this.$store.state.hostTokens.accessToken == false) {
-        if (this.activeSession.creatorEmail == this.$auth.user.email) {
-          await this.$store.dispatch("callDownTokens");
-        } else {
-          console.log("Not the host, no tokens for you");
-        }
-      }
-    },
+    // async callTokens() {
+    //   if (this.$store.state.hostTokens.accessToken == false) {
+    //     if (this.activeSession.creatorEmail == this.$auth.user.email) {
+    //       await this.$store.dispatch("callDownTokens");
+    //     } else {
+    //       console.log("Not the host, no tokens for you");
+    //     }
+    //   }
+    // },
     async joinSessionVisitor() {
       if (this.$route.params.code) {
-        await this.$store.dispatch(
-          "joinSessionVisitor",
-          this.$route.params.code
-        );
+        await this.$store.dispatch("joinSessionHost", this.$route.params.code);
       } else {
         console.log("no route params code found");
       }
@@ -222,12 +214,12 @@ export default {
   },
 
   components: {
-    hostComponent,
     queue,
     InfiniteLoading,
   },
 };
 </script>
+
 
 
 <style scoped>

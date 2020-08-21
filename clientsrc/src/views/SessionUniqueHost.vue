@@ -57,24 +57,17 @@
                     >+</button>
                   </div>
                   <InfiniteLoading
-              v-if="!noLoadForYou"
-              spinner="waveDots"
-              :identifier="infiniteId"
-              @infinite="infiniteHandler"
-            >
-            </InfiniteLoading>
+                    v-if="!noLoadForYou"
+                    spinner="waveDots"
+                    :identifier="infiniteId"
+                    @infinite="infiniteHandler"
+                  ></InfiniteLoading>
                   <div v-if="noLoadForYou">
                     <div class="row bg-primary justify-content-center">End of results!</div>
                   </div>
                 </div>
                 <div class="modal-footer"></div>
-
               </div>
-              {{result.artists[0].name}}- {{result.name}}
-              <button
-                class="btn btn-outline-secondary mr-5 rounded-circle col-2"
-                @click.prevent="selectSong(result)"
-              >+</button>
             </div>
           </div>
 
@@ -88,7 +81,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -233,5 +225,51 @@ export default {
 </script>
 
 
+
 <style scoped>
+body {
+  background-color: #fff8ed;
+  color: var(--black);
+}
+.font-fancy {
+  font-family: "Norican", cursive;
+}
+.full-height {
+  min-height: 100%;
+  max-height: 100%;
+}
+.top-height {
+  min-height: 8vh;
+  max-height: 8vh;
+}
+.mid-height {
+  min-height: 72vh;
+  max-height: 72vh;
+}
+.bot-height {
+  min-height: 20vh;
+  max-height: 20vh;
+}
+
+.strawberry {
+  background-color: #ffd9d1;
+}
+.chocolate {
+  background-color: #74462c;
+}
+.vanilla {
+  background-color: #fff8ed;
+}
+.strawberry-accent {
+  color: white;
+  background-color: #e64772;
+}
+.bright-accent {
+  color: white;
+  background-color: #0fb2b5;
+}
+.rm-my {
+  margin-top: 0em !important;
+  margin-bottom: 0em !important;
+}
 </style>
