@@ -7,25 +7,27 @@
     <div class="row mid-height">
       <queue />
     </div>
-    
+
     <div class="row bot-height strawberry align-items-center">
       <div class="col-12">
         <div class="row px-5 py-3">
-        
-    <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
+          <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
               <div class="modal-content bg-success">
                 <div class="modal-header">
-                
                   <h5 class="modal-title mr-5">Search</h5>
-                  <button type="button" @click="clearTrackResults" class="close" data-dismiss="modal" aria-label="Close">
+                  <button
+                    type="button"
+                    @click="clearTrackResults"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form
-                    class="form-inline mr-5" @submit.prevent="searchBySong()"
-                  >
+                  <form class="form-inline mr-5" @submit.prevent="searchBySong()">
                     <input
                       v-model="search.data"
                       class="form-control mr-sm-2"
@@ -59,6 +61,7 @@
             <infinite-loading v-if="!noLoadForYou" spinner="waveDots" @infinite="infiniteHandler"></infinite-loading>
             <div v-if="noLoadForYou">end of results :)</div>
           </div>
+
           <button
             type="button"
             class="btn btn-block btn-outline-danger p-3 rounded-pill"
@@ -114,8 +117,8 @@ export default {
     },
   },
   methods: {
-    yesLoadForYou(){
-      this.noLoadForYou = false
+    yesLoadForYou() {
+      this.noLoadForYou = false;
     },
     async infiniteHandler($state) {
       // debugger;
@@ -134,7 +137,7 @@ export default {
         $state.loaded();
         setTimeout((this.isSearching = false), 2000);
       } else {
-        console.log("no load")
+        console.log("no load");
         this.noLoadForYou = true;
       }
 
