@@ -149,7 +149,7 @@ body {
   max-height: 80%;
 }
 .overflowy {
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .strawberry {

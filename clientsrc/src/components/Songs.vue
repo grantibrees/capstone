@@ -1,5 +1,5 @@
 <template>
-  <div class="songs border border-rounded bg-danger col-12 font-medieval-wide h-25">
+  <div class="songs border border-rounded bg-danger col-12 h-25">
     <div class="row">
       <div class="col-2">
         <button
