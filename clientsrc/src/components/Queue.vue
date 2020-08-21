@@ -29,20 +29,20 @@
    <div v-else>
           <div class="text-white bg-primary rounded container">
       <div class="row justify-content-center align-items-center p-2">
-
+         <div class="col-2">
+          <img class="rounded my-auto img-thumbnail img-fluid" src="https://library.kissclipart.com/20180923/aw/kissclipart-social-media-clipart-social-media-computer-icons-v-8840baff6da662e3.png" alt />
+        </div>
        
         <div class="col-8">
-          <h3>Playing</h3>
-          Title: 
-          Album: 
-          Track Length: 
+          <h3>Search For A Song To Start</h3>
+    
         </div>
         <!-- Is this going to be handled by the SKD player? -->
       </div>
       <div class="row justify-content-center p-2">
         <div class="col-10">
-          <button>Play/Pause</button>
-          <button>Skip</button>
+          <button class="btn btn-outline-secondary">Play/Pause</button>
+          <button class="btn btn-outline-secondary">Skip</button>
         </div>
       </div>
     </div>

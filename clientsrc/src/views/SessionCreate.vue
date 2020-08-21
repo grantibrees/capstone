@@ -4,13 +4,13 @@
       <div class="col-8">
         <div class="form-group">
           <h5>Warning: You'll need Spotify Premium to Host a Session</h5>
-          <input
+          <input v-on:keyup.enter="createSession"
             v-model="newSessionName"
             type="text"
             placeholder="Choose A Name For Your Session"
             class="form-control"
           />
-          <h5 id="helpId" class="form-text text-muted">please enter the name of the session</h5>
+          <h5  id="helpId" class="form-text text-muted">please enter the name of the session</h5>
           <button class="btn btn-outline-info" @click="createSession">Create</button>
         </div>
       </div>

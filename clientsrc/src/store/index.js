@@ -29,10 +29,13 @@ export default new Vuex.Store({
       expiresIn: ''
     },
     activeSession: {
-      queue: []
+      queue: [],
+      page: true
     },
     activeSong: "no active song",
     nextSong: {},
+    songsUpVoted: [],
+    songsDownVoted: []
 
   },
   mutations: {
@@ -43,7 +46,13 @@ export default new Vuex.Store({
       state.spotifyAuthToken = spotifyAuthToken
     },
     setTrackSearchResults(state, searchResults) {
-      state.trackSearchResults = searchResults
+     searchResults.items.forEach(item => state.trackSearchResults.push(item))
+    },
+    updateTrackPage(state, page){
+      state.activeSession.page = page
+    },
+    clearTrackSearchResults(state) {
+      state.trackSearchResults = []
     },
     setHostTokens(state, tokens) {
       state.hostTokens.accessToken = tokens.accessToken
@@ -65,7 +74,13 @@ export default new Vuex.Store({
     },
     setDeviceId(state, deviceId) {
       state.hostDeviceId = deviceId
-    }
+    },
+    songUpVoted(state, songUri) {
+      state.songsUpVoted.push(songUri)
+    },
+    songDownVoted(state, songUri) {
+      state.songsDownVoted.push(songUri)
+    },
   },
   actions: {
     setBearer({ }, bearer) {
@@ -128,6 +143,21 @@ export default new Vuex.Store({
 
     getDeviceId({ commit }, deviceId) {
       commit("setDeviceId", deviceId)
+    },
+
+    saveToLocal(context) {
+      window.localStorage.setItem("Session" + context.state.activeSession.sessionCode, JSON.stringify({ SessionCode: context.state.activeSession.sessionCode, songsUpVoted: context.state.songsUpVoted, songsDownVoted: context.state.songsDownVoted }))
+      console.log('Session saved')
+    },
+    loadFromSave(context) {
+      let session = JSON.parse(window.localStorage.getItem("Session" + context.state.activeSession.sessionCode))
+
+      if (session) {
+        context.state.songsUpVoted = session.songsUpVoted
+        context.state.songsDownVoted = session.songsDownVoted
+      }
+
+
     }
   },
   modules: {

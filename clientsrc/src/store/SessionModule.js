@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { api, loginApi } from "../axiosService"
 import store from "."
 import router from '../router/index'
+import Swal from 'sweetalert2' 
 
 Vue.use(Vuex)
 
@@ -29,8 +30,14 @@ export default {
           commit("setActiveSong", res.data[0].queue[0])
         }
         router.push({ name: 'SessionUniqueHost', params: { code: sessionCode } })
+        dispatch("loadFromSave")
       } catch (error) {
         console.error(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'The Session Does Not Exist!',
+        })
 
       }
     }
