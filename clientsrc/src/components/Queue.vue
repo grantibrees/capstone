@@ -74,8 +74,10 @@
         </div>
       </div>
     </div>
-    <div class="row vanilla overflowy">
-      <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong._id" />
+    <div class="row vanilla queue-height overflowy">
+      <div class="col-12 overflowy">
+        <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong._id" />
+      </div>
     </div>
   </div>
 </template> 
@@ -141,15 +143,15 @@ body {
   font-family: "Norican", cursive;
 }
 .player-height {
-  min-height: 20%;
-  max-height: 20%;
+  min-height: 18vh;
+  max-height: 18vh;
 }
 .queue-height {
-  min-height: 80%;
-  max-height: 80%;
+  min-height: 44vh;
+  max-height: 44vh;
 }
 .overflowy {
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .strawberry {
