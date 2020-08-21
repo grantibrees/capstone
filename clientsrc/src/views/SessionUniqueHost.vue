@@ -16,17 +16,7 @@
               <div class="modal-content bg-success">
                 <div class="modal-header">
                   <h5 class="modal-title mr-5">Search</h5>
-                  <button
-                    type="button"
-                    @click="clearTrackResults"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
+
                   <form class="form-inline mr-5" @submit.prevent="searchBySong()">
                     <input
                       v-model="search.data"
@@ -40,6 +30,18 @@
                       type="submit"
                     >Search</button>
                   </form>
+
+                  <button
+                    type="button"
+                    @click="clearTrackResults"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
                   <div
                     class="bg-primary m-2 p-2 row justify-content-between rounded-pill"
                     v-for="result in trackResults"
@@ -54,12 +56,18 @@
                       @click.prevent="selectSong(result)"
                     >+</button>
                   </div>
+                  <infinite-loading
+                    v-if="!noLoadForYou"
+                    spinner="waveDots"
+                    @infinite="infiniteHandler"
+                  ></infinite-loading>
+                  <div v-if="noLoadForYou">
+                    <div class="row bg-primary justify-content-center">End of results!</div>
+                  </div>
                 </div>
                 <div class="modal-footer"></div>
               </div>
             </div>
-            <infinite-loading v-if="!noLoadForYou" spinner="waveDots" @infinite="infiniteHandler"></infinite-loading>
-            <div v-if="noLoadForYou">end of results :)</div>
           </div>
 
           <button
