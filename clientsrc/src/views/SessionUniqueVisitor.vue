@@ -1,8 +1,6 @@
 <template>
-  <div class="SessionUniqueHost container-fluid full-height">
-    <div class="row chocolate top-height">
-      <hostComponent></hostComponent>
-    </div>
+  <div class="SessionUniqueVisitor container-fluid full-height">
+    <div class="row chocolate top-height justify-content-center">Song Scoopery</div>
 
     <div class="row mid-height">
       <queue />
@@ -92,7 +90,7 @@ import queue from "../components/Queue";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  name: "SessionUniqueHost",
+  name: "SessionUniqueVisitor",
   data() {
     return {
       search: {},
@@ -107,7 +105,7 @@ export default {
   },
 
   mounted() {
-    this.joinSessionHost();
+    this.joinSessionVisitor();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
 
@@ -211,9 +209,12 @@ export default {
         }
       }
     },
-    async joinSessionHost() {
+    async joinSessionVisitor() {
       if (this.$route.params.code) {
-        await this.$store.dispatch("joinSessionHost", this.$route.params.code);
+        await this.$store.dispatch(
+          "joinSessionVisitor",
+          this.$route.params.code
+        );
       } else {
         console.log("no route params code found");
       }
