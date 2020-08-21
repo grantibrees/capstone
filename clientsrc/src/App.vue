@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div class="spacing"></div>
     <router-view />
   </div>
 </template>
@@ -33,14 +34,27 @@ export default {
 @import "./assets/_overrides.scss";
 
 #app {
-  font-family: "Alata", sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #ffffff;
+  color: #2c3e50;
 }
 
-.font-fancy {
-  font-family: "Norican", cursive;
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+.spacing {
+  height: 50px;
 }
 </style>

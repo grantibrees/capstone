@@ -56,17 +56,25 @@
                       @click.prevent="selectSong(result)"
                     >+</button>
                   </div>
-                  <infinite-loading
-                    v-if="!noLoadForYou"
-                    spinner="waveDots"
-                    @infinite="infiniteHandler"
-                  ></infinite-loading>
+                  <InfiniteLoading
+              v-if="!noLoadForYou"
+              spinner="waveDots"
+              :identifier="infiniteId"
+              @infinite="infiniteHandler"
+            >
+            </InfiniteLoading>
                   <div v-if="noLoadForYou">
                     <div class="row bg-primary justify-content-center">End of results!</div>
                   </div>
                 </div>
                 <div class="modal-footer"></div>
+
               </div>
+              {{result.artists[0].name}}- {{result.name}}
+              <button
+                class="btn btn-outline-secondary mr-5 rounded-circle col-2"
+                @click.prevent="selectSong(result)"
+              >+</button>
             </div>
           </div>
 
@@ -80,6 +88,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -95,10 +104,12 @@ export default {
   name: "SessionUniqueHost",
   data() {
     return {
-      search: {},
+      search: "",
       oldSearchLength: 0,
-      isSearching: false,
       noLoadForYou: false,
+      oldSearchTerm: 0,
+      isLoading: false,
+      infiniteId: "",
     };
   },
 
@@ -129,23 +140,14 @@ export default {
       this.noLoadForYou = false;
     },
     async infiniteHandler($state) {
-      // debugger;
-      console.log(
-        "search Results",
-        this.oldSearchLength,
-        this.trackResults.length
-      );
-      if (
-        !this.isSearching &&
-        this.oldSearchLength != this.trackResults.length &&
-        this.trackResults.length <= 50
-      ) {
-        this.isSearching = true;
+      if (!this.isLoading && this.trackResults.length <= 50) {
+        this.isLoading = true;
         await this.searchBySong();
         $state.loaded();
-        setTimeout((this.isSearching = false), 2000);
-      } else {
+        console.log("load more");
+      } else if (this.trackResults.length > 0) {
         console.log("no load");
+        $state.complete();
         this.noLoadForYou = true;
       }
 
@@ -156,12 +158,6 @@ export default {
       this.oldSearchLength = 0;
       this.noLoadForYou = false;
       this.search = "";
-      console.log(this.infiniteHandler);
-      this.infiniteHandler.reset();
-    },
-    stateLoaded($state) {
-      $state.loaded();
-      console.log("loaded");
     },
 
     async hostCheck() {
@@ -195,11 +191,19 @@ export default {
       });
     },
     async searchBySong() {
+      if (this.oldSearchTerm != this.search) {
+        this.clearTrackResults();
+        this.noLoadForYou = false;
+        this.infiniteId = this.search;
+      }
       this.oldSearchLength = this.trackResults.length;
+      this.oldSearchTerm = this.search;
+      console.log(this.search);
       await this.$store.dispatch("searchBySong", {
-        data: this.search.data,
+        data: this.search,
         page: this.trackResults.length,
       });
+      this.isLoading = false;
     },
 
     async callTokens() {
@@ -230,49 +234,4 @@ export default {
 
 
 <style scoped>
-body {
-  background-color: #fff8ed;
-  color: var(--black);
-}
-.font-fancy {
-  font-family: "Norican", cursive;
-}
-.full-height {
-  min-height: 100%;
-  max-height: 100%;
-}
-.top-height {
-  min-height: 8vh;
-  max-height: 8vh;
-}
-.mid-height {
-  min-height: 72vh;
-  max-height: 72vh;
-}
-.bot-height {
-  min-height: 20vh;
-  max-height: 20vh;
-}
-
-.strawberry {
-  background-color: #ffd9d1;
-}
-.chocolate {
-  background-color: #74462c;
-}
-.vanilla {
-  background-color: #fff8ed;
-}
-.strawberry-accent {
-  color: white;
-  background-color: #e64772;
-}
-.bright-accent {
-  color: white;
-  background-color: #0fb2b5;
-}
-.rm-my {
-  margin-top: 0em !important;
-  margin-bottom: 0em !important;
-}
 </style>

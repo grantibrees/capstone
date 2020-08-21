@@ -30,6 +30,7 @@ export default {
           commit("setActiveSong", res.data[0].queue[0])
         }
         router.push({ name: 'SessionUniqueHost', params: { code: sessionCode } })
+        dispatch("loadFromSave")
       } catch (error) {
         console.error(error)
         Swal.fire({

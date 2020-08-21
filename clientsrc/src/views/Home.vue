@@ -1,39 +1,70 @@
 <template>
   <div class="home">
-    <div class="container-fluid">
-      <div class="row chocolate min-height2 align-items-center justify-content-center">
-        <div class>
-          <div class="justify-content-center mt-2">
-            <h1 class="font-fancy">Song Sundae</h1>
-          </div>
-          <div class="justify-content-center mt-4 mx-5">
-            <p>You don't need to steal your friend's phone to put on decent music.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row vanilla min-height align-items-center">
-        <div class="col-12">
-          <div class="row px-5 py-3">
-            <button
-              class="btn btn-block btn-outline-danger p-3 rounded-pill"
-              @click="hostTrigger()"
-            >
-              <h2>Host a Session</h2>
-            </button>
-          </div>
-          <div class="row px-5 py-3">
-            <button
-              @click="movePage('SessionJoin')"
-              class="btn btn-block btn-outline-danger p-3 rounded-pill"
-            >
-              <h2>Join a Session</h2>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="row strawberry min-height2"></div>
+    <div class="mt-5 container font-medieval-wide">
+      <h1 class>Welcome To Song Scoop</h1>
+      <h3>Where you don't need to steal your friends phone to put on decent music</h3>
+      <!-- NOTE This works as a link -->
+      <!-- <a class="btn btn-block btn-primary p-5 rounded" :href="url">
+        <h1>Host A Session</h1>
+      </a>-->
+      <button class="btn btn-block btn-primary p-5 rounded" @click="hostTrigger()">
+        <h1>Host A Session</h1>
+      </button>
+      <button @click="movePage('SessionJoin')" class="btn btn-block btn-info p-5 rounded">
+        <h1>Join A Session</h1>
+      </button>
     </div>
+    <!-- Currently shows search results, need to add this to proper search and change selectSong() to properly add data to state and play song.  -->
+
+    <!-- <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#HomeSongModal"
+    >Search</button>
+
+    <div id="HomeSongModal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Search</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form
+              class="form-inline mr-5"
+              @submit.prevent="searchByArtist(),searchByAlbum(),searchBySong()"
+            >
+              <input
+                v-model="search.data"
+                class="form-control mr-sm-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <div
+              class="bg-success m-2 p-2 row justify-content-between rounded-pill"
+              v-for="result in trackResults"
+              :key="result.id"
+            >
+              <div class="col-2">
+                <img class="ml-5 rounded img-fluid" :src="result.album.images[0].url" alt />
+              </div>
+              {{result.artists[0].name}}- {{result.name}}
+              <button
+                class="btn btn-outline-secondary mr-5 rounded-circle col-2"
+                @click.prevent="selectSong(result)"
+              >+</button>
+            </div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>-->
   </div>
 </template>
 
@@ -114,36 +145,12 @@ export default {
 };
 </script>
 <style>
+.font-medieval-wide {
+  font-family: "Metamorphous", cursive;
+}
+
 body {
-  background-color: #fff8ed;
-  color: var(--black);
-}
-.font-fancy {
-  font-family: "Norican", cursive;
-}
-
-.min-height {
-  min-height: 36vh;
-}
-.min-height2 {
-  min-height: 32vh;
-}
-
-.strawberry {
-  background-color: #ffd9d1;
-}
-.chocolate {
-  background-color: #613921;
-}
-.vanilla {
-  background-color: #fff8ed;
-}
-.strawberry-accent {
-  color: white;
-  background-color: #e64772;
-}
-.bright-accent {
-  color: white;
-  background-color: #0fb2b5;
+  background-color: #fcdb80;
+  color: var(--verydarkgrey);
 }
 </style>
