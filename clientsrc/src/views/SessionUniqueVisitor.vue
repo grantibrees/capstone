@@ -1,6 +1,7 @@
 <template>
   <div class="SessionUniqueHost container-fluid full-height">
-    <div class="row chocolate top-height justify-content-center">Song Scoopery</div>
+    <div class="row chocolate top-height">
+    </div>
 
     <div class="row mid-height">
       <queue />
@@ -55,7 +56,7 @@
                     >+</button>
                   </div>
                   <InfiniteLoading
-                    v-if="!noLoadForYou"
+                    v-if="!noLoadForYou && infiniteWait"
                     spinner="waveDots"
                     :identifier="infiniteId"
                     @infinite="infiniteHandler"
@@ -96,15 +97,16 @@ export default {
       search: "",
       oldSearchLength: 0,
       noLoadForYou: false,
+      infiniteWait: false,
       oldSearchTerm: 0,
       isLoading: false,
       infiniteId: "",
     };
   },
 
-  async beforeMount() {
-    // await this.hostCheck();
-  },
+  // async beforeMount() {
+  //   await this.hostCheck();
+  // },
 
   mounted() {
     this.joinSessionVisitor();
@@ -128,23 +130,31 @@ export default {
     yesLoadForYou() {
       this.noLoadForYou = false;
     },
+
     async infiniteHandler($state) {
+      
       if (!this.isLoading && this.trackResults.length <= 50) {
+        
         this.isLoading = true;
         await this.searchBySong();
+        // this.getTrackResults((this.trackResults.length + 10));
         $state.loaded();
         console.log("load more");
+        
+        
       } else if (this.trackResults.length > 0) {
         console.log("no load");
         $state.complete();
         this.noLoadForYou = true;
       }
+    
 
       // $state.loaded()
-    },
+  },
     clearTrackResults() {
       this.$store.commit("clearTrackSearchResults");
       this.noLoadForYou = false;
+      this.infiniteWait = false; 
       // NOTE Mick- Do we still need these in a different place??
       // this.oldSearchLength = 0;
       // this.search = "";
@@ -188,13 +198,25 @@ export default {
       }
       this.oldSearchLength = this.trackResults.length;
       this.oldSearchTerm = this.search;
-      console.log(this.search);
+      console.log(this.trackResults.length);
       await this.$store.dispatch("searchBySong", {
         data: this.search,
         page: this.trackResults.length,
       });
       this.isLoading = false;
+      this.infiniteWaited()
     },
+
+    infiniteWaited(){
+      this.infiniteWait = true;
+    },
+    
+
+    // getTrackResults(offset){
+    //   let offsetResults = this.$store.state.trackSearchResults[offset];
+    //   console.log(offsetResults);
+
+    // },
 
     // async callTokens() {
     //   if (this.$store.state.hostTokens.accessToken == false) {
