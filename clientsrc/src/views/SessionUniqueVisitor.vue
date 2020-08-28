@@ -207,7 +207,7 @@ export default {
     // },
     async joinSessionVisitor() {
       if (this.$route.params.code) {
-        await this.$store.dispatch("joinSessionHost", this.$route.params.code);
+        await this.$store.dispatch("joinSessionVisitor", this.$route.params.code);
       } else {
         console.log("no route params code found");
       }
