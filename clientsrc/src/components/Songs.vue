@@ -59,22 +59,15 @@ export default {
     vote(direction) {
       if (this.voteDisabled == false) {
         this.voteDisabled = true;
-        if (direction == "up" && this.upVoteToggle == true) {
+        if (direction == "up" && this.upVoteToggle == false) {
           this.songData.score++;
-          this.upVoteToggle = false;
-        } else if (direction == "up" && this.upVoteToggle == false) {
-          this.songData.score--;
-          this.upVoteToggle = true;
-        } else if (direction == "down" && this.downVoteToggle == true) {
-          this.songData.score--;
-          this.downVoteToggle = false;
         } else if (direction == "down" && this.downVoteToggle == false) {
-          this.songData.score++;
-          this.downVoteToggle = true;
+          this.songData.score--;
         }
         this.$store.dispatch("updateSongScore", {
           songData: this.songData,
           uri: this.songData.uri.split(":")[2],
+          direction: direction,
         });
         this.delay();
       }
