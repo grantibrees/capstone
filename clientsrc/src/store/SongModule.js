@@ -63,6 +63,6 @@ export default {
         commit("songDownVoted", songRequest.uri)
       }
       dispatch("saveToLocal")
-    }
+    },
   }
 }
