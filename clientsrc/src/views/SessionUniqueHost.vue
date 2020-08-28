@@ -33,7 +33,7 @@
 
                   <button
                     type="button"
-                    @click="clearTrackResults"
+                    @click="clearTrackResults(), clearSearch()"
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
@@ -114,6 +114,9 @@ export default {
     this.joinSessionHost();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
+    $("#songModal").on("hidden.bs.modal", () => {
+      this.clearSearch(), this.clearTrackResults()
+    })
 
     // this.$store.dispatch("getQueue", {
     //   sessionCode: this.$route.params.code
@@ -153,12 +156,15 @@ export default {
 
       // $state.loaded()
   },
+    clearSearch(){
+      this.search = ""
+    },
     clearTrackResults() {
       this.$store.commit("clearTrackSearchResults");
       this.noLoadForYou = false;
       this.infiniteWait = false; 
       // NOTE Mick- Do we still need these in a different place??
-      // this.oldSearchLength = 0;
+      // // this.oldSearchLength = 0;
       // this.search = "";
     },
 
