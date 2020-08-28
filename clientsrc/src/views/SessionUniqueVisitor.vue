@@ -1,8 +1,6 @@
 <template>
   <div class="SessionUniqueHost container-fluid full-height">
-    <div class="row chocolate top-height">
-      <hostComponent></hostComponent>
-    </div>
+    <div class="row chocolate top-height justify-content-center">Song Scoopery</div>
 
     <div class="row mid-height">
       <queue />
@@ -33,7 +31,7 @@
 
                   <button
                     type="button"
-                    @click="clearTrackResults(), clearSearch()"
+                    @click="clearTrackResults"
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
@@ -57,7 +55,7 @@
                     >+</button>
                   </div>
                   <InfiniteLoading
-                    v-if="!noLoadForYou && infiniteWait"
+                    v-if="!noLoadForYou"
                     spinner="waveDots"
                     :identifier="infiniteId"
                     @infinite="infiniteHandler"
@@ -87,7 +85,6 @@
 
 <script>
 import Vue from "vue";
-import hostComponent from "../components/HostComponent";
 import { onAuth } from "@bcwdev/auth0-vue";
 import queue from "../components/Queue";
 import InfiniteLoading from "vue-infinite-loading";
@@ -99,7 +96,6 @@ export default {
       search: "",
       oldSearchLength: 0,
       noLoadForYou: false,
-      infiniteWait: false,
       oldSearchTerm: 0,
       isLoading: false,
       infiniteId: "",
@@ -107,16 +103,13 @@ export default {
   },
 
   async beforeMount() {
-    await this.hostCheck();
+    // await this.hostCheck();
   },
 
   mounted() {
-    this.joinSessionHost();
+    this.joinSessionVisitor();
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
-    $("#songModal").on("hidden.bs.modal", () => {
-      this.clearSearch(), this.clearTrackResults()
-    })
 
     // this.$store.dispatch("getQueue", {
     //   sessionCode: this.$route.params.code
@@ -135,51 +128,40 @@ export default {
     yesLoadForYou() {
       this.noLoadForYou = false;
     },
-
     async infiniteHandler($state) {
-      
       if (!this.isLoading && this.trackResults.length <= 50) {
-        
         this.isLoading = true;
         await this.searchBySong();
-        // this.getTrackResults((this.trackResults.length + 10));
         $state.loaded();
         console.log("load more");
-        
-        
       } else if (this.trackResults.length > 0) {
         console.log("no load");
         $state.complete();
         this.noLoadForYou = true;
       }
-    
 
       // $state.loaded()
-  },
-    clearSearch(){
-      this.search = ""
     },
     clearTrackResults() {
       this.$store.commit("clearTrackSearchResults");
       this.noLoadForYou = false;
-      this.infiniteWait = false; 
       // NOTE Mick- Do we still need these in a different place??
-      // // this.oldSearchLength = 0;
+      // this.oldSearchLength = 0;
       // this.search = "";
     },
 
-    async hostCheck() {
-      await onAuth();
-      this.$store.dispatch("setBearer", this.$auth.bearer);
-      this.$store.dispatch("getProfile", this.$auth.user);
-      let email = await this.$store.dispatch(
-        "getSessionEmail",
-        this.$route.params.code
-      );
-      if (email == this.$auth.user.email) {
-        await this.callTokens();
-      }
-    },
+    // async hostCheck() {
+    //   await onAuth();
+    //   this.$store.dispatch("setBearer", this.$auth.bearer);
+    //   this.$store.dispatch("getProfile", this.$auth.user);
+    //   let email = await this.$store.dispatch(
+    //     "getSessionEmail",
+    //     this.$route.params.code
+    //   );
+    //   if (email == this.$auth.user.email) {
+    //     await this.callTokens();
+    //   }
+    // },
 
     beforeDestory() {
       this.$store.dispatch("leaveRoom", "session");
@@ -206,36 +188,24 @@ export default {
       }
       this.oldSearchLength = this.trackResults.length;
       this.oldSearchTerm = this.search;
-      console.log(this.trackResults.length);
+      console.log(this.search);
       await this.$store.dispatch("searchBySong", {
         data: this.search,
         page: this.trackResults.length,
       });
       this.isLoading = false;
-      this.infiniteWaited()
     },
 
-    infiniteWaited(){
-      this.infiniteWait = true;
-    },
-    
-
-    // getTrackResults(offset){
-    //   let offsetResults = this.$store.state.trackSearchResults[offset];
-    //   console.log(offsetResults);
-
+    // async callTokens() {
+    //   if (this.$store.state.hostTokens.accessToken == false) {
+    //     if (this.activeSession.creatorEmail == this.$auth.user.email) {
+    //       await this.$store.dispatch("callDownTokens");
+    //     } else {
+    //       console.log("Not the host, no tokens for you");
+    //     }
+    //   }
     // },
-
-    async callTokens() {
-      if (this.$store.state.hostTokens.accessToken == false) {
-        if (this.activeSession.creatorEmail == this.$auth.user.email) {
-          await this.$store.dispatch("callDownTokens");
-        } else {
-          console.log("Not the host, no tokens for you");
-        }
-      }
-    },
-    async joinSessionHost() {
+    async joinSessionVisitor() {
       if (this.$route.params.code) {
         await this.$store.dispatch("joinSessionHost", this.$route.params.code);
       } else {
@@ -245,7 +215,6 @@ export default {
   },
 
   components: {
-    hostComponent,
     queue,
     InfiniteLoading,
   },

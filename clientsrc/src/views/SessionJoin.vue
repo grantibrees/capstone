@@ -3,9 +3,14 @@
     <div class="row">
       <div class="col-12">
         <div class="form-group">
-          <input v-on:keyup.enter="joinSession" v-model="sessionCode" type="text" class="form-control" />
-          <small id="helpId" class="form-text text-muted">enter session code:</small>
-          <button class="btn btn-outline-info"  @click="joinSession">Join</button>
+          <input
+            v-on:keyup.enter="joinSessionVisitor"
+            v-model="sessionCode"
+            type="text"
+            class="form-control"
+          />
+          <small id="helpId" class="form-text text-muted">Enter Session Code:</small>
+          <button class="btn rounded-pill btn-outline-danger" @click="joinSessionVisitor">Join</button>
         </div>
       </div>
     </div>
@@ -25,8 +30,8 @@ export default {
   mounted() {},
   computed: {},
   methods: {
-    joinSession() {
-      this.$store.dispatch("joinSession", this.sessionCode);
+    joinSessionVisitor() {
+      this.$store.dispatch("joinSessionVisitor", this.sessionCode);
     },
   },
   components: {},
