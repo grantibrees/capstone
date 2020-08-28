@@ -24,10 +24,10 @@
             <div class="row justify-content-center">Track Length: {{activeSong.trackLength}}</div>
           </div>
         </div>
-        <div class="row justify-content-center">
+        <div v-if="$store.state.hostTokens.accessToken !== ''" class="row justify-content-center">
           <div class="col-1"></div>
 
-          <div class="col-4">
+          <div  class="col-4">
             <button class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
           </div>
           <div class="col-2"></div>
@@ -59,7 +59,7 @@
           </div>
           <div class="col-1"></div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" v-if="$store.state.hostTokens.accessToken !== '' ">
           <div class="col-1"></div>
 
           <div class="col-4">
