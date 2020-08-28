@@ -19,7 +19,7 @@
 
                   <form class="form-inline mr-5" @submit.prevent="searchBySong()">
                     <input
-                      v-model="search.data"
+                      v-model="search"
                       class="form-control mr-sm-2"
                       type="search"
                       placeholder="Search"
@@ -147,9 +147,10 @@ export default {
     },
     clearTrackResults() {
       this.$store.commit("clearTrackSearchResults");
-      this.oldSearchLength = 0;
       this.noLoadForYou = false;
-      this.search = "";
+      // NOTE Mick- Do we still need these in a different place??
+      // this.oldSearchLength = 0;
+      // this.search = "";
     },
 
     async hostCheck() {
