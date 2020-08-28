@@ -10,7 +10,7 @@ const Session = new Schema(
     albumCover: { type: String, required: true },
     trackLength: { type: Number, required: true },
     explicit: { type: Boolean, required: true },
-    popularity: { type: Boolean, required: true },
+    popularity: { type: Number, required: true },
     score: { type: Number, required: true },
   },
   { timestamps: true, toJSON: { virtuals: true } }

@@ -34,6 +34,7 @@ export default new Vuex.Store({
     },
     activeSong: "no active song",
     nextSong: {},
+    playing: true, 
     songsUpVoted: [],
     songsDownVoted: []
 
@@ -81,6 +82,10 @@ export default new Vuex.Store({
     songDownVoted(state, songUri) {
       state.songsDownVoted.push(songUri)
     },
+    playpause(state){
+      state.playing = !state.playing    
+    },
+
   },
   actions: {
     setBearer({ }, bearer) {
