@@ -60,6 +60,14 @@ class SessionsService {
     }
     return data;
   }
+
+  async findActiveSong(sessionCode) {
+    let data = await dbContext.Session.find({ sessionCode: sessionCode });
+    if (!data) {
+      throw new BadRequest("Invalid ID");
+    }
+    return data;
+  }
   async getById(sessionCode) {
     let data = await dbContext.Session.find({ sessionCode: sessionCode });
     if (!data) {

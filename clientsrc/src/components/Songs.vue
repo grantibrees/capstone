@@ -52,7 +52,6 @@ export default {
       }, 2000);
     },
     vote(direction) {
-      debugger;
       if (!this.voteDisabled) {
         this.voteDisabled = true;
         if (direction == "up") {

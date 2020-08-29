@@ -19,7 +19,7 @@ export const socketStore = {
 
       socket.on("songScoreUpdated", (payload) => {
         console.log("song score updated", payload);
-        // dispatch("getQueue", payload);
+        dispatch("getQueue", payload);
       });
       socket.on("activeSongUpdated", (payload) => {
         console.log("socket hit", payload.data.activeSong[0]);

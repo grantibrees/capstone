@@ -90,5 +90,16 @@ export default {
         console.error(error);
       }
     },
+    async findActiveSong({ commit, dispatch, state }, code) {
+      try {
+        let res = await api.get("session/" + code + "/find");
+        debugger;
+        console.log("foundActiveSong", res.data.data[0].activeSong[0]);
+        commit("setActiveSong", res.data.data[0].activeSong[0]);
+        console.log("current song", this.state.activeSong);
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };

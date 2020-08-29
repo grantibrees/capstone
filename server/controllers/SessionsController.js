@@ -9,6 +9,7 @@ export class SessionsController extends BaseController {
     super("api/session");
     this.router
       .get("/:sessionCode", this.getBySessionCode)
+      .get("/:sessionCode/find", this.findActiveSong)
       .put("/:sessionCode", this.addToQueue)
       .put("/:sessionCode/:songUri", this.updateSong)
       .put("/:sessionCode/:songUri/active", this.updateActiveSong)
@@ -100,6 +101,17 @@ export class SessionsController extends BaseController {
         data: data,
         message: "updated active song sesh controller",
       });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async findActiveSong(req, res, next) {
+    try {
+      let data = await sessionsService.findActiveSong(req.params.sessionCode);
+      return res.send({
+        data: data,
+      });
+      // return res.send(data);
     } catch (error) {
       console.error(error);
     }
