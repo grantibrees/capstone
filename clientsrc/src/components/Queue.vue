@@ -76,7 +76,7 @@
     </div>
     <div class="row vanilla queue-height overflowy">
       <div class="col-12 overflowy">
-        <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong._id" />
+        <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong.uri" />
       </div>
     </div>
   </div>
