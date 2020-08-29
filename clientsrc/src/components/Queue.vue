@@ -27,13 +27,13 @@
         <div v-if="$store.state.hostTokens.accessToken !== ''" class="row justify-content-center">
           <div class="col-1"></div>
 
-          <div class="col-4">
-            <button class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
+          <div  class="col-4">
+            <button @click="playpause" class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
           </div>
           <div class="col-2"></div>
 
           <div class="col-4">
-            <button class="btn btn-outline-secondary rounded-pill">Skip</button>
+            <button @click="skipSong"  class="btn btn-outline-secondary rounded-pill">Skip</button>
           </div>
           <div class="col-1"></div>
         </div>
@@ -63,7 +63,7 @@
           <div class="col-1"></div>
 
           <div class="col-4">
-            <button class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
+            <button  class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
           </div>
           <div class="col-2"></div>
 
@@ -114,11 +114,24 @@ export default {
     },
   },
   methods: {
+    playpause() {
+      this.$store.commit("playpause")
+     
+    },
     startSong() {
       if (this.songsQueue.length > 0) {
         this.$store.dispatch("getActiveSong", this.songsQueue[0]);
+      }},
+      skipSong() {
+        console.log('song skip?')
+        this.$store.dispatch("changeSong", this.songsQueue[0]);
       }
-    },
+     
+    // pauseSong() {
+
+    // }
+    
+     
     // songsQueued(){
     //   if(this.$store.state.activeSession.queue.length >= 0){
     //     this.queue = true

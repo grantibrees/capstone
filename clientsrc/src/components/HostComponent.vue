@@ -2,7 +2,7 @@
   <div class="host-component col-12">
     <div class="row align-items-center my-4">
       <div class="col-8">
-        <h5 class="rm-my">Session Code 5DC7</h5>
+        <h5 class="rm-my">Session Code: {{activeSession.sessionCode}}</h5>
       </div>
       <div class="col-2">
         <i class="far fa-share-square"></i>
@@ -22,7 +22,12 @@ export default {
       deviceId: this.$store.state.hostDeviceId,
       changingTrack: false,
       currentState: {},
+      spotifySDK : {}
     };
+  },
+
+  watch: {
+    playing: function(){this.playpause()}
   },
   mounted() {
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -35,6 +40,12 @@ export default {
     accessToken() {
       return this.$store.state.hostTokens.accessToken;
     },
+    activeSession(){
+      return this.$store.state.activeSession
+    },
+    playing(){
+      return this.$store.state.playing;
+    }
   } /* Pulls values from the store. Always the value of the method that's in it. The live value. Constant value, has to have a return in it, it's a getter. It's like a listener, listening to the state. It gets the state.
       cars() {
       return this.store.state.cars;
@@ -57,44 +68,49 @@ export default {
     initiatePlayer: async function () {
       await this.accessToken;
       const { Player } = await this.waitForSpotifyWebPlaybackSDKToLoad();
-      const player = new Player({
+      this.spotifySDK = new Player({
         name: "Capstone Web Player",
         volume: 1.0,
         getOAuthToken: (callback) => {
           callback(this.accessToken);
         },
       });
-      console.log(JSON.stringify(player));
+      console.log(JSON.stringify(this.spotifySDK));
       // Error handling
-      player.addListener("initialization_error", ({ message }) => {
+      this.spotifySDK.addListener("initialization_error", ({ message }) => {
         console.log("Initialization_error: " + message);
       });
-      player.addListener("authentication_error", ({ message }) => {
+      this.spotifySDK.addListener("authentication_error", ({ message }) => {
         console.log("Authentication_error: " + message);
       });
-      player.addListener("account_error", ({ message }) => {
+      this.spotifySDK.addListener("account_error", ({ message }) => {
         console.log("Account_error: " + message);
       });
-      player.addListener("playback_error", ({ message }) => {
+      this.spotifySDK.addListener("playback_error", ({ message }) => {
         console.log("Playback_error: " + message);
       });
       // Playback status updates
-      player.addListener("player_state_changed", (state) => {
+      this.spotifySDK.addListener("this.spotifySDK_state_changed", (state) => {
         this.changeSong(state);
       });
       // Ready
-      player.addListener("ready", ({ device_id }) => {
+      this.spotifySDK.addListener("ready", ({ device_id }) => {
         console.log("Ready with Device Id: ", device_id);
         this.$store.dispatch("getDeviceId", device_id);
       });
       // Not Ready
-      player.addListener("not_ready", ({ device_id }) => {
+      this.spotifySDK.addListener("not_ready", ({ device_id }) => {
         console.log("Not ready with device Id: ", device_id);
       });
-      player.connect();
+      this.spotifySDK.connect();
     },
     play() {
       this.$store.dispatch("playCurrentSong");
+    },
+    playpause() {  
+                  this.spotifySDK.togglePlay().then(() => {
+                  console.log('Toggled playback!');});
+    
     },
     changeSong(state) {
       console.log(state);
