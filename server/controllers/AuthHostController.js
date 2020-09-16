@@ -46,7 +46,7 @@ export class AuthHostController extends BaseController {
         expiresIn: expires_in
       }
       //unsafe.send(payload)
-      res.redirect("http://localhost:8080/#/dashboard?" + `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`)
+      res.redirect("https://songscoop.herokuapp.com/#/dashboard?" + `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`)
     } catch (error) {
       res.redirect('error')
     }
