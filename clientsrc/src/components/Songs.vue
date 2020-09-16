@@ -2,20 +2,20 @@
   <div class="songs bg-secondary row mb-2">
     <div class="col-2 py-2">
       <button
-        v-if="upVoteToggle == true"
         @click.prevent="vote('up')"
-        class="btn btn-sm btn-success btn-outline"
-      >Upvote</button>
-      <button
-        v-if="upVoteToggle == false"
-        @click.prevent="vote('up')"
-        class="btn btn-sm btn-outline-success btn-outline"
+        class="btn btn-sm"
+        :class="upVoteToggle ? 'btn-success':'btn-outline-success'"
       >Upvote</button>
     </div>
     <div class="col-8">
-      {{songData.songTitle}}-
-      {{songData.artist}}
-      {{songData.score}}
+      <div class="row">
+        <div class="col-8 justify-content-center">
+          {{songData.songTitle}} -
+          {{songData.artist}}
+        </div>
+        <div class="col-4 justify-content-center">Vote Count: {{songData.score}}</div>
+      </div>
+
       <!-- <img
 
         class="rounded my-auto img-thumbnail img-fluid"
@@ -25,14 +25,9 @@
     </div>
     <div class="col-2 py-2">
       <button
-        v-if="downVoteToggle == true"
         @click.prevent="vote('down')"
-        class="btn btn-sm btn-danger btn-outline"
-      >Downvote</button>
-      <button
-        v-if="downVoteToggle == false"
-        @click.prevent="vote('down')"
-        class="btn btn-sm btn-outline-danger btn-outline"
+        class="btn btn-sm"
+        :class="downVoteToggle ? 'btn-danger':'btn-outline-danger'"
       >Downvote</button>
     </div>
   </div>
@@ -57,24 +52,31 @@ export default {
       }, 2000);
     },
     vote(direction) {
-      if (this.voteDisabled == false) {
+      if (!this.voteDisabled) {
         this.voteDisabled = true;
-        if (direction == "up" && this.upVoteToggle == true) {
-          this.songData.score++;
-          this.upVoteToggle = false;
-        } else if (direction == "up" && this.upVoteToggle == false) {
-          this.songData.score--;
-          this.upVoteToggle = true;
-        } else if (direction == "down" && this.downVoteToggle == true) {
-          this.songData.score--;
-          this.downVoteToggle = false;
-        } else if (direction == "down" && this.downVoteToggle == false) {
-          this.songData.score++;
-          this.downVoteToggle = true;
+        if (direction == "up") {
+          this.upVoteToggle = !this.upVoteToggle;
+        } else if (direction == "down") {
+          this.downVoteToggle = !this.downVoteToggle;
+        }
+
+        if (direction == "up") {
+          if (this.upVoteToggle) {
+            this.songData.score--;
+          } else {
+            this.songData.score++;
+          }
+        } else if (direction == "down") {
+          if (this.downVoteToggle) {
+            this.songData.score++;
+          } else {
+            this.songData.score--;
+          }
         }
         this.$store.dispatch("updateSongScore", {
           songData: this.songData,
           uri: this.songData.uri.split(":")[2],
+          direction: direction,
         });
         this.delay();
       }
