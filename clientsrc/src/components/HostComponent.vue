@@ -71,7 +71,7 @@ export default {
       await this.accessToken;
       const { Player } = await this.waitForSpotifyWebPlaybackSDKToLoad();
       this.spotifySDK = new Player({
-        name: "Capstone Web Player",
+        name: "Song Scoop",
         volume: 1.0,
         getOAuthToken: (callback) => {
           callback(this.accessToken);
