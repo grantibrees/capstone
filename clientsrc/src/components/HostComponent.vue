@@ -115,7 +115,7 @@ export default {
       });
     },
     changeSong(state) {
-      // console.log(state);
+      console.log(state);
       if (
         state &&
         state != this.currentState &&
