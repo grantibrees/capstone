@@ -46,7 +46,7 @@ export default {
 
     getActiveSong({ commit, dispatch }, song) {
       if (store.state.activeSong == "no active song") {
-        // commit("setActiveSong", song);
+        commit("setActiveSong", song);
         dispatch("playCurrentSong");
         api.delete(
           "session/" + store.state.activeSession.sessionCode + "/" + song.uri
@@ -85,7 +85,7 @@ export default {
           "session/" + song.sessionCode + "/" + song.uri + "/" + "active",
           song
         );
-        // console.log("updatedActiveSong worked?", res.data);
+        console.log("updatedActiveSong worked?", res.data);
       } catch (error) {
         console.error(error);
       }
