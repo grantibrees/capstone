@@ -5,7 +5,9 @@ let socket = {};
 export const socketStore = {
   actions: {
     initializeSocket({ commit, dispatch }) {
-      socket = io(window.location.host.includes('localhost') ? '//localhost:3000/' : '/')
+      socket = io(
+        window.location.host.includes("localhost") ? "//localhost:3000/" : "/"
+      );
       socket.on("CONNECTED", (data) => {
         console.log(data.message + " Let the villany commence");
       });
