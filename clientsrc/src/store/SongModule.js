@@ -13,7 +13,7 @@ export default {
       try {
         await spotifySongApi.put(
           "play?device_id=" + store.state.hostDeviceId,
-          { uris: [store.state.activeSong.uri] },
+          { uri: [store.state.activeSong.uri] },
           {
             headers: {
               Authorization: "Bearer " + store.state.hostTokens.accessToken,
