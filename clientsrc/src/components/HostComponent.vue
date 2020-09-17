@@ -22,30 +22,32 @@ export default {
       deviceId: this.$store.state.hostDeviceId,
       changingTrack: false,
       currentState: {},
-      spotifySDK : {}
+      spotifySDK: {},
     };
   },
 
   watch: {
-    playing: function(){this.playpause()}
+    playing: function () {
+      this.playpause();
+    },
   },
   mounted() {
     window.onSpotifyWebPlaybackSDKReady = () => {
       // You can now initialize Spotify.Player and use the SDK
     };
-    console.log("hostComponent loaded");
+    // console.log("hostComponent loaded");
     this.checkForActiveSong();
   } /* Runs functions on startup */,
   computed: {
     accessToken() {
       return this.$store.state.hostTokens.accessToken;
     },
-    activeSession(){
-      return this.$store.state.activeSession
+    activeSession() {
+      return this.$store.state.activeSession;
     },
-    playing(){
+    playing() {
       return this.$store.state.playing;
-    }
+    },
   } /* Pulls values from the store. Always the value of the method that's in it. The live value. Constant value, has to have a return in it, it's a getter. It's like a listener, listening to the state. It gets the state.
       cars() {
       return this.store.state.cars;
@@ -107,13 +109,13 @@ export default {
     play() {
       this.$store.dispatch("playCurrentSong");
     },
-    playpause() {  
-                  this.spotifySDK.togglePlay().then(() => {
-                  console.log('Toggled playback!');});
-    
+    playpause() {
+      this.spotifySDK.togglePlay().then(() => {
+        console.log("Toggled playback!");
+      });
     },
     changeSong(state) {
-      console.log(state);
+      // console.log(state);
       if (
         state &&
         state != this.currentState &&

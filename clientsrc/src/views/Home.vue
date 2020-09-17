@@ -93,7 +93,7 @@ export default {
     async startSession() {
       let res = await fetch("http://localhost:3000/login");
       let { url } = await res.json();
-      console.log(url);
+      // console.log(url);
     },
     searchByArtist() {
       this.$store.dispatch("searchByArtist", {

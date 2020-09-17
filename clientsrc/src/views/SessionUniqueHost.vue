@@ -115,8 +115,8 @@ export default {
     this.$store.dispatch("getSpotifyVisitorAuth");
     this.$store.dispatch("joinRoom", "session-" + this.$route.params.code);
     $("#songModal").on("hidden.bs.modal", () => {
-      this.clearSearch(), this.clearTrackResults()
-    })
+      this.clearSearch(), this.clearTrackResults();
+    });
 
     // this.$store.dispatch("getQueue", {
     //   sessionCode: this.$route.params.code
@@ -137,32 +137,27 @@ export default {
     },
 
     async infiniteHandler($state) {
-      
       if (!this.isLoading && this.trackResults.length <= 50) {
-        
         this.isLoading = true;
         await this.searchBySong();
         // this.getTrackResults((this.trackResults.length + 10));
         $state.loaded();
-        console.log("load more");
-        
-        
+        // console.log("load more");
       } else if (this.trackResults.length > 0) {
-        console.log("no load");
+        // console.log("no load");
         $state.complete();
         this.noLoadForYou = true;
       }
-    
 
       // $state.loaded()
-  },
-    clearSearch(){
-      this.search = ""
+    },
+    clearSearch() {
+      this.search = "";
     },
     clearTrackResults() {
       this.$store.commit("clearTrackSearchResults");
       this.noLoadForYou = false;
-      this.infiniteWait = false; 
+      this.infiniteWait = false;
       // NOTE Mick- Do we still need these in a different place??
       // // this.oldSearchLength = 0;
       // this.search = "";
@@ -206,19 +201,18 @@ export default {
       }
       this.oldSearchLength = this.trackResults.length;
       this.oldSearchTerm = this.search;
-      console.log(this.trackResults.length);
+      // console.log(this.trackResults.length);
       await this.$store.dispatch("searchBySong", {
         data: this.search,
         page: this.trackResults.length,
       });
       this.isLoading = false;
-      this.infiniteWaited()
+      this.infiniteWaited();
     },
 
-    infiniteWaited(){
+    infiniteWaited() {
       this.infiniteWait = true;
     },
-    
 
     // getTrackResults(offset){
     //   let offsetResults = this.$store.state.trackSearchResults[offset];
@@ -231,7 +225,7 @@ export default {
         if (this.activeSession.creatorEmail == this.$auth.user.email) {
           await this.$store.dispatch("callDownTokens");
         } else {
-          console.log("Not the host, no tokens for you");
+          // console.log("Not the host, no tokens for you");
         }
       }
     },
@@ -239,7 +233,7 @@ export default {
       if (this.$route.params.code) {
         await this.$store.dispatch("joinSessionHost", this.$route.params.code);
       } else {
-        console.log("no route params code found");
+        // console.log("no route params code found");
       }
     },
   },

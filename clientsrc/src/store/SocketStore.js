@@ -13,22 +13,22 @@ export const socketStore = {
 
       //registers event listeners for emits from socketservice
       socket.on("updateQueue", (payload) => {
-        console.log("worked", payload);
+        // console.log("worked", payload);
         dispatch("getQueue", payload);
       });
 
       socket.on("songScoreUpdated", (payload) => {
-        console.log("song score updated", payload);
+        // console.log("song score updated", payload);
         dispatch("getQueue", payload);
       });
       socket.on("activeSongUpdated", (payload) => {
-        console.log("socket hit", payload.data.activeSong[0]);
+        // console.log("socket hit", payload.data.activeSong[0]);
         commit("setActiveSong", payload.data.activeSong[0]);
       });
     },
     joinRoom({ commit, dispatch }, roomName) {
       socket.emit("dispatch", { action: "joinRoom", data: roomName });
-      console.log("room Joined", roomName);
+      // console.log("room Joined", roomName);
     },
     leaveRoom({ commit, dispatch }, roomName) {
       socket.emit("disconnect", { action: "leaveRoom", data: roomName });

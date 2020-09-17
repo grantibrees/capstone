@@ -124,7 +124,7 @@ export default {
       }
     },
     skipSong() {
-      console.log("song skip?");
+      // console.log("song skip?");
       this.$store.dispatch("changeSong", this.songsQueue[0]);
     },
 

@@ -35,7 +35,7 @@ export default {
           qs.stringify(data),
           headers
         );
-        console.log(res.data.access_token, "Bearer Token For Non Owner");
+        // console.log(res.data.access_token, "Bearer Token For Non Owner");
         let spotifyAuthToken = res.data.access_token
         commit('setSpotifyVisitorAuth', spotifyAuthToken)
       } catch (error) {

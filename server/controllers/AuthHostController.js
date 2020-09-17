@@ -13,7 +13,7 @@ let unsafe = {}
 export class AuthHostController extends BaseController {
   constructor() {
     super("")
-    console.log('AuthHostController active');
+    // console.log('AuthHostController active');
     this.router
       .get('/callback', this.authCallBack)
       .get('/login', this.authorizeHost)
@@ -37,7 +37,7 @@ export class AuthHostController extends BaseController {
     try {
       let data = await spotifyApi.authorizationCodeGrant(code)
       const { access_token, refresh_token, expires_in } = data.body;
-      console.log(data.body);
+      // console.log(data.body);
       spotifyApi.setAccessToken(access_token);
       spotifyApi.setRefreshToken(refresh_token);
       let payload = {

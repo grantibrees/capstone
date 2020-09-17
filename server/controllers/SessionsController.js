@@ -29,7 +29,7 @@ export class SessionsController extends BaseController {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
       req.body.creatorEmail = req.body.userEmail;
-      console.log(req.body);
+      // console.log(req.body);
       let data = await sessionsService.create(req.body);
       return res.status(201).send(data);
     } catch (error) {

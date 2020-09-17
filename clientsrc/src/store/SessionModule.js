@@ -12,7 +12,7 @@ export default {
   actions: {
     async createSession({ commit }, sessionData) {
       try {
-        console.log(sessionData)
+        // console.log(sessionData)
         await api.post("session/post", sessionData)
         commit("setActiveSession", sessionData)
         router.push({ name: 'SessionUniqueHost', params: { code: sessionData.sessionCode } })

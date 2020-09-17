@@ -97,10 +97,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    setBearer({}, bearer) {
+    setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
       hostTokensApi.defaults.headers.authorization = bearer;
-      console.log("Set Bearer tokens");
+      // console.log("Set Bearer tokens");
     },
     resetBearer() {
       api.defaults.headers.authorization = "";
@@ -111,7 +111,7 @@ export default new Vuex.Store({
       try {
         let res = await api.get("/profile");
         commit("setUser", res.data);
-        console.log("profile data", res.data);
+        // console.log("profile data", res.data);
       } catch (err) {
         console.error(err);
       }
@@ -119,7 +119,7 @@ export default new Vuex.Store({
     async getSessionEmail({ dispatch }, code) {
       try {
         let res = await api.get("session/" + code);
-        console.log(res.data[0].creatorEmail);
+        // console.log(res.data[0].creatorEmail);
         return res.data[0].creatorEmail;
       } catch (error) {
         console.error(error);
@@ -128,7 +128,7 @@ export default new Vuex.Store({
 
     setSpotifyHostTokens({ commit, dispatch, state }, tokenData) {
       commit("setHostTokens", tokenData);
-      console.log(" host tokens set to store: ", tokenData);
+      // console.log(" host tokens set to store: ", tokenData);
     },
 
     async saveSpotifyHostTokens({ commit, dispatch }, tokenData) {
@@ -138,9 +138,9 @@ export default new Vuex.Store({
           refreshToken: tokenData.refreshToken,
           expiresIn: tokenData.expiresIn,
         };
-        console.log(payload);
+        // console.log(payload);
         let res = await hostTokensApi.post("tokensave", payload);
-        console.log("host tokens posted to server", res);
+        // console.log("host tokens posted to server", res);
       } catch (error) {
         console.error(error);
       }
@@ -150,9 +150,9 @@ export default new Vuex.Store({
       try {
         let res = await hostTokensApi.get("tokenget");
         commit("setHostTokens", res.data);
-        console.log(res.data);
+        // console.log(res.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     },
 

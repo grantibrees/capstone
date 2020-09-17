@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default {
   actions: {
     async playCurrentSong({ commit }, songRequest) {
-      console.log("song play");
+      // console.log("song play");
       try {
         await spotifySongApi.put(
           "play?device_id=" + store.state.hostDeviceId,
@@ -28,7 +28,7 @@ export default {
     async addToQueue({ commit, dispatch }, payload) {
       try {
         let res = await api.put("session/" + payload.sessionCode, payload);
-        console.log(res);
+        // console.log(res);
         dispatch("getActiveSong", payload);
       } catch (error) {
         console.error(error);
@@ -37,7 +37,7 @@ export default {
     async getQueue({ commit, dispatch }, payload) {
       try {
         let res = await api.get("session/" + payload.sessionCode);
-        console.log("got Queue", res.data[0]);
+        // console.log("got Queue", res.data[0]);
         commit("setQueue", res.data[0].queue);
       } catch (error) {
         console.error(error);
@@ -46,7 +46,7 @@ export default {
 
     getActiveSong({ commit, dispatch }, song) {
       if (store.state.activeSong == "no active song") {
-        commit("setActiveSong", song);
+        // commit("setActiveSong", song);
         dispatch("playCurrentSong");
         api.delete(
           "session/" + store.state.activeSession.sessionCode + "/" + song.uri
@@ -85,7 +85,7 @@ export default {
           "session/" + song.sessionCode + "/" + song.uri + "/" + "active",
           song
         );
-        console.log("updatedActiveSong worked?", res.data);
+        // console.log("updatedActiveSong worked?", res.data);
       } catch (error) {
         console.error(error);
       }
@@ -94,9 +94,9 @@ export default {
       try {
         let res = await api.get("session/" + code + "/find");
         debugger;
-        console.log("foundActiveSong", res.data.data[0].activeSong[0]);
+        // console.log("foundActiveSong", res.data.data[0].activeSong[0]);
         commit("setActiveSong", res.data.data[0].activeSong[0]);
-        console.log("current song", this.state.activeSong);
+        // console.log("current song", this.state.activeSong);
       } catch (error) {
         console.error(error);
       }
