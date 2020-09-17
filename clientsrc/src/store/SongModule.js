@@ -9,11 +9,11 @@ Vue.use(Vuex);
 export default {
   actions: {
     async playCurrentSong({ commit }, songRequest) {
-      // console.log("song play");
+      console.log(store.state.activeSong.uri);
       try {
         await spotifySongApi.put(
           "play?device_id=" + store.state.hostDeviceId,
-          { uri: [store.state.activeSong.uri] },
+          { uris: [store.state.activeSong.uri] },
           {
             headers: {
               Authorization: "Bearer " + store.state.hostTokens.accessToken,
