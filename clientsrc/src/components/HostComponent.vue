@@ -93,6 +93,7 @@ export default {
       });
       // Playback status updates
       this.spotifySDK.addListener("this.spotifySDK_state_changed", (state) => {
+        console.log("state Changed", state);
         this.changeSong(state);
       });
       // Ready
