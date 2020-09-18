@@ -1,19 +1,19 @@
 <template>
-  <div class="SessionUniqueHost container-fluid full-height">
-    <div class="row chocolate top-height"></div>
+  <div class="SessionUniqueVisitor bg-info font-site container-fluid full-height rm-my">
+    <div class="row bg-warning border-bottom border-info"></div>
 
-    <div class="row mid-height">
+    <div class="row">
       <queue />
     </div>
 
-    <div class="row bot-height strawberry align-items-center">
+    <div class="row align-items-center">
       <div class="col-12">
         <div class="row px-5 py-3">
           <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
-              <div class="modal-content bg-success">
+              <div class="modal-content bg-warning">
                 <div class="modal-header">
-                  <h5 class="modal-title mr-5">Search</h5>
+                  <h5 class="modal-title"></h5>
 
                   <form class="form-inline mr-5" @submit.prevent="searchBySong()">
                     <input
@@ -24,14 +24,14 @@
                       aria-label="Search"
                     />
                     <button
-                      class="btn btn-outline-danger rounded-pill my-2 my-sm-0"
+                      class="btn btn-outline-danger btn-block rounded-pill my-2 p-3"
                       type="submit"
                     >Search</button>
                   </form>
 
                   <button
                     type="button"
-                    @click="clearTrackResults"
+                    @click="clearTrackResults(), clearSearch()"
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
@@ -41,18 +41,18 @@
                 </div>
                 <div class="modal-body">
                   <div
-                    class="bg-primary m-2 p-2 row justify-content-between rounded-pill"
+                    class="bg-primary m-2 p-2 row justify-content-between align-items-center rounded-pill result"
+                    @click.prevent="selectSong(result)"
                     v-for="result in trackResults"
                     :key="result.id"
                   >
-                    <div class="col-2">
-                      <img class="ml-5 rounded img-fluid" :src="result.album.images[0].url" alt />
+                    <div class="col-2 ml-1">
+                      <img class="rounded img-fluid" :src="result.album.images[0].url" alt />
                     </div>
-                    {{result.artists[0].name}}- {{result.name}}
-                    <button
-                      class="btn btn-outline-secondary mr-5 rounded-pill col-2"
-                      @click.prevent="selectSong(result)"
-                    >+</button>
+                    <div class="col result-name">{{result.artists[0].name}}- {{result.name}}</div>
+                    <div class="col-2">
+                      <i class="fa fa-plus mt-1"></i>
+                    </div>
                   </div>
                   <InfiniteLoading
                     v-if="!noLoadForYou && infiniteWait"
@@ -71,11 +71,15 @@
 
           <button
             type="button"
-            class="btn btn-block btn-outline-danger p-3 rounded-pill"
+            class="btn bg-fade p-3 text-info my-5 mx-4 add-button fixed-bottom"
             data-toggle="modal"
             data-target="#songModal"
             @click="yesLoadForYou"
-          >Add a Song</button>
+          >
+            <h2>
+              <i class="pt-3 fa fa-plus"></i>
+            </h2>
+          </button>
         </div>
       </div>
     </div>
@@ -243,46 +247,22 @@ export default {
 
 
 <style scoped>
-body {
-  background-color: #fff8ed;
-  color: var(--black);
+.add-button {
+  border-radius: 50%;
+  width: 110px;
+  height: 110px;
 }
-.font-fancy {
-  font-family: "Norican", cursive;
+.result {
+  height: 8vh;
+  transition: all 0.2s ease-in-out;
 }
-.full-height {
-  min-height: 100%;
-  max-height: 100%;
-}
-.top-height {
-  min-height: 8vh;
-  max-height: 8vh;
-}
-.mid-height {
-  min-height: 72vh;
-  max-height: 72vh;
-}
-.bot-height {
-  min-height: 20vh;
-  max-height: 20vh;
+.result-name {
+  overflow: hidden;
 }
 
-.strawberry {
-  background-color: #ffd9d1;
-}
-.chocolate {
-  background-color: #74462c;
-}
-.vanilla {
-  background-color: #fff8ed;
-}
-.strawberry-accent {
-  color: white;
-  background-color: #e64772;
-}
-.bright-accent {
-  color: white;
-  background-color: #0fb2b5;
+.result:active {
+  background-color: var(--warning);
+  border: 1px solid var(--primary);
 }
 .rm-my {
   margin-top: 0em !important;

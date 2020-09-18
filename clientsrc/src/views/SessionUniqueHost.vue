@@ -51,7 +51,7 @@
                     <div class="col-2 ml-1">
                       <img class="rounded img-fluid" :src="result.album.images[0].url" alt />
                     </div>
-                    <div class="col">{{result.artists[0].name}}- {{result.name}}</div>
+                    <div class="col result-name">{{result.artists[0].name}}- {{result.name}}</div>
                     <div class="col-2">
                       <i class="fa fa-plus mt-1"></i>
                     </div>
@@ -260,8 +260,10 @@ export default {
 }
 .result {
   height: 8vh;
-  overflow: hidden;
   transition: all 0.2s ease-in-out;
+}
+.result-name {
+  overflow: hidden;
 }
 
 .result:active {
