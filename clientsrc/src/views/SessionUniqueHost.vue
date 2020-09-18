@@ -73,7 +73,7 @@
 
           <button
             type="button"
-            class="btn bg-fade p-3 text-info m-5 rounded-pill fixed-bottom"
+            class="btn bg-fade p-3 text-info m-5 add-button fixed-bottom"
             data-toggle="modal"
             data-target="#songModal"
             @click="yesLoadForYou"
@@ -251,6 +251,11 @@ export default {
 
 
 <style scoped>
+.add-button {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
 .top-height {
   min-height: 8vh;
   max-height: 8vh;
