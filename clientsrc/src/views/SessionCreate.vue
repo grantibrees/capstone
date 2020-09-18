@@ -1,5 +1,5 @@
 <template>
-  <div class="SessionCreate full-height bg-warning container-fluid m-0 p-0">
+  <div class="SessionCreate font-site full-height bg-warning container-fluid">
     <div class="row chocolate justify-content-center"></div>
 
     <div class="row p-push align-items-center">
@@ -73,5 +73,10 @@ export default {
 
 .p-push {
   padding-top: 12em;
+}
+
+.container-fluid{
+  margin: 0;
+  padding: 0;
 }
 </style>

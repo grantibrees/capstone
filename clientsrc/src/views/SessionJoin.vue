@@ -1,5 +1,5 @@
 <template>
-  <div class="SessionJoin full-height bg-warning container-fluid">
+  <div class="SessionJoin font-site full-height bg-warning container-fluid">
     <div class="row justify-content-center p-push">
       <div class="col-12 pt-5">
         <div class="form-group pt-5">
