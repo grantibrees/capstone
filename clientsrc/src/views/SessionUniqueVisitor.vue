@@ -1,6 +1,6 @@
 <template>
   <div class="SessionUniqueVisitor bg-info font-site container-fluid full-height rm-my">
-    <div class="row bg-warning border-bottom border-info"></div>
+    <div class="row bg-warning"></div>
 
     <div class="row">
       <queue />
