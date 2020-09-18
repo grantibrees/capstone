@@ -117,7 +117,7 @@ export default {
     buttonShadow(id) {
       let text = document.getElementById(id);
       let shadow = "";
-      let length = 150;
+      let length = 170;
       for (let i = 0; i <= length; i++) {
         shadow +=
           (shadow ? "," : "") +
