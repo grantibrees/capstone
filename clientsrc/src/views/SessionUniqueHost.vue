@@ -1,6 +1,6 @@
 <template>
   <div class="SessionUniqueHost bg-info font-site container-fluid full-height rm-my">
-    <div class="row">
+    <div class="row bg-warning border-bottom border-info">
       <hostComponent></hostComponent>
     </div>
 
@@ -15,7 +15,7 @@
             <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
               <div class="modal-content bg-warning">
                 <div class="modal-header">
-                  <h5 class="modal-title mr-5">Search</h5>
+                  <h5 class="modal-title"></h5>
 
                   <form class="form-inline mr-5" @submit.prevent="searchBySong()">
                     <input

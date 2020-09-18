@@ -1,5 +1,5 @@
 <template>
-  <div class="host-component col-12">
+  <div class="host-component font-site col-12">
     <div class="row align-items-center my-4">
       <div class="col-8">
         <h5 class="rm-my">Session Code: {{activeSession.sessionCode}}</h5>
