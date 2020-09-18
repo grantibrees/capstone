@@ -43,7 +43,7 @@
                 </div>
                 <div class="modal-body">
                   <div
-                    class="bg-primary m-2 p-2 row justify-content-between rounded-pill"
+                    class="bg-primary m-2 p-2 row justify-content-between rounded-pill result"
                     @click.prevent="selectSong(result)"
                     v-for="result in trackResults"
                     :key="result.id"
@@ -256,7 +256,9 @@ export default {
   width: 110px;
   height: 110px;
 }
-
+.result {
+  height: 15vh;
+}
 .rm-my {
   margin-top: 0em !important;
   margin-bottom: 0em !important;
