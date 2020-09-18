@@ -73,7 +73,7 @@
 
           <button
             type="button"
-            class="btn bg-fade p-3 rounded-pill fixed-bottom"
+            class="btn bg-fade p-5 text-info m-5 rounded-pill fixed-bottom"
             data-toggle="modal"
             data-target="#songModal"
             @click="yesLoadForYou"
