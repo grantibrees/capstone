@@ -43,17 +43,17 @@
                 </div>
                 <div class="modal-body">
                   <div
-                    class="bg-primary m-2 p-2 row justify-content-between rounded-pill result"
+                    class="bg-primary m-2 p-2 row justify-content-between align-items-center rounded-pill result"
                     @click.prevent="selectSong(result)"
                     v-for="result in trackResults"
                     :key="result.id"
                   >
-                    <div class="col-2">
-                      <img class="ml-5 rounded img-fluid" :src="result.album.images[0].url" alt />
+                    <div class="col-2 ml-1">
+                      <img class="rounded img-fluid" :src="result.album.images[0].url" alt />
                     </div>
                     <div class="col">{{result.artists[0].name}}- {{result.name}}</div>
                     <div class="col-2">
-                      <i class="fa fa-plus"></i>
+                      <i class="fa fa-plus mt-1"></i>
                     </div>
                   </div>
                   <InfiniteLoading
