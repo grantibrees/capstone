@@ -1,5 +1,5 @@
 <template>
-  <div class="SessionUniqueHost font-site container-fluid full-height rm-my">
+  <div class="SessionUniqueHost bg-info font-site container-fluid full-height rm-my">
     <div class="row">
       <hostComponent></hostComponent>
     </div>
@@ -13,7 +13,7 @@
         <div class="row px-5 py-3">
           <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
-              <div class="modal-content bg-success">
+              <div class="modal-content bg-warning">
                 <div class="modal-header">
                   <h5 class="modal-title mr-5">Search</h5>
 
