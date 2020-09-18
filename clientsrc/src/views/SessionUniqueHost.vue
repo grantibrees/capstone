@@ -44,6 +44,7 @@
                 <div class="modal-body">
                   <div
                     class="bg-primary m-2 p-2 row justify-content-between rounded-pill"
+                    @click.prevent="selectSong(result)"
                     v-for="result in trackResults"
                     :key="result.id"
                   >
@@ -51,10 +52,7 @@
                       <img class="ml-5 rounded img-fluid" :src="result.album.images[0].url" alt />
                     </div>
                     {{result.artists[0].name}}- {{result.name}}
-                    <button
-                      class="btn btn-outline-secondary mr-5 rounded-pill col-2"
-                      @click.prevent="selectSong(result)"
-                    >+</button>
+                    <i class="fa fa-plus"></i>
                   </div>
                   <InfiniteLoading
                     v-if="!noLoadForYou && infiniteWait"

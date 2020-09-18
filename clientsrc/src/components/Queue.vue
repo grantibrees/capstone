@@ -81,7 +81,9 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong.uri" />
+        <transition-group name="songs">
+          <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong.uri" />
+        </transition-group>
       </div>
     </div>
   </div>
@@ -165,5 +167,19 @@ export default {
 .rm-my {
   margin-top: 0em !important;
   margin-bottom: 0em !important;
+}
+
+.song-enter-active {
+  transition: all 0.3s ease;
+}
+
+.song-leave-active {
+  transition: all 0.3s ease;
+}
+
+.song-enter,
+.song-leave-to {
+  transform: translateY(-8px);
+  opacity: 0;
 }
 </style>
