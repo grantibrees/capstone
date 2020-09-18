@@ -1,10 +1,10 @@
 <template>
-  <div class="SessionUniqueHost font-site container-fluid full-height">
-    <div class="row chocolate top-height">
+  <div class="SessionUniqueHost font-site container-fluid full-height rm-my">
+    <div class="row">
       <hostComponent></hostComponent>
     </div>
 
-    <div class="row mid-height">
+    <div class="row">
       <queue />
     </div>
 
@@ -79,7 +79,7 @@
             @click="yesLoadForYou"
           >
             <h2>
-              <i class="pt-2 fa fa-plus"></i>
+              <i class="pt-3 fa fa-plus"></i>
             </h2>
           </button>
         </div>
@@ -257,18 +257,6 @@ export default {
   border-radius: 50%;
   width: 110px;
   height: 110px;
-}
-.top-height {
-  min-height: 8vh;
-  max-height: 8vh;
-}
-.mid-height {
-  min-height: 72vh;
-  max-height: 72vh;
-}
-.bot-height {
-  min-height: 20vh;
-  max-height: 20vh;
 }
 
 .rm-my {
