@@ -249,17 +249,6 @@ export default {
 
 
 <style scoped>
-body {
-  background-color: #fff8ed;
-  color: var(--black);
-}
-.font-fancy {
-  font-family: "Norican", cursive;
-}
-.full-height {
-  min-height: 100%;
-  max-height: 100%;
-}
 .top-height {
   min-height: 8vh;
   max-height: 8vh;
@@ -273,23 +262,6 @@ body {
   max-height: 20vh;
 }
 
-.strawberry {
-  background-color: #ffd9d1;
-}
-.chocolate {
-  background-color: #74462c;
-}
-.vanilla {
-  background-color: #fff8ed;
-}
-.strawberry-accent {
-  color: white;
-  background-color: #e64772;
-}
-.bright-accent {
-  color: white;
-  background-color: #0fb2b5;
-}
 .rm-my {
   margin-top: 0em !important;
   margin-bottom: 0em !important;
