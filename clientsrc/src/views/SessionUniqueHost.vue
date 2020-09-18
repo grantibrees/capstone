@@ -79,7 +79,7 @@
             @click="yesLoadForYou"
           >
             <h2>
-              <i class="fa fa-plus"></i>
+              <i class="pt-2fa fa-plus"></i>
             </h2>
           </button>
         </div>
@@ -255,8 +255,8 @@ export default {
 <style scoped>
 .add-button {
   border-radius: 50%;
-  width: 90px;
-  height: 90px;
+  width: 110px;
+  height: 110px;
 }
 .top-height {
   min-height: 8vh;
