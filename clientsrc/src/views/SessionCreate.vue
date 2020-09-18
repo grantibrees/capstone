@@ -1,7 +1,5 @@
 <template>
   <div class="SessionCreate font-site full-height bg-warning container-fluid">
-    <div class="row chocolate justify-content-center"></div>
-
     <div class="row p-push align-items-center">
       <div class="col-12">
         <div class="form-group">
