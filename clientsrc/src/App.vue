@@ -1,6 +1,8 @@
 <template>
   <div class="bg-warning" id="app">
-    <router-view />
+    <transition name="slide-fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -40,7 +42,15 @@ export default {
   color: #ffffff;
 }
 
-.font-fancy {
-  font-family: "Norican", cursive;
+.slide-fade-enter-active {
+  transition: all 0.4s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  background-image: linear-gradient(to bottom left, black, black);
+  opacity: 0;
 }
 </style>
