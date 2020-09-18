@@ -51,8 +51,10 @@
                     <div class="col-2">
                       <img class="ml-5 rounded img-fluid" :src="result.album.images[0].url" alt />
                     </div>
-                    {{result.artists[0].name}}- {{result.name}}
-                    <i class="fa fa-plus"></i>
+                    <div class="col">{{result.artists[0].name}}- {{result.name}}</div>
+                    <div class="col-2">
+                      <i class="fa fa-plus"></i>
+                    </div>
                   </div>
                   <InfiniteLoading
                     v-if="!noLoadForYou && infiniteWait"
@@ -257,7 +259,7 @@ export default {
   height: 110px;
 }
 .result {
-  height: 15vh;
+  height: 8vh;
 }
 .rm-my {
   margin-top: 0em !important;

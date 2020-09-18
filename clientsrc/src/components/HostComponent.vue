@@ -2,7 +2,10 @@
   <div class="host-component font-site col-12">
     <div class="row align-items-center my-4">
       <div class="col-8">
-        <h5 class="rm-my">Session Code: {{activeSession.sessionCode}}</h5>
+        <h5 class="rm-my">
+          Session Code:
+          <span class="text-primary">{{activeSession.sessionCode}}</span>
+        </h5>
       </div>
       <div class="col-2">
         <i class="far fa-share-square"></i>
