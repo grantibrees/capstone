@@ -260,6 +260,13 @@ export default {
 }
 .result {
   height: 8vh;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.result:active {
+  background-color: var(--warning);
+  border: 1px solid var(--primary);
 }
 .rm-my {
   margin-top: 0em !important;
