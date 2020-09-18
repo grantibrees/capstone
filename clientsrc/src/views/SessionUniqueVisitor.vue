@@ -251,6 +251,7 @@ export default {
   border-radius: 50%;
   width: 110px;
   height: 110px;
+  z-index: 10;
 }
 .result {
   height: 8vh;
