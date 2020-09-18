@@ -1,13 +1,15 @@
 <template>
-  <div class="songs bg-secondary row mb-2">
+  <div class="songs bg-primary row my-1">
     <div class="col-2 py-2">
       <button
         @click.prevent="vote('up')"
-        class="btn btn-sm"
-        :class="upVoteToggle ? 'btn-success':'btn-outline-success'"
-      >Upvote</button>
+        class="btn"
+        :class="upVoteToggle ? 'btn-info':'btn-outline-info'"
+      >
+        <i class="fa fa-arrow-up"></i>
+      </button>
     </div>
-    <div class="col-8">
+    <div class="col">
       <div class="row">
         <div class="col-8 justify-content-center">
           {{songData.songTitle}} -
@@ -28,7 +30,9 @@
         @click.prevent="vote('down')"
         class="btn btn-sm"
         :class="downVoteToggle ? 'btn-danger':'btn-outline-danger'"
-      >Downvote</button>
+      >
+        <i class="fa fa-arrow-down"></i>
+      </button>
     </div>
   </div>
 </template>

@@ -23,7 +23,7 @@
             <div class="row justify-content-center">Album: {{activeSong.album}}</div>
             <div
               class="row justify-content-center"
-            >Track Length: {{(activeSong.trackLength/1000)/60}}</div>
+            >Track Length: {{Math.round(((activeSong.trackLength/1000)/60)*100)/100}}</div>
           </div>
         </div>
         <div
@@ -79,8 +79,8 @@
         </div>
       </div>
     </div>
-    <div class="row vanilla queue-height overflowy">
-      <div class="col-12 overflowy">
+    <div class="row">
+      <div class="col-12">
         <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong.uri" />
       </div>
     </div>
