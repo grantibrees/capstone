@@ -1,38 +1,40 @@
 <template>
-  <div class="home">
+  <div class="home font-site bg-white">
     <div class="container-fluid">
-      <div class="row chocolate min-height2 align-items-center justify-content-center">
+      <div class="row choco align-items-center justify-content-center">
         <div class>
-          <div class="justify-content-center mt-2">
-            <h1 class="font-fancy">Song Sundae</h1>
+          <div class="col-4">
+            <img class="img-fluid" src="../assets/songscoopcassette.png" alt />
+          </div>
+          <div class="justify-content-center">
+            <h1 class="font-fancy py-2">Song Scoop</h1>
           </div>
           <div class="justify-content-center mt-4 mx-5">
             <p>You don't need to steal your friend's phone to put on decent music.</p>
           </div>
         </div>
       </div>
-      <div class="row vanilla min-height align-items-center">
+      <div class="row vanilla min-height py-5 align-items-center">
         <div class="col-12">
-          <div class="row px-5 py-3">
-            <button
-              class="btn btn-block btn-outline-danger p-3 rounded-pill"
-              @click="hostTrigger()"
-            >
-              <h2>Host a Session</h2>
+          <div id="btn1" class="border-pill-wrap my-5">
+            <button class="btn btn-block p-4 btn-pill" @click="hostTrigger()">
+              <h4>Create Session</h4>
             </button>
           </div>
-          <div class="row px-5 py-3">
-            <button
-              @click="movePage('SessionJoin')"
-              class="btn btn-block btn-outline-danger p-3 rounded-pill"
-            >
-              <h2>Join a Session</h2>
+
+          <div id="btn2" class="border-pill-wrap my-5">
+            <button @click="movePage('SessionJoin')" class="btn btn-block p-4 btn-pill">
+              <h4>Join Session</h4>
             </button>
           </div>
         </div>
       </div>
 
-      <div class="row strawberry min-height2"></div>
+      <div class="row fixed-bottom strawberry footer-size justify-content-center">
+        <small
+          class="d-flex align-self-end justify-self-center my-2"
+        >created by Tim Grant Tyler & Mick</small>
+      </div>
     </div>
   </div>
 </template>
@@ -68,6 +70,8 @@ export default {
   mounted() {
     this.$store.dispatch("getSpotifyVisitorAuth");
     // this.startMusic();
+    this.buttonShadow("btn1");
+    this.buttonShadow("btn2");
   },
   methods: {
     async hostTrigger() {
@@ -110,40 +114,83 @@ export default {
         data: this.search.data,
       });
     },
+    buttonShadow(id) {
+      let text = document.getElementById(id);
+      let shadow = "";
+      let length = 150;
+      for (let i = 0; i <= length; i++) {
+        shadow +=
+          (shadow ? "," : "") +
+          i * 1 +
+          "px " +
+          i * 1 +
+          "px 0 rgb(" +
+          (246 - i * 0.004) +
+          ", " +
+          (101 + i * 0.149) +
+          ", " +
+          (153 - i * 0.3) +
+          ")";
+      }
+      console.log(shadow);
+      text.style.boxShadow = shadow;
+      // (241, 250, 123)
+    },
   },
 };
 </script>
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Concert+One&family=Monoton&family=Righteous&family=Rubik&display=swap");
 body {
-  background-color: #fff8ed;
+  background-color: var(--info);
   color: var(--black);
 }
+.font-site {
+  font-family: "Rubik", sans-serif !important;
+}
 .font-fancy {
-  font-family: "Norican", cursive;
+  font-family: "Monoton", cursive;
 }
-
-.min-height {
-  min-height: 36vh;
-}
-.min-height2 {
-  min-height: 32vh;
-}
-
-.strawberry {
-  background-color: #ffd9d1;
-}
-.chocolate {
-  background-color: #613921;
+.choco {
+  background-color: var(--warning);
 }
 .vanilla {
-  background-color: #fff8ed;
+  background-color: var(--info);
 }
-.strawberry-accent {
-  color: white;
-  background-color: #e64772;
+.strawberry {
+  background-color: var(--primary);
 }
-.bright-accent {
-  color: white;
-  background-color: #0fb2b5;
+
+.btn-pill {
+  color: var(--primary);
+  background-color: var(--info);
+  border-radius: 3em !important;
+  transition: all 0.2s ease-in-out;
+}
+.btn-pill:active {
+  color: var(--info);
+  background-color: var(--warning);
+  border-radius: 3em !important;
+}
+
+.border-pill-wrap {
+  border-radius: 3em;
+  padding: 1rem;
+  position: relative;
+  background-image: linear-gradient(
+    to bottom left,
+    var(--pink),
+    rgb(253, 187, 171)
+  );
+  padding: 3px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.border-pill-wrap:hover {
+  transform: translateY(-5px);
+}
+
+.footer-size {
+  min-height: 20vh;
 }
 </style>
