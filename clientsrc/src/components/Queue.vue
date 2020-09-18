@@ -6,7 +6,7 @@
         class="col-12"
         v-if="(this.activeSession.queue && this.activeSession.queue.length > 0) || this.activeSong.trackLength"
       >
-        <div class="row">
+        <div class="row player">
           <div class="col-5">
             <img
               class="rounded my-auto img-thumbnail img-fluid"
@@ -161,9 +161,8 @@ export default {
 
 
 <style scoped>
-.player-height {
-  min-height: 18vh;
-  max-height: 18vh;
+.player {
+  max-height: 30vh;
 }
 
 .overflowy {
