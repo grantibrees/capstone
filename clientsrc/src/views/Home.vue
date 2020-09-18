@@ -173,6 +173,14 @@ body {
   border-radius: 3em !important;
 }
 
+.bg-fade {
+  background-image: linear-gradient(
+    to bottom left,
+    var(--pink),
+    rgb(253, 187, 171)
+  );
+}
+
 .border-pill-wrap {
   border-radius: 3em;
   padding: 1rem;

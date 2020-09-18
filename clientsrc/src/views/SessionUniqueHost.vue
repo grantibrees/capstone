@@ -1,5 +1,5 @@
 <template>
-  <div class="SessionUniqueHost container-fluid full-height">
+  <div class="SessionUniqueHost font-site container-fluid full-height">
     <div class="row chocolate top-height">
       <hostComponent></hostComponent>
     </div>
@@ -8,7 +8,7 @@
       <queue />
     </div>
 
-    <div class="row bot-height strawberry align-items-center">
+    <div class="row align-items-center">
       <div class="col-12">
         <div class="row px-5 py-3">
           <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
@@ -73,7 +73,7 @@
 
           <button
             type="button"
-            class="btn btn-block btn-outline-danger p-3 rounded-pill"
+            class="btn bg-fade p-3 rounded-pill fixed-bottom"
             data-toggle="modal"
             data-target="#songModal"
             @click="yesLoadForYou"
