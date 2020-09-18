@@ -23,7 +23,7 @@
             <div class="row justify-content-center">Album: {{activeSong.album}}</div>
             <div
               class="row justify-content-center"
-            >Track Length: {{Math.round(((activeSong.trackLength/1000)/60)*100)/100}}</div>
+            >Track Length: {{trackTime(activeSong.trackLength)}}</div>
           </div>
         </div>
         <div
@@ -133,6 +133,12 @@ export default {
     skipSong() {
       // console.log("song skip?");
       this.$store.dispatch("changeSong", this.songsQueue[0]);
+    },
+
+    trackTime(trackMs) {
+      let format = Math.round((trackMs / 1000 / 60) * 100) / 100;
+      let string = format.toString.split(".");
+      return string[0] + ":" + string[1] ? string[1] : "";
     },
 
     // pauseSong() {
