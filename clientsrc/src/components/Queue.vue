@@ -148,42 +148,15 @@ export default {
 
 
 <style scoped>
-body {
-  background-color: #fff8ed;
-  color: var(--black);
-}
-.font-fancy {
-  font-family: "Norican", cursive;
-}
 .player-height {
   min-height: 18vh;
   max-height: 18vh;
 }
-.queue-height {
-  min-height: 44vh;
-  max-height: 44vh;
-}
+
 .overflowy {
   overflow-y: auto;
 }
 
-.strawberry {
-  background-color: #ffd9d1;
-}
-.chocolate {
-  background-color: #74462c;
-}
-.vanilla {
-  background-color: #fff8ed;
-}
-.strawberry-accent {
-  color: white;
-  background-color: #e64772;
-}
-.bright-accent {
-  color: white;
-  background-color: #0fb2b5;
-}
 .rm-my {
   margin-top: 0em !important;
   margin-bottom: 0em !important;

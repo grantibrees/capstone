@@ -26,7 +26,7 @@
                       aria-label="Search"
                     />
                     <button
-                      class="btn btn-outline-danger rounded-pill my-2 my-sm-0"
+                      class="btn btn-outline-danger btn-block rounded-pill my-2 p-3"
                       type="submit"
                     >Search</button>
                   </form>
