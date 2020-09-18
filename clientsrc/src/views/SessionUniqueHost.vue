@@ -73,13 +73,13 @@
 
           <button
             type="button"
-            class="btn bg-fade p-3 text-info m-5 add-button fixed-bottom"
+            class="btn bg-fade p-3 text-info my-5 mx-4 add-button fixed-bottom"
             data-toggle="modal"
             data-target="#songModal"
             @click="yesLoadForYou"
           >
             <h2>
-              <i class="pt-2fa fa-plus"></i>
+              <i class="pt-2 fa fa-plus"></i>
             </h2>
           </button>
         </div>
