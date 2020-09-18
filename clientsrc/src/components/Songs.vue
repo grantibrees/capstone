@@ -1,9 +1,9 @@
 <template>
   <div class="songs bg-primary row my-1">
-    <div class="col-2">
+    <div class="col-2 pb-0">
       <button
         @click.prevent="vote('up')"
-        class="btn"
+        class="btn p-3"
         :class="upVoteToggle ? 'btn-outline-info':'btn-info'"
       >
         <i class="fa fa-arrow-up"></i>
@@ -28,11 +28,11 @@
         alt
       />-->
     </div>
-    <div class="col-2">
+    <div class="col-2 pb-0">
       <button
         @click.prevent="vote('down')"
-        class="btn"
-        :class="downVoteToggle ? 'btn-outline-danger':'btn-danger'"
+        class="btn p-3"
+        :class="downVoteToggle ? 'btn-outline-warning':'btn-warning'"
       >
         <i class="fa fa-arrow-down"></i>
       </button>
