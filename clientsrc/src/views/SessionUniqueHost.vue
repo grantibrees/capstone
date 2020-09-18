@@ -121,7 +121,7 @@ export default {
     $("#songModal").on("hidden.bs.modal", () => {
       this.clearSearch(), this.clearTrackResults();
     });
-
+    // this.checkSong();
     // this.$store.dispatch("getQueue", {
     //   sessionCode: this.$route.params.code
     // })
@@ -136,6 +136,9 @@ export default {
     },
   },
   methods: {
+    // checkSong(){
+    //   if ()
+    // },
     yesLoadForYou() {
       this.noLoadForYou = false;
     },

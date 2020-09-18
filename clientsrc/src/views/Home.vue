@@ -33,7 +33,7 @@
       <div class="row fixed-bottom strawberry footer-size justify-content-center">
         <small
           class="d-flex align-self-end justify-self-center my-2"
-        >created by Tim Grant Tyler & Mick</small>
+        >created by Tim, Grant, Tyler, & Mick</small>
       </div>
     </div>
   </div>

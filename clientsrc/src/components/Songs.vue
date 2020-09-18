@@ -16,8 +16,17 @@
           {{songData.artist}}
         </small>
         <div class="col-4 justify-content-center">
-          <i class="fa fa-th-list"></i>
-          {{songData.score}}
+          <div class="row">
+            <i class="fa fa-th-list"></i>
+            {{songData.score}}
+          </div>
+          <div class="row">
+            <div v-if="(deleteButton)">
+              <button @click="deleteSong" class="btn btn-outline-danger p-3">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -44,11 +53,15 @@
 <script>
 export default {
   name: "songs",
+  mounted() {
+    this.hostCheck();
+  },
   data() {
     return {
       upVoteToggle: true,
       downVoteToggle: true,
       voteDisabled: false,
+      deleteButton: false,
     };
   },
   computed: {},
@@ -88,6 +101,19 @@ export default {
         this.delay();
       }
     },
+    async hostCheck() {
+      await onAuth();
+      this.$store.dispatch("setBearer", this.$auth.bearer);
+      this.$store.dispatch("getProfile", this.$auth.user);
+      let email = await this.$store.dispatch(
+        "getSessionEmail",
+        this.$route.params.code
+      );
+      if (email == this.$auth.user.email) {
+        this.deleteButton = true;
+      }
+    },
+    deleteSong() {},
   },
   props: ["songData"],
   components: {},
