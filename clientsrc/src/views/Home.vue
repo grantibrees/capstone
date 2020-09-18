@@ -199,6 +199,6 @@ body {
 }
 
 .footer-size {
-  min-height: 20vh;
+  min-height: 5em;
 }
 </style>
