@@ -78,7 +78,9 @@
             data-target="#songModal"
             @click="yesLoadForYou"
           >
-            <i class="fa fa-plus"></i>
+            <h2>
+              <i class="fa fa-plus"></i>
+            </h2>
           </button>
         </div>
       </div>
@@ -253,8 +255,8 @@ export default {
 <style scoped>
 .add-button {
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 90px;
+  height: 90px;
 }
 .top-height {
   min-height: 8vh;
