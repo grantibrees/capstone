@@ -15,7 +15,10 @@
           {{songData.songTitle}} -
           {{songData.artist}}
         </div>
-        <div class="col-4 justify-content-center">Vote Count: {{songData.score}}</div>
+        <div class="col-4 justify-content-center">
+          <i class="fa fa-bar-chart"></i>
+          {{songData.score}}
+        </div>
       </div>
 
       <!-- <img
