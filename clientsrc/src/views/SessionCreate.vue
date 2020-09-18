@@ -1,8 +1,8 @@
 <template>
-  <div class="SessionCreate full-height bg-warning container-fluid">
-    <div class="row chocolate align-items-center justify-content-center"></div>
+  <div class="SessionCreate full-height bg-warning container-fluid m-0 p-0">
+    <div class="row chocolate justify-content-center"></div>
 
-    <div class="row vanilla p-push align-items-center">
+    <div class="row p-push align-items-center">
       <div class="col-12">
         <div class="form-group">
           <div class="row px-5 py-3">
@@ -14,7 +14,7 @@
             />
           </div>
           <div class="border-pill-wrap">
-            <button @click="createSession" class="btn btn-block btn-pill p-3 rounded-pill">
+            <button @click="createSession" class="btn btn-block btn-pill p-3">
               <h2>Create Session</h2>
             </button>
           </div>
