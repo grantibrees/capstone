@@ -1,13 +1,13 @@
 <template>
-  <div class="Queue col">
-    <div class="row chocolate">
+  <div class="Queue col-12">
+    <div class="row bg-warning">
       <!-- SECTION If there IS a queue or track length -->
       <div
         class="col-12"
         v-if="(this.activeSession.queue && this.activeSession.queue.length > 0) || this.activeSong.trackLength"
       >
         <div class="row">
-          <div class="col-3">
+          <div class="col-5">
             <img
               class="rounded my-auto img-thumbnail img-fluid"
               :src="activeSong.albumCover.url"
@@ -15,25 +15,30 @@
             />
           </div>
 
-          <div class="col-9">
+          <div class="col-7">
             <div class="row justify-content-center">
               <h3>Playing</h3>
             </div>
             <div class="row justify-content-center">Title: {{activeSong.songTitle}}</div>
             <div class="row justify-content-center">Album: {{activeSong.album}}</div>
-            <div class="row justify-content-center">Track Length: {{activeSong.trackLength}}</div>
+            <div
+              class="row justify-content-center"
+            >Track Length: {{(activeSong.trackLength/1000)/60}}</div>
           </div>
         </div>
-        <div v-if="$store.state.hostTokens.accessToken !== ''" class="row justify-content-center">
+        <div
+          v-if="$store.state.hostTokens.accessToken !== ''"
+          class="row justify-content-center pb-2"
+        >
           <div class="col-1"></div>
 
           <div class="col-4">
-            <button @click="playpause" class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
+            <button @click="playpause" class="btn btn-outline-primary rounded-pill p-2">Play/Pause</button>
           </div>
           <div class="col-2"></div>
 
           <div class="col-4">
-            <button @click="skipSong" class="btn btn-outline-secondary rounded-pill">Skip</button>
+            <button @click="skipSong" class="btn btn-outline-primary rounded-pill p-2">Skip</button>
           </div>
           <div class="col-1"></div>
         </div>
