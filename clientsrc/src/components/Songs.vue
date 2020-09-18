@@ -1,6 +1,6 @@
 <template>
   <div class="songs bg-primary row my-1">
-    <div class="col-2 pb-0">
+    <div class="col-2 p-0">
       <button
         @click.prevent="vote('up')"
         class="btn p-3"
@@ -11,10 +11,10 @@
     </div>
     <div class="col">
       <div class="row">
-        <div class="col-8 justify-content-center">
+        <small class="col-8 justify-content-center">
           {{songData.songTitle}} -
           {{songData.artist}}
-        </div>
+        </small>
         <div class="col-4 justify-content-center">
           <i class="fa fa-th-list"></i>
           {{songData.score}}
@@ -28,7 +28,7 @@
         alt
       />-->
     </div>
-    <div class="col-2 pb-0">
+    <div class="col-2 p-0">
       <button
         @click.prevent="vote('down')"
         class="btn p-3"
