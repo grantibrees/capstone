@@ -3,13 +3,13 @@
     <div class="row bg-warning">
       <!-- SECTION If there IS a queue or track length -->
       <div
-        class="col-12"
         v-if="(this.activeSession.queue && this.activeSession.queue.length > 0) || this.activeSong.trackLength"
       >
         <div class="row player">
-          <div class="col-5">
+          <div class="col-1"></div>
+          <div class="col-3 align-self-center">
             <img
-              class="rounded my-auto img-thumbnail img-fluid"
+              class="rounded img-thumbnail img-fluid"
               :src="activeSong.albumCover.url"
               alt
             />
@@ -25,6 +25,7 @@
               class="row justify-content-center"
             >Track Length: {{Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100}}</div>
           </div>
+          <div class="col-1"></div>
         </div>
         <div
           v-if="$store.state.hostTokens.accessToken !== ''"
