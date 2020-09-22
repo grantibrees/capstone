@@ -8,8 +8,9 @@
         </h5>
       </div>
       <div class="col-2">
-        <i class="far fa-share-square"></i>
+        <i @click="shareSessionCode()" class="far fa-share-square"></i>
       </div>
+
       <div class="col-2">
         <i class="fas fa-cog"></i>
       </div>
@@ -17,6 +18,7 @@
   </div>
 </template>
 <script>
+import Swal from "sweetalert2";
 export default {
   name: "FileName" /*  */,
   data() {
@@ -59,6 +61,26 @@ export default {
     await this.initiatePlayer();
   },
   methods: {
+    shareSessionCode() {
+      let copytext = "";
+      if (window.location.host.includes("localhost")) {
+        copytext =
+          "http://localhost:8080/#/session/" + this.activeSession.sessionCode;
+      } else {
+        coptytext =
+          "https://songscoop.herokuapp.com/#/session/" +
+          this.activeSession.sessionCode;
+      }
+      console.log(copytext);
+      navigator.clipboard.writeText(copytext);
+      Swal.fire({
+        position: "top-end",
+        title: "<span class='text-info'>Session Has Been Copied!</span>",
+        showConfirmButton: false,
+        timer: 1500,
+        background: "#f66599",
+      });
+    },
     waitForSpotifyWebPlaybackSDKToLoad: async function () {
       return new Promise((resolve) => {
         if (window.Spotify) {

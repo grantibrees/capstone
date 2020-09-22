@@ -9,6 +9,10 @@
         <i class="fa fa-arrow-up"></i>
       </button>
     </div>
+    <div class="col-2">
+      <img class="rounded my-auto img-thumbnail img-fluid" :src="songData.albumCover.url" alt />
+    </div>
+
     <div class="col">
       <div class="row">
         <small class="col justify-content-center">
@@ -20,14 +24,8 @@
           {{songData.score}}
         </div>
       </div>
-
-      <!-- <img
-
-        class="rounded my-auto img-thumbnail img-fluid"
-        :src="songData.albumCover.url"
-        alt
-      />-->
     </div>
+
     <div class="col-2">
       <i
         v-if="this.$store.state.user.email"
@@ -35,6 +33,7 @@
         @click="deleteFromQueue(songData)"
       ></i>
     </div>
+
     <div class="col-2 p-0">
       <button
         @click.prevent="vote('down')"

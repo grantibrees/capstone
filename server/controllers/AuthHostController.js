@@ -16,8 +16,9 @@ const spotifyApi = new SpotifyWebApi({
   redirectUri:
     //NOTE Cannot get redirect to work with turnary, must change manually for now!
     // window.location.host.includes("localhost") ?
-    "http://localhost:3000/callback",
-  // : "https://songscoop.herokuapp.com/callback",
+    // "http://localhost:3000/callback",
+    // :
+    "https://songscoop.herokuapp.com/callback",
 });
 let unsafe = {};
 export class AuthHostController extends BaseController {
@@ -61,10 +62,11 @@ export class AuthHostController extends BaseController {
       //NOTE Currently unable to get the redirect to work with turnary, must change manually when deploying!
       res.redirect(
         // window.location.host.includes("localhost")?
-        "http://localhost:8080/#/dashboard?" +
+        // "http://localhost:8080/#/dashboard?" +
+        //   `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`
+        // :
+        "https://songscoop.herokuapp.com/#/dashboard?" +
           `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`
-        // : "https://songscoop.herokuapp.com/#/dashboard?" +
-        //     `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`
       );
     } catch (error) {
       res.redirect("error");
