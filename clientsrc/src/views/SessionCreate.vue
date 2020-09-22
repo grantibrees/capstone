@@ -19,6 +19,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 
@@ -73,7 +74,7 @@ export default {
   padding-top: 12em;
 }
 
-.container-fluid{
+.container-fluid {
   margin: 0;
   padding: 0;
 }
