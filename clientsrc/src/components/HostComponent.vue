@@ -67,7 +67,7 @@ export default {
         copytext =
           "http://localhost:8080/#/session/" + this.activeSession.sessionCode;
       } else {
-        coptytext =
+        copytext =
           "https://songscoop.herokuapp.com/#/session/" +
           this.activeSession.sessionCode;
       }
