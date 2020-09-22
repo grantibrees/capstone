@@ -13,10 +13,10 @@ export default {
       try {
         await spotifySongApi.put(
           "play?device_id=" + store.state.hostDeviceId,
-          { "uris": [store.state.activeSong.uri] },
+          { uris: [store.state.activeSong.uri] },
           {
             headers: {
-              "Authorization": "Bearer " + store.state.hostTokens.accessToken,
+              Authorization: "Bearer " + store.state.hostTokens.accessToken,
             },
           }
         );
@@ -30,6 +30,15 @@ export default {
         let res = await api.put("session/" + payload.sessionCode, payload);
         // console.log(res);
         dispatch("getActiveSong", payload);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteFromQueue({ commit, dispatch }, payload) {
+      try {
+        let res = api.delete(
+          "session/" + payload.sessionCode + "/" + payload.uri
+        );
       } catch (error) {
         console.error(error);
       }

@@ -11,7 +11,7 @@
     </div>
     <div class="col">
       <div class="row">
-        <small class="col-8 justify-content-center">
+        <small class="col justify-content-center">
           {{songData.songTitle}} -
           {{songData.artist}}
         </small>
@@ -27,6 +27,13 @@
         :src="songData.albumCover.url"
         alt
       />-->
+    </div>
+    <div class="col-2">
+      <i
+        v-if="this.$store.state.user.email"
+        class="far fa-trash-alt"
+        @click="deleteFromQueue(songData)"
+      ></i>
     </div>
     <div class="col-2 p-0">
       <button
@@ -51,8 +58,12 @@ export default {
       voteDisabled: false,
     };
   },
+
   computed: {},
   methods: {
+    deleteFromQueue(songData) {
+      this.$store.dispatch("deleteFromQueue", songData);
+    },
     delay() {
       this.timeout = setTimeout(() => {
         this.voteDisabled = false;
