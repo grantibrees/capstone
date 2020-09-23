@@ -1,5 +1,7 @@
 <template>
-  <div class="SessionUniqueHost bg-info font-site container-fluid full-height rm-my">
+  <div
+    class="SessionUniqueHost bg-info font-site container-fluid full-height rm-my"
+  >
     <div class="row bg-warning border-bottom border-info">
       <hostComponent></hostComponent>
     </div>
@@ -12,12 +14,18 @@
       <div class="col-12">
         <div class="row px-5 py-3">
           <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
+            <div
+              class="modal-dialog modal-dialog-scrollable h-75"
+              role="document"
+            >
               <div class="modal-content bg-warning">
                 <div class="modal-header">
                   <h5 class="modal-title"></h5>
 
-                  <form class="form-inline mr-5" @submit.prevent="searchBySong()">
+                  <form
+                    class="form-inline mr-5"
+                    @submit.prevent="searchBySong()"
+                  >
                     <input
                       v-model="search"
                       class="form-control mr-sm-2"
@@ -28,7 +36,9 @@
                     <button
                       class="btn btn-outline-danger btn-block rounded-pill my-2 p-3"
                       type="submit"
-                    >Search</button>
+                    >
+                      Search
+                    </button>
                   </form>
 
                   <button
@@ -41,21 +51,37 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div
+                  class="modal-body"
+                  v-if="$store.state.explicitAllowed == true"
+                >
                   <div
                     class="bg-primary m-2 p-2 row justify-content-between align-items-center rounded-pill result"
                     @click.prevent="selectSong(result)"
                     v-for="result in trackResults"
                     :key="result.id"
                   >
-                    <div class="col-2 ml-1">
-                      <img class="rounded img-fluid" :src="result.album.images[0].url" alt />
-                    </div>
-                    <div class="col result-name">{{result.artists[0].name}}- {{result.name}}</div>
-                    <div class="col-2">
-                      <i class="fa fa-plus mt-1"></i>
+                    <div class="row">
+                      <div class="col-2">
+                        <img
+                          class="ml-5 rounded img-fluid"
+                          :src="result.album.images[0].url"
+                          alt
+                        />
+                      </div>
+
+                      <div class="col">
+                        {{ result.artists[0].name }}- {{ result.name }}
+                      </div>
+                      <button
+                        class="btn btn-outline-secondary mr-5 rounded-pill col-2"
+                        @click.prevent="selectSong(result)"
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
+
                   <InfiniteLoading
                     v-if="!noLoadForYou && infiniteWait"
                     spinner="waveDots"
@@ -63,7 +89,52 @@
                     @infinite="infiniteHandler"
                   ></InfiniteLoading>
                   <div v-if="noLoadForYou">
-                    <div class="row bg-primary justify-content-center">End of results!</div>
+                    <div class="row bg-primary justify-content-center">
+                      End of results!
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="modal-body"
+                  v-if="$store.state.explicitAllowed == false"
+                >
+                  <div
+                    class="bg-primary m-2 p-2 row justify-content-between align-items-center rounded-pill result"
+                    @click.prevent="selectSong(result)"
+                    v-for="result in cleanTrackResults"
+                    :key="result.id"
+                  >
+                    <div class="row">
+                      <div class="col-2">
+                        <img
+                          class="ml-5 rounded img-fluid"
+                          :src="result.album.images[0].url"
+                          alt
+                        />
+                      </div>
+
+                      <div class="col">
+                        {{ result.artists[0].name }}- {{ result.name }}
+                      </div>
+                      <button
+                        class="btn btn-outline-secondary mr-5 rounded-pill col-2"
+                        @click.prevent="selectSong(result)"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <InfiniteLoading
+                    v-if="!noLoadForYou && infiniteWait"
+                    spinner="waveDots"
+                    :identifier="infiniteId"
+                    @infinite="infiniteHandler"
+                  ></InfiniteLoading>
+                  <div v-if="noLoadForYou">
+                    <div class="row bg-primary justify-content-center">
+                      End of results!
+                    </div>
                   </div>
                 </div>
                 <div class="modal-footer"></div>
@@ -133,6 +204,11 @@ export default {
     },
     trackResults() {
       return this.$store.state.trackSearchResults;
+    },
+    cleanTrackResults() {
+      return this.$store.state.trackSearchResults.filter(
+        (track) => track.explicit == false
+      );
     },
   },
   methods: {

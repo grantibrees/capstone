@@ -4,15 +4,57 @@
       <div class="col-8">
         <h5 class="rm-my">
           Session Code:
-          <span class="text-primary">{{activeSession.sessionCode}}</span>
+          <span class="text-primary">{{ activeSession.sessionCode }}</span>
         </h5>
       </div>
       <div class="col-2">
         <i @click="shareSessionCode()" class="far fa-share-square"></i>
       </div>
-
-      <div class="col-2">
-        <i class="fas fa-cog"></i>
+      <div class="dropdown col-2">
+        <i
+          class="fas fa-cog dropdown-toggle"
+          id="optionsDropDown"
+          data-toggle="dropdown"
+        >
+        </i>
+        <div
+          class="dropdown-menu dropdown-menu-right bg-primary ml-1"
+          id="optionsDropDownMenu"
+        >
+          <div class="dropdown-item custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="customSwitch1"
+            />
+            <label
+              class="custom-control-label"
+              for="customSwitch1"
+              @click="explicit()"
+              >Filter Explicit Content</label
+            >
+          </div>
+          <div class="dropdown-item custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="customSwitch2"
+            />
+            <label class="custom-control-label" for="customSwitch2"
+              >Remove Unpopular Songs</label
+            >
+          </div>
+          <div class="dropdown-item custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="customSwitch3"
+            />
+            <label class="custom-control-label" for="customSwitch3"
+              >Lock Next Song</label
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -42,7 +84,7 @@ export default {
     };
     // console.log("hostComponent loaded");
     this.checkForActiveSong();
-  } /* Runs functions on startup */,
+  },
   computed: {
     accessToken() {
       return this.$store.state.hostTokens.accessToken;
@@ -53,10 +95,7 @@ export default {
     playing() {
       return this.$store.state.playing;
     },
-  } /* Pulls values from the store. Always the value of the method that's in it. The live value. Constant value, has to have a return in it, it's a getter. It's like a listener, listening to the state. It gets the state.
-      cars() {
-      return this.store.state.cars;
-  */,
+  },
   async mounted() {
     await this.initiatePlayer();
   },
@@ -155,6 +194,13 @@ export default {
         this.$store.dispatch("changeSong");
       } else if (state.paused == false && state.position > 1000) {
         this.changingTrack = false;
+      }
+    },
+    explicit() {
+      if (this.$store.state.explicitAllowed == true) {
+        this.$store.state.explicitAllowed = false;
+      } else {
+        this.$store.state.explicitAllowed = true;
       }
     },
   },

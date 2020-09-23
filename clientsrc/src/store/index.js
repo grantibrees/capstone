@@ -41,6 +41,7 @@ export default new Vuex.Store({
     vistorActive: {},
     nextSong: {},
     playing: true,
+    explicitAllowed: true,
     songsUpVoted: [],
     songsDownVoted: [],
   },
@@ -97,7 +98,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    setBearer({ }, bearer) {
+    setBearer({}, bearer) {
       api.defaults.headers.authorization = bearer;
       hostTokensApi.defaults.headers.authorization = bearer;
       // console.log("Set Bearer tokens");
