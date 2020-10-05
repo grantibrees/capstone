@@ -10,12 +10,13 @@ let scopes = [
   "playlist-modify-public",
   "playlist-modify-private",
 ];
-var spotifyRedirect = "";
+// var spotifyRedirect = "";
 //We should be able to delete this, because the two functions that needed it created their own now.
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: spotifyRedirect,
+  redirectUri: "https://songscoop.herokuapp.com/callback",
+  // redirectUri: spotifyRedirect,
 });
 let unsafe = {};
 export class AuthHostController extends BaseController {
@@ -32,15 +33,17 @@ export class AuthHostController extends BaseController {
   async authorizeHost(req, res, next) {
     try {
       //Spotify  was not receiving the redirect in time, so creating the callback API in the function allows it to be set before spotify calls it.
-      spotifyRedirect = req.headers.referer.includes("localhost")
-        ? "http://localhost:3000/callback"
-        : "https://songscoop.herokuapp.com/callback";
-      let spotifyCallback = new SpotifyWebApi({
-        clientId: process.env.SPOTIFY_CLIENT_ID,
-        clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-        redirectUri: spotifyRedirect,
-      });
-      let html = await spotifyCallback.createAuthorizeURL(scopes, "");
+      // spotifyRedirect = req.headers.referer.includes("localhost")
+      //   ? "http://localhost:3000/callback"
+      //   : "https://songscoop.herokuapp.com/callback";
+      // let spotifyCallback = new SpotifyWebApi({
+      //   clientId: process.env.SPOTIFY_CLIENT_ID,
+      //   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+      //   redirectUri: spotifyRedirect,
+      // });
+      // let html = await spotifyCallback.createAuthorizeURL(scopes, "");
+
+      let html = await spotifyApi.createAuthorizeURL(scopes, "");
       console.log(html);
       // res.send({ url: html })
       res.redirect(html);
@@ -54,18 +57,21 @@ export class AuthHostController extends BaseController {
     console.log(code);
     try {
       //Spotify still was not receiving the redirect in time, so creating a second callback API allows it to be accessed.
-      spotifyRedirect = req.headers.referer.includes("localhost")
-        ? "http://localhost:3000/callback"
-        : "https://songscoop.herokuapp.com/callback";
-      let spotifySecondCallBack = new SpotifyWebApi({
-        clientId: process.env.SPOTIFY_CLIENT_ID,
-        clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-        redirectUri: spotifyRedirect,
-      });
-      let data = await spotifySecondCallBack.authorizationCodeGrant(code);
-      let redirect = req.headers.referer;
-      const { access_token, refresh_token, expires_in } = data.body;
+      // spotifyRedirect = req.headers.referer.includes("localhost")
+      //   ? "http://localhost:3000/callback"
+      //   : "https://songscoop.herokuapp.com/callback";
+      // let spotifySecondCallBack = new SpotifyWebApi({
+      //   clientId: process.env.SPOTIFY_CLIENT_ID,
+      //   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+      //   redirectUri: spotifyRedirect,
+      // });
+      // let data = await spotifySecondCallBack.authorizationCodeGrant(code);
+      // let redirect = req.headers.referer;
+      // const { access_token, refresh_token, expires_in } = data.body;
       // console.log(data.body);
+      let data = await spotifyApi.authorizationCodeGrant(code);
+      const { access_token, refresh_token, expires_in } = data.body;
+      console.log(data.body);
       spotifyApi.setAccessToken(access_token);
       spotifyApi.setRefreshToken(refresh_token);
       let payload = {
@@ -75,8 +81,10 @@ export class AuthHostController extends BaseController {
       };
 
       res.redirect(
-        redirect +
-          "#/dashboard?" +
+        // redirect +
+        //   "#/dashboard?" +
+        //   `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`
+        "https://songscoop.herokuapp.com/#/dashboard?" +
           `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`
       );
     } catch (error) {
