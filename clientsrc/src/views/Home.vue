@@ -10,7 +10,10 @@
             <h1 class="font-fancy py-2">Song Scoop</h1>
           </div>
           <div class="justify-content-center mt-4 mx-5">
-            <p>You don't need to steal your friend's phone to put on decent music.</p>
+            <p>
+              You don't need to steal your friend's phone to put on decent
+              music.
+            </p>
           </div>
         </div>
       </div>
@@ -23,17 +26,22 @@
           </div>
 
           <div id="btn2" class="border-pill-wrap my-5">
-            <button @click="movePage('SessionJoin')" class="btn btn-block p-4 btn-pill">
+            <button
+              @click="movePage('SessionJoin')"
+              class="btn btn-block p-4 btn-pill"
+            >
               <h4>Join Session</h4>
             </button>
           </div>
         </div>
       </div>
 
-      <div class="row fixed-bottom strawberry footer-size justify-content-center">
-        <small
-          class="d-flex align-self-end justify-self-center my-2"
-        >created by Tim, Grant, Tyler, & Mick</small>
+      <div
+        class="row fixed-bottom strawberry footer-size justify-content-center"
+      >
+        <small class="d-flex align-self-end justify-self-center my-2"
+          >created by Tim, Grant, Tyler, & Mick</small
+        >
       </div>
     </div>
   </div>
@@ -169,6 +177,18 @@ body {
 }
 .btn-pill:active {
   color: var(--info);
+  background-color: var(--warning);
+  border-radius: 3em !important;
+}
+
+.btn-pill-search {
+  color: var(--info);
+  background-color: var(--primary);
+  border-radius: 3em !important;
+  transition: all 0.2s ease-in-out;
+}
+.btn-pill-search:active {
+  color: var(--warning);
   background-color: var(--warning);
   border-radius: 3em !important;
 }

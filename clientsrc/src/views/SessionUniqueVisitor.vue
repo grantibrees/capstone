@@ -32,7 +32,7 @@
                       aria-label="Search"
                     />
                     <button
-                      class="btn btn-outline-danger btn-block btn-pill my-2 p-3"
+                      class="btn btn-outline-danger btn-block rounded-pill my-2 p-3"
                       type="submit"
                     >
                       Search
@@ -51,7 +51,7 @@
                 </div>
                 <div class="modal-body">
                   <div
-                    class="bg-primary m-2 p-2 row justify-content-between align-items-center rounded-pill result"
+                    class="m-2 p-2 row justify-content-between align-items-center btn-pill-search result"
                     @click.prevent="selectSong(result)"
                     v-for="result in trackResults"
                     :key="result.id"
