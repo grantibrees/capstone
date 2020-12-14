@@ -1,5 +1,7 @@
 <template>
-  <div class="SessionUniqueVisitor bg-info font-site container-fluid full-height rm-my">
+  <div
+    class="SessionUniqueVisitor bg-info font-site container-fluid full-height rm-my"
+  >
     <div class="row bg-warning"></div>
 
     <div class="row">
@@ -10,12 +12,18 @@
       <div class="col-12">
         <div class="row px-5 py-3">
           <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-dialog-scrollable h-75" role="document">
+            <div
+              class="modal-dialog modal-dialog-scrollable h-75"
+              role="document"
+            >
               <div class="modal-content bg-warning">
                 <div class="modal-header">
                   <h5 class="modal-title"></h5>
 
-                  <form class="form-inline mr-5" @submit.prevent="searchBySong()">
+                  <form
+                    class="form-inline mr-5"
+                    @submit.prevent="searchBySong()"
+                  >
                     <input
                       v-model="search"
                       class="form-control mr-sm-2"
@@ -24,9 +32,11 @@
                       aria-label="Search"
                     />
                     <button
-                      class="btn btn-outline-danger btn-block rounded-pill my-2 p-3"
+                      class="btn btn-outline-danger btn-block btn-pill my-2 p-3"
                       type="submit"
-                    >Search</button>
+                    >
+                      Search
+                    </button>
                   </form>
 
                   <button
@@ -47,9 +57,15 @@
                     :key="result.id"
                   >
                     <div class="col-2 ml-1">
-                      <img class="rounded img-fluid" :src="result.album.images[0].url" alt />
+                      <img
+                        class="rounded img-fluid"
+                        :src="result.album.images[0].url"
+                        alt
+                      />
                     </div>
-                    <div class="col result-name">{{result.artists[0].name}}- {{result.name}}</div>
+                    <div class="col result-name">
+                      {{ result.artists[0].name }}- {{ result.name }}
+                    </div>
                     <div class="col-2">
                       <i class="fa fa-plus mt-1"></i>
                     </div>
@@ -61,7 +77,9 @@
                     @infinite="infiniteHandler"
                   ></InfiniteLoading>
                   <div v-if="noLoadForYou">
-                    <div class="row bg-primary justify-content-center">End of results!</div>
+                    <div class="row bg-primary justify-content-center">
+                      End of results!
+                    </div>
                   </div>
                 </div>
                 <div class="modal-footer"></div>
