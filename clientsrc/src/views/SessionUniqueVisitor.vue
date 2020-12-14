@@ -274,9 +274,9 @@ export default {
 .result {
   height: 8vh;
   transition: all 0.2s ease-in-out;
+  overflow: hidden;
 }
 .result-name {
-  overflow: hidden;
 }
 
 .result:active {
