@@ -1,14 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { api, loginApi, spotifySongApi } from "../axiosService";
 import store from ".";
-import router from "../router/index";
+import { api, spotifySongApi } from "../axiosService";
 
 Vue.use(Vuex);
 
 export default {
   actions: {
-    async playCurrentSong({ commit }, songRequest) {
+    async playCurrentSong({ commit, dispatch, state }, songRequest) {
       console.log(store.state.activeSong.uri);
       try {
         await spotifySongApi.put(
@@ -20,6 +19,18 @@ export default {
             },
           }
         );
+        clearInterval(store.state.track);
+        store.state.trackBallPos = 95
+        store.state.songPos = 0
+        store.state.track = setInterval((() => {
+          if (store.state.playing) {
+            store.state.songPos += 1000;
+            store.state.trackBallPos = Math.abs(
+              (store.state.songPos / store.state.activeSong.trackLength) * 90 - 95
+            );
+          }
+        }), 1000);
+        console.log("interval started")
       } catch (error) {
         console.error(error);
       }
@@ -110,5 +121,13 @@ export default {
         console.error(error);
       }
     },
+    trackBallMove({ commit, dispatch, state }) {
+      console.log("interval")
+      state.songPos += 3000;
+      state.trackBallPos = Math.abs(
+        (state.songPos / state.activeSong.trackLength) * 90 - 95
+      );
+    }
+
   },
 };

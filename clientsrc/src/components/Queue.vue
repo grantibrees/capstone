@@ -3,7 +3,10 @@
     <div class="row bg-warning">
       <!-- SECTION If there IS a queue or track length -->
       <div
-        v-if="(this.activeSession.queue && this.activeSession.queue.length > 0) || this.activeSong.trackLength"
+        v-if="
+          (this.activeSession.queue && this.activeSession.queue.length > 0) ||
+          this.activeSong.trackLength
+        "
       >
         <div class="row player">
           <div class="col-1"></div>
@@ -16,14 +19,28 @@
           </div>
 
           <div class="col-7">
-            <div class="row justify-content-center">
-              <h3>Playing</h3>
+            <div class="row mb-0 mt-2 justify-content-center text-primary">
+              <h4>{{ activeSong.songTitle }}</h4>
             </div>
-            <div class="row justify-content-center">Title: {{activeSong.songTitle}}</div>
-            <div class="row justify-content-center">Album: {{activeSong.album}}</div>
-            <div
-              class="row justify-content-center"
-            >Track Length: {{Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100}}</div>
+            <div class="row justify-content-center">
+              {{ activeSong.artist }}
+            </div>
+            <div class="row justify-content-center">
+              Album: {{ activeSong.album }}
+            </div>
+            <!-- <div class="row justify-content-center">
+              Track Length:
+              {{ Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100 }}
+            </div> -->
+            <div class="col-12 my-3">
+              <div class="row align-items-center w-100">
+                <div class="col-12 song-track w-100"></div>
+                <div
+                  class="track-ball"
+                  :style="'right:' + trackBallPos + '%'"
+                ></div>
+              </div>
+            </div>
           </div>
           <div class="col-1"></div>
         </div>
@@ -34,12 +51,22 @@
           <div class="col-1"></div>
 
           <div class="col-4">
-            <button @click="playpause" class="btn btn-outline-primary rounded-pill p-2">Play/Pause</button>
+            <button
+              @click="playpause"
+              class="btn btn-outline-primary rounded-pill p-2"
+            >
+              Play/Pause
+            </button>
           </div>
           <div class="col-2"></div>
 
           <div class="col-4">
-            <button @click="skipSong" class="btn btn-outline-primary rounded-pill p-2">Skip</button>
+            <button
+              @click="skipSong"
+              class="btn btn-outline-primary rounded-pill p-2"
+            >
+              Skip
+            </button>
           </div>
           <div class="col-1"></div>
         </div>
@@ -61,15 +88,20 @@
             </div>
             <div class="row justify-content-center">Title:</div>
             <div class="row justify-content-center">Album:</div>
-            <div class="row justify-content-center">Track Length:</div>
+            <!-- <div class="row justify-content-center">Track Length:</div> -->
           </div>
           <div class="col-1"></div>
         </div>
-        <div class="row justify-content-center" v-if="$store.state.hostTokens.accessToken !== '' ">
+        <div
+          class="row justify-content-center"
+          v-if="$store.state.hostTokens.accessToken !== ''"
+        >
           <div class="col-1"></div>
 
           <div class="col-4">
-            <button class="btn btn-outline-secondary rounded-pill">Play/Pause</button>
+            <button class="btn btn-outline-secondary rounded-pill">
+              Play/Pause
+            </button>
           </div>
           <div class="col-2"></div>
 
@@ -83,7 +115,11 @@
     <div class="row">
       <div class="col-12">
         <transition-group name="songs">
-          <songs v-for="singleSong in songsQueue" :songData="singleSong" :key="singleSong.uri" />
+          <songs
+            v-for="singleSong in songsQueue"
+            :songData="singleSong"
+            :key="singleSong.uri"
+          />
         </transition-group>
       </div>
     </div>
@@ -105,7 +141,6 @@ export default {
   },
   computed: {
     activeSession() {
-      debugger;
       return this.$store.state.activeSession;
     },
     songsQueue() {
@@ -121,6 +156,9 @@ export default {
     activeSong() {
       return this.$store.state.activeSong;
     },
+    trackBallPos() {
+      return this.$store.state.trackBallPos;
+    },
   },
   methods: {
     playpause() {
@@ -134,6 +172,7 @@ export default {
     skipSong() {
       // console.log("song skip?");
       this.$store.dispatch("changeSong", this.songsQueue[0]);
+      this.songPos = 0;
     },
 
     // trackTime(trackMs) {
@@ -187,5 +226,22 @@ export default {
 .song-leave-to {
   transform: translateY(-8px);
   opacity: 0;
+}
+
+.song-track {
+  height: 2px;
+  width: 120%;
+  border-radius: 1px;
+  background-color: var(--info);
+}
+
+.track-ball {
+  transition: all linear 1s;
+  position: absolute;
+  width: 0.75em;
+  height: 0.75em;
+  background-color: var(--warning);
+  border: var(--primary) 2px solid;
+  border-radius: 50%;
 }
 </style>

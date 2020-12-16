@@ -2,25 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {
   api,
-  hostTokensApi,
-  loginApi,
-  spotifySongApi,
-  spotifyAuthApi,
-  spotifyApi,
+  hostTokensApi
 } from "../axiosService";
-import router from "../router/index";
-import Axios from "axios";
-import qs from "qs";
-import { spotifyClientId, spotifyClientSecret } from "../authConfig";
-import store from "../store";
-import VisitorModule from "./VisitorModule";
 import SessionModule from "./SessionModule";
-import SongModule from "./SongModule";
 import { socketStore } from "./SocketStore";
+import SongModule from "./SongModule";
+import VisitorModule from "./VisitorModule";
 
 Vue.use(Vuex);
 
-import { onAuth } from "@bcwdev/auth0-vue";
 
 export default new Vuex.Store({
   state: {
@@ -43,6 +33,9 @@ export default new Vuex.Store({
     playing: true,
     songsUpVoted: [],
     songsDownVoted: [],
+    songPos: 0,
+    trackBallPos: 95,
+    track: null
   },
   mutations: {
     setUser(state, user) {
