@@ -1,6 +1,6 @@
 <template>
-  <div class="Queue col-12">
-    <div class="row bg-warning">
+  <div class="Queue bg-warning col-12">
+    <div class="bg-warning">
       <!-- SECTION If there IS a queue or track length -->
       <div
         v-if="
@@ -8,9 +8,8 @@
           this.activeSong.trackLength
         "
       >
-        <div class="row player">
-          <div class="col-1"></div>
-          <div class="col-3 align-self-center">
+        <div class="row my-2 justify-content-around">
+          <div class="col-md-3 col-4 align-self-center">
             <img
               class="rounded img-thumbnail img-fluid"
               :src="activeSong.albumCover.url"
@@ -18,7 +17,7 @@
             />
           </div>
 
-          <div class="col-7">
+          <div class="col-md-7 col-6">
             <div class="row mb-0 mt-2 justify-content-center text-primary">
               <h4>{{ activeSong.songTitle }}</h4>
             </div>
@@ -34,35 +33,26 @@
             </div> -->
             <div class="col-12 my-3">
               <div class="row align-items-center justify-content-center w-100">
-                <small class="col-1">{{
-                  (Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100)
-                    .toString()
-                    .split(".")
-                    .join(":")
-                }}</small>
-                <div class="col-10 song-track d-flex align-items-center">
+                <small class="col-1">{{ timeConvert(songPos / 1000) }}</small>
+                <div
+                  class="col-md-10 col-12 song-track d-flex align-items-center"
+                >
                   <div
                     class="track-ball"
                     :style="'right:' + trackBallPos + '%'"
                   ></div>
                 </div>
                 <small class="col-1">{{
-                  (Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100)
-                    .toString()
-                    .split(".")
-                    .join(":")
+                  timeConvert(Math.round(activeSong.trackLength / 1000))
                 }}</small>
               </div>
             </div>
           </div>
-          <div class="col-1"></div>
         </div>
         <div
           v-if="$store.state.hostTokens.accessToken !== ''"
           class="row justify-content-center pb-2"
         >
-          <div class="col-1"></div>
-
           <div class="col-4">
             <button
               @click="playpause"
@@ -81,21 +71,19 @@
               Skip
             </button>
           </div>
-          <div class="col-1"></div>
         </div>
       </div>
       <!-- SECTION If there is NO queue or NO track length -->
       <div v-else>
         <div class="row">
-          <div class="col-1"></div>
-          <div class="col-3 align-self-center">
+          <div class="col-md-3 col-5 align-self-center">
             <img
               class="rounded img-thumbnail img-fluid"
               src="https://images.squarespace-cdn.com/content/5d2e2c5ef24531000113c2a4/1564770252898-1KLCZDE9BJRSWDSMIM7L/image-asset.png"
               alt
             />
           </div>
-          <div class="col-7">
+          <div class="col-md-7 col-5">
             <div class="row justify-content-center">
               <h3>Playing</h3>
             </div>
@@ -103,30 +91,25 @@
             <div class="row justify-content-center">Album:</div>
             <!-- <div class="row justify-content-center">Track Length:</div> -->
           </div>
-          <div class="col-1"></div>
         </div>
         <div
           class="row justify-content-center"
           v-if="$store.state.hostTokens.accessToken !== ''"
         >
-          <div class="col-1"></div>
-
           <div class="col-4">
             <button class="btn btn-outline-secondary rounded-pill">
               Play/Pause
             </button>
           </div>
-          <div class="col-2"></div>
 
           <div class="col-4">
             <button class="btn btn-outline-secondary rounded-pill">Skip</button>
           </div>
-          <div class="col-1"></div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 bg-info">
         <transition-group name="songs">
           <songs
             v-for="singleSong in songsQueue"
@@ -173,6 +156,9 @@ export default {
     trackBallPos() {
       return this.$store.state.trackBallPos;
     },
+    songPos() {
+      return this.$store.state.songPos;
+    },
   },
   methods: {
     playpause() {
@@ -187,6 +173,12 @@ export default {
       // console.log("song skip?");
       this.$store.dispatch("changeSong", this.songsQueue[0]);
       this.songPos = 0;
+    },
+    timeConvert(time) {
+      let minutes = Math.floor(time / 60);
+      let seconds = time - minutes * 60;
+      seconds = seconds < 10 ? `0` + seconds : seconds;
+      return `${minutes}:${seconds}`;
     },
 
     // trackTime(trackMs) {
@@ -243,6 +235,7 @@ export default {
 }
 
 .song-track {
+  transform: translate(3%, 0%);
   height: 2px;
   /* width: 100%; */
   border-radius: 1px;

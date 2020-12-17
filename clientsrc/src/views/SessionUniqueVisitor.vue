@@ -13,7 +13,7 @@
         <div class="row px-5 py-3">
           <div id="songModal" class="modal fade" tabindex="-1" role="dialog">
             <div
-              class="modal-dialog modal-dialog-scrollable h-75"
+              class="modal-dialog modal-dialog-scrollable h-100"
               role="document"
             >
               <div class="modal-content bg-warning">
