@@ -33,12 +33,25 @@
               {{ Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100 }}
             </div> -->
             <div class="col-12 my-3">
-              <div class="row align-items-center w-100">
-                <div class="col-12 song-track w-100"></div>
-                <div
-                  class="track-ball"
-                  :style="'right:' + trackBallPos + '%'"
-                ></div>
+              <div class="row align-items-center justify-content-center w-100">
+                <small class="col-1">{{
+                  (Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100)
+                    .toString()
+                    .split(".")
+                    .join(":")
+                }}</small>
+                <div class="col-10 song-track d-flex align-items-center">
+                  <div
+                    class="track-ball"
+                    :style="'right:' + trackBallPos + '%'"
+                  ></div>
+                </div>
+                <small class="col-1">{{
+                  (Math.round((activeSong.trackLength / 1000 / 60) * 100) / 100)
+                    .toString()
+                    .split(".")
+                    .join(":")
+                }}</small>
               </div>
             </div>
           </div>
@@ -230,7 +243,7 @@ export default {
 
 .song-track {
   height: 2px;
-  width: 120%;
+  /* width: 100%; */
   border-radius: 1px;
   background-color: var(--info);
 }
