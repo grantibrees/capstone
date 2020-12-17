@@ -3,30 +3,33 @@
     <div class="col-2 p-0">
       <button
         @click.prevent="vote('up')"
-        class="btn p-3"
-        :class="upVoteToggle ? 'btn-outline-info':'btn-info'"
+        class="btn p-3 h-100 w-100 b-0"
+        :class="upVoteToggle ? 'btn-outline-info' : 'btn-info'"
       >
         <i class="fa fa-arrow-up"></i>
       </button>
     </div>
-    <div class="col-2">
-      <img class="rounded my-auto img-thumbnail img-fluid" :src="songData.albumCover.url" alt />
+    <div class="col-2 p-0">
+      <img
+        class="rounded my-auto img-thumbnail img-fluid"
+        :src="songData.albumCover.url"
+        alt
+      />
     </div>
 
     <div class="col">
-      <div class="row">
+      <div class="row align-items-center">
         <small class="col justify-content-center">
-          {{songData.songTitle}} -
-          {{songData.artist}}
+          {{ nameTrunc(songData.songTitle + "-" + songData.artist) }}
         </small>
-        <div class="col-4 justify-content-center">
+        <div class="col-3 justify-content-center">
           <i class="fa fa-th-list"></i>
-          {{songData.score}}
+          {{ songData.score }}
         </div>
       </div>
     </div>
 
-    <div class="col-2">
+    <div class="col-1">
       <i
         v-if="this.$store.state.user.email"
         class="far fa-trash-alt"
@@ -37,8 +40,8 @@
     <div class="col-2 p-0">
       <button
         @click.prevent="vote('down')"
-        class="btn p-3"
-        :class="downVoteToggle ? 'btn-outline-warning':'btn-warning'"
+        class="btn p-3 h-100 w-100 b-0"
+        :class="downVoteToggle ? 'btn-outline-warning' : 'btn-warning'"
       >
         <i class="fa fa-arrow-down"></i>
       </button>
@@ -97,6 +100,12 @@ export default {
         });
         this.delay();
       }
+    },
+    nameTrunc(name) {
+      if (name.length > 30) {
+        return name.slice(0, 28) + "...";
+      }
+      return name;
     },
   },
   props: ["songData"],
