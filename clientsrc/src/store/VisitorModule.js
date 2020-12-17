@@ -1,24 +1,22 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { spotifyApi } from "../axiosService"
-import { spotifyAuthApi } from "../axiosService"
-import router from '../router/index'
-import Axios from "axios"
-import qs from 'qs'
-import { spotifyClientId, spotifyClientSecret } from "../authConfig"
-import store from "."
+import Vue from "vue";
+import Vuex from "vuex";
+import { spotifyApi } from "../axiosService";
+import { spotifyAuthApi } from "../axiosService";
+import router from "../router/index";
+import Axios from "axios";
+import qs from "qs";
+import { spotifyClientId, spotifyClientSecret } from "../authConfig";
+import store from ".";
 
-
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default {
   actions: {
     async getSpotifyVisitorAuth({ commit, dispatch }) {
-
       const headers = {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         auth: {
           username: spotifyClientId,
@@ -26,18 +24,18 @@ export default {
         },
       };
       const data = {
-        grant_type: 'client_credentials',
+        grant_type: "client_credentials",
       };
 
       try {
         const res = await spotifyAuthApi.post(
-          'token',
+          "token",
           qs.stringify(data),
           headers
         );
         // console.log(res.data.access_token, "Bearer Token For Non Owner");
-        let spotifyAuthToken = res.data.access_token
-        commit('setSpotifyVisitorAuth', spotifyAuthToken)
+        let spotifyAuthToken = res.data.access_token;
+        commit("setSpotifyVisitorAuth", spotifyAuthToken);
       } catch (error) {
         console.log(error, "Failed");
       }
@@ -64,18 +62,28 @@ export default {
 
     async searchBySong({ commit, dispatch, state }, query) {
       try {
-        const res = await spotifyApi.get('search?q=' + query.data + '&type=track' + '&limit=10&' + 'offset=' + query.page, { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
-        commit("setTrackSearchResults", res.data.tracks)
-        commit("updateTrackPage", true)
-        return res.data
-
+        const res = await spotifyApi.get(
+          "search?q=" +
+            query.data +
+            "&type=track" +
+            "&limit=10&" +
+            "offset=" +
+            query.page +
+            "&explicit=" +
+            store.state.settings.explicit,
+          {
+            headers: {
+              Authorization: "Bearer " + store.state.spotifyAuthToken,
+            },
+          }
+        );
+        commit("setTrackSearchResults", res.data.tracks);
+        commit("updateTrackPage", true);
+        return res.data;
       } catch (error) {
-        console.error(error)
-        commit("updateTrackPage", false)
+        console.error(error);
+        commit("updateTrackPage", false);
       }
     },
-
-  }
-
-
-}
+  },
+};

@@ -1,16 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {
-  api,
-  hostTokensApi
-} from "../axiosService";
+import { api, hostTokensApi } from "../axiosService";
 import SessionModule from "./SessionModule";
 import { socketStore } from "./SocketStore";
 import SongModule from "./SongModule";
 import VisitorModule from "./VisitorModule";
 
 Vue.use(Vuex);
-
 
 export default new Vuex.Store({
   state: {
@@ -27,6 +23,9 @@ export default new Vuex.Store({
       queue: [],
       page: true,
     },
+    settings: {
+      explicit: false,
+    },
     activeSong: "no active song",
     vistorActive: {},
     nextSong: {},
@@ -35,7 +34,7 @@ export default new Vuex.Store({
     songsDownVoted: [],
     songPos: 0,
     trackBallPos: 95,
-    track: null
+    track: null,
   },
   mutations: {
     setUser(state, user) {
@@ -90,7 +89,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    setBearer({ }, bearer) {
+    setBearer({}, bearer) {
       api.defaults.headers.authorization = bearer;
       hostTokensApi.defaults.headers.authorization = bearer;
       // console.log("Set Bearer tokens");

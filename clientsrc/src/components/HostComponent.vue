@@ -12,8 +12,34 @@
       </div>
 
       <div class="col-2">
-        <i class="fas fa-cog"></i>
+        <i class="fas fa-cog" data-toggle="modal" data-target="#settingsModal"></i>
       </div>
+      <!-- Modal -->
+ <div id="settingsModal" class="modal fadesp"  tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <form>
+         <div class="col-6 text-dark">Explicit Allowed</div> 
+        <div class="col-6 custom-control custom-switch text-dark">
+  <input type="checkbox" v-model="explicit" class="custom-control-input" id="explicitToggle">
+  <label class="custom-control-label" for="explicitToggle"></label>
+    </div>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" @click="settings" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
     </div>
   </div>
 </template>
@@ -28,6 +54,7 @@ export default {
       changingTrack: false,
       currentState: {},
       spotifySDK: {},
+      explicit: false,
     };
   },
 
@@ -40,9 +67,13 @@ export default {
     window.onSpotifyWebPlaybackSDKReady = () => {
       // You can now initialize Spotify.Player and use the SDK
     };
-    // console.log("hostComponent loaded");
     this.checkForActiveSong();
-  } /* Runs functions on startup */,
+    $("#settingsModal").on("hidden.bs.modal", () => {
+      this.settings();
+      console.log('modal hit')
+    });
+  },
+
   computed: {
     accessToken() {
       return this.$store.state.hostTokens.accessToken;
@@ -61,6 +92,9 @@ export default {
     await this.initiatePlayer();
   },
   methods: {
+    settings(){
+      console.log('toggled')
+    },
     shareSessionCode() {
       let copytext = "";
       if (window.location.host.includes("localhost")) {
