@@ -30,7 +30,7 @@ export default {
             );
           }
         }), 1000);
-        console.log("interval started")
+        dispatch("refreshTokens", "nothing")
       } catch (error) {
         console.error(error);
       }
