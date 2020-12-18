@@ -10,6 +10,7 @@ export class SessionsController extends BaseController {
     this.router
       .get("/:sessionCode", this.getBySessionCode)
       .get("/:sessionCode/find", this.findActiveSong)
+      .put("/:sessionCode/settings", this.updateSettings)
       .put("/:sessionCode", this.addToQueue)
       .put("/:sessionCode/:songUri", this.updateSong)
       .put("/:sessionCode/:songUri/active", this.updateActiveSong)
@@ -17,6 +18,7 @@ export class SessionsController extends BaseController {
       .delete("/:sessionCode/:songUri", this.removeSongFromQueue)
       .post("/post", this.create);
   }
+
   async getBySessionCode(req, res, next) {
     try {
       let data = await sessionsService.getById(req.params.sessionCode);
@@ -49,6 +51,23 @@ export class SessionsController extends BaseController {
         req.body
       );
       return res.send({ data: data, message: "added song to que" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateSettings(req, res, next) {
+    try {
+      let data = await sessionsService.updateSettings(
+        req.params.sessionCode,
+        req.body
+      );
+      socketService.messageRoom(
+        "session-" + req.params.sessionCode,
+        "updateSettings",
+        req.body
+      );
+      return res.send({ data: data, message: "settings updated" });
     } catch (error) {
       next(error);
     }

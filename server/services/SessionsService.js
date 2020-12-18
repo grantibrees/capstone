@@ -61,6 +61,23 @@ class SessionsService {
     return data;
   }
 
+  async updateSettings(sessionCode, body) {
+    await dbContext.Session.findOneAndUpdate(
+      { sessionCode: sessionCode },
+      { $pull: { settings: {} } },
+      { new: true }
+    );
+    let data = await dbContext.Session.findOneAndUpdate(
+      { sessionCode: sessionCode },
+      { $addToSet: { settings: body } },
+      { new: true }
+    );
+    if (!data) {
+      throw new BadRequest("Invalid!");
+    }
+    return data;
+  }
+
   async findActiveSong(sessionCode) {
     let data = await dbContext.Session.find({ sessionCode: sessionCode });
     if (!data) {

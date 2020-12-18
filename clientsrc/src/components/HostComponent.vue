@@ -18,23 +18,32 @@
  <div id="settingsModal" class="modal fadesp"  tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-warning">
         <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body row">
-        <form>
-         <div class="col-6 text-dark">Explicit Allowed</div> 
+      <div class="modal-body bg-warning">
+        <form class>
+          <div class="row">
+         <div class="col-6">No Explicit Content</div> 
         <div class="col-6 custom-control custom-switch text-dark">
-  <input type="checkbox" v-model="explicit" class="custom-control-input" id="explicitToggle">
-  <label class="custom-control-label" for="explicitToggle"></label>
+  <input type="checkbox" checked="checked" v-model="settings.noexplicit" class="custom-control-input" id="explicitToggle">
+  <label class="custom-control-label active" for="explicitToggle"></label>
+  </div>
+  </div>
+  <div class="row">
+  <div class="col-6">No Voting</div> 
+        <div class="col-6 custom-control custom-switch text-dark">
+  <input type="checkbox" checked="checked" v-model="settings.novoting" class="custom-control-input" id="votingToggle">
+  <label class="custom-control-label active" for="votingToggle"></label>
+  </div>
     </div>
       </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" @click="settings" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <div class="modal-footer bg-warning">
+        <button type="button" @click="updateSettings" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
       </div>
     </div>
@@ -54,7 +63,10 @@ export default {
       changingTrack: false,
       currentState: {},
       spotifySDK: {},
-      explicit: false,
+      settings : {
+        noexplicit: false,
+        novoting: false,
+      }
     };
   },
 
@@ -92,8 +104,9 @@ export default {
     await this.initiatePlayer();
   },
   methods: {
-    settings(){
-      console.log('toggled')
+    updateSettings(){
+      debugger
+    this.$store.dispatch('updateSettings', { session: this.activeSession.sessionCode, settings: this.settings })
     },
     shareSessionCode() {
       let copytext = "";

@@ -8,6 +8,7 @@ const Session = new Schema(
     sessionCode: { type: String, required: true },
     queue: [],
     activeSong: {},
+    settings: {},
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );

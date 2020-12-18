@@ -25,7 +25,8 @@ export default new Vuex.Store({
       page: true,
     },
     settings: {
-      explicit: false,
+      noexplicit: false,
+      novoting: false,
     },
     activeSong: "no active song",
     vistorActive: {},
@@ -45,9 +46,7 @@ export default new Vuex.Store({
       state.spotifyAuthToken = spotifyAuthToken;
     },
     setTrackSearchResults(state, searchResults) {
-      searchResults.items.forEach((item) =>
-        state.trackSearchResults.push(item)
-      );
+      searchResults.forEach((item) => state.trackSearchResults.push(item));
     },
     updateTrackPage(state, page) {
       state.activeSession.page = page;
@@ -87,6 +86,10 @@ export default new Vuex.Store({
     },
     playpause(state) {
       state.playing = !state.playing;
+    },
+    setSettings(state, settings) {
+      state.settings = settings;
+      console.log(settings);
     },
   },
   actions: {

@@ -26,6 +26,9 @@ export const socketStore = {
         // console.log("socket hit", payload.data.activeSong[0]);
         commit("setActiveSong", payload.data.activeSong[0]);
       });
+      socket.on("updateSettings", (payload) => {
+        commit("setSettings", payload);
+      });
     },
     joinRoom({ commit, dispatch }, roomName) {
       socket.emit("dispatch", { action: "joinRoom", data: roomName });
