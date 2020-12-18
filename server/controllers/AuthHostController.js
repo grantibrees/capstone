@@ -15,7 +15,8 @@ let scopes = [
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: "https://songscoop.herokuapp.com/callback",
+  redirectUri: "http://localhost:3000/callback",
+  // redirectUri: "https://songscoop.herokuapp.com/callback",
   // redirectUri: spotifyRedirect,
 });
 let unsafe = {};
@@ -84,7 +85,8 @@ export class AuthHostController extends BaseController {
         // redirect +
         //   "#/dashboard?" +
         //   `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`
-        "https://songscoop.herokuapp.com/#/dashboard?" +
+        "http://localhost:8080/#/dashboard?" +
+          // "https://songscoop.herokuapp.com/#/dashboard?" +
           `accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`
       );
     } catch (error) {

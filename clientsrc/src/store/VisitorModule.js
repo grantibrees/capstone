@@ -40,27 +40,9 @@ export default {
         console.log(error, "Failed");
       }
     },
-    //Should Be Safe To Delete
-
-    // async searchByArtist({ commit, dispatch, state }, query) {
-    //   try {
-    //     const res = await spotifyApi.get('search?q=' + query.data + '&type=artist', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
-    //     console.log(res, 'artist results')
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // },
-
-    // async searchByAlbum({ commit, dispatch, state }, query) {
-    //   try {
-    //     const res = await spotifyApi.get('search?q=' + query.data + '&type=album', { headers: { Authorization: 'Bearer ' + store.state.spotifyAuthToken } })
-    //     console.log(res, 'album results')
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // },
 
     async searchBySong({ commit, dispatch, state }, query) {
+      let filtered;
       try {
         const res = await spotifyApi.get(
           "search?q=" +
@@ -68,17 +50,23 @@ export default {
             "&type=track" +
             "&limit=10&" +
             "offset=" +
-            query.page +
-            "&explicit=" +
-            store.state.settings.explicit,
+            query.page,
           {
             headers: {
               Authorization: "Bearer " + store.state.spotifyAuthToken,
             },
           }
         );
-        commit("setTrackSearchResults", res.data.tracks);
+        if (store.state.settings.noexplicit == true) {
+          filtered = res.data.tracks.items.filter(
+            (song) => song.explicit == false
+          );
+        } else {
+          filtered = res.data.tracks.items;
+        }
+        commit("setTrackSearchResults", filtered);
         commit("updateTrackPage", true);
+        console.log("tracks", filtered);
         return res.data;
       } catch (error) {
         console.error(error);
