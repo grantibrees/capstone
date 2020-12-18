@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { api, hostTokensApi } from "../axiosService";
+import { spotifyClientId, spotifyClientSecret } from "../authConfig";
+import { api, hostTokensApi, tokenRefreshApi } from "../axiosService";
 import SessionModule from "./SessionModule";
 import { socketStore } from "./SocketStore";
 import SongModule from "./SongModule";
@@ -89,7 +90,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    setBearer({}, bearer) {
+    setBearer({ }, bearer) {
       api.defaults.headers.authorization = bearer;
       hostTokensApi.defaults.headers.authorization = bearer;
       // console.log("Set Bearer tokens");
@@ -150,6 +151,23 @@ export default new Vuex.Store({
 
     getDeviceId({ commit }, deviceId) {
       commit("setDeviceId", deviceId);
+    },
+
+    async refreshTokens({ commit, dispatch, state }) {
+      try {
+        console.log("refreshing tokens")
+        let body = `grant_type=refresh_token&refresh_token=${state.hostTokens.refreshToken}&client_id=${spotifyClientId}&client_secret=${spotifyClientSecret}`
+        let res = await tokenRefreshApi.post("", body)
+        let tokens = {
+          accessToken: res.data.access_token,
+          refreshToken: state.hostTokens.refreshToken,
+          expiresIn: res.data.expires_in,
+        };
+        dispatch("setSpotifyHostTokens", tokens)
+        dispatch("saveSpotifyHostTokens", tokens)
+      } catch (error) {
+        console.error(error)
+      }
     },
 
     saveToLocal(context) {

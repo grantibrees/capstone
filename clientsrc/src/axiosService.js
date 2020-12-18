@@ -1,4 +1,5 @@
-import Axios from "axios"
+import Axios from "axios";
+
 let base = window.location.host.includes('localhost') ? '//localhost:3000/' : '/'
 export const loginApi = Axios.create({
   baseURL: base + "login/",
@@ -38,6 +39,14 @@ export const spotifyApi = Axios.create({
 export const spotifySongApi = Axios.create({
   baseURL: "https://api.spotify.com/v1/me/player/",
   timeout: 3000,
+})
+
+export const tokenRefreshApi = Axios.create({
+  baseURL: "https://accounts.spotify.com/api/token",
+  timeout: 3000,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  }
 })
 
 
