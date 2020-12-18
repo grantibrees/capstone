@@ -1,7 +1,7 @@
 <template>
   <div class="songs bg-primary row my-1">
     <div class="col-2 p-0">
-      <button
+      <button v-if="this.$store.state.settings.novoting == false"
         @click.prevent="vote('up')"
         class="btn p-3 h-100 w-100 b-0"
         :class="upVoteToggle ? 'btn-outline-info' : 'btn-info'"
@@ -38,7 +38,7 @@
     </div>
 
     <div class="col-2 p-0">
-      <button
+      <button v-if="this.$store.state.settings.novoting == false"
         @click.prevent="vote('down')"
         class="btn p-3 h-100 w-100 b-0"
         :class="downVoteToggle ? 'btn-outline-warning' : 'btn-warning'"
