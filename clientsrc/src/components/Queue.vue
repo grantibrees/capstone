@@ -134,7 +134,6 @@ export default {
   },
   mounted() {
     // this.startSong();
-  
   },
   computed: {
     activeSession() {
@@ -250,5 +249,6 @@ export default {
   background-color: var(--warning);
   border: var(--primary) 2px solid;
   border-radius: 50%;
+  transform: translateX(+3%);
 }
 </style>
